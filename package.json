@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start",
+    "start-alt": "expo start --tunnel",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/ngrok": "^4.1.0",
     "axios": "^1.2.2",
     "dotenv": "^16.0.3",
     "expo": "~47.0.12",

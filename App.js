@@ -6,7 +6,6 @@ import Comments from './components/Comments/Comments.js';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Comments />
     </View>
   );
 }

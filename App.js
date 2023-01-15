@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
+import ConfessionList from './componets/ConfessionList';
 
 export default function App() {
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <ConfessionList />
     </View>
   );
 }
@@ -14,8 +15,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f8ff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
+
+
 });

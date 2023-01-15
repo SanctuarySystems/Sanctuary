@@ -11,7 +11,7 @@ const Notifications = () => {
       />
       <Text>this is the notif page</Text>
     </View>
-  )
+  );
 };
 
 export default Notifications;

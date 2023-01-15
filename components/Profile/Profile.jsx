@@ -29,57 +29,58 @@ const styles = StyleSheet.create({
 
 const Profile = () => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
-  const [profileView, setProfileView] = React.useState(true);
+  // const [profileView, setProfileView] = React.useState(true);
 
   return (
-    { profileView &&
-      <View styles={styles.profile}>
-        <View styles={styles.container}>
-          <View>
-            {/* LOG OUT BUTTON */}
-            <Button
-              styles={styles.align_right}
-              title="Log out"
-              onPress={() => console.log('Logged Out')}
-            />
+  // { (!profileView) &&
+  //   <Notifications></Notifications> }
 
-            {/* NOTIFICATIONS */}
-            <Button
-              styles={styles.align_right}
-              title="Notifications"
-              onPress={() => setProfileView(false)}
-            />
+  // { profileView &&
+    <View styles={styles.profile}>
+      <View styles={styles.container}>
+        <View>
+          {/* LOG OUT BUTTON */}
+          <Button
+            styles={styles.align_right}
+            title="Log out"
+            onPress={() => console.log('Logged Out')}
+          />
 
-            {/* AVATAR */}
-            <Text>avatar img</Text>
-            {/* EDIT AVATAR */}
-            <Button
-              title="Edit"
-              onPress={() => console.log('editing avatar')}
-            />
-            {/* USERNAME */}
-            <Text>{mockData.username}</Text>
-          </View>
+          {/* NOTIFICATIONS */}
+          <Button
+            styles={styles.align_right}
+            title="Notifications"
+            onPress={() => {}}//setProfileView(false)}
+          />
 
-          {/* TABS */}
-          <View styles={styles.tabs}>
-            <Button
-              title="Joined Spaces"
-              onPress={() => console.log('showing joined') || setCurrentTab('joined')}
-            />
-            <Button
-              title="Created Spaces"
-              onPress={() => console.log('showing created') || setCurrentTab('created')}
-            />
-          </View>
+          {/* AVATAR */}
+          <Text>avatar img</Text>
+          {/* EDIT AVATAR */}
+          <Button
+            title="Edit"
+            onPress={() => console.log('editing avatar')}
+          />
+          {/* USERNAME */}
+          <Text>{mockData.username}</Text>
         </View>
 
-        {/* SPACES */}
-        <SpacesList currentTab={currentTab} />
-      </View> }
+        {/* TABS */}
+        <View styles={styles.tabs}>
+          <Button
+            title="Joined Spaces"
+            onPress={() => console.log('showing joined') || setCurrentTab('joined')}
+          />
+          <Button
+            title="Created Spaces"
+            onPress={() => console.log('showing created') || setCurrentTab('created')}
+          />
+        </View>
+      </View>
 
-    { !profileView &&
-      <Notifications></Notifications> }
+      {/* SPACES */}
+      <SpacesList currentTab={currentTab} />
+    </View>
+    // }
   );
 };
 

@@ -33,13 +33,8 @@ const SpacesList = ({ currentTab }) => {
     const name = item.name.toLowerCase();
     const search = searchTerm.toLowerCase();
 
-    if (searchTerm.length !== 0 && name.indexOf(search) < 0) {
-      return;
-    }
-
-    if (currentTab === 'created' && !item.admin) {
-      return;
-    }
+    if (searchTerm.length !== 0 && name.indexOf(search) < 0) return;
+    if (currentTab === 'created' && !item.admin) return;
 
     return (
       <SpacesListing space={item} />

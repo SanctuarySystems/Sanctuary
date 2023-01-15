@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Comments from './components/Comments/Comments.js';
 import ConfessionList from './components/Confession/ConfessionList';
 
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 
 export default function App() {
 

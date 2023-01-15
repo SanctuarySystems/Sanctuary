@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 
 .env
+/.expo
+/android
+/ios

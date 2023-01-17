@@ -10,6 +10,11 @@ const Home = ({ navigation }) => {
         title="Go to Test Page"
         onPress={() => navigation.navigate('Test Page')}
       />
+      <Text>Welcome Page</Text>
+      <Button
+        title="Go to Welcome Screen"
+        onPress={() => navigation.navigate('Welcome Screen')}
+      />
     </View>
   );
 };

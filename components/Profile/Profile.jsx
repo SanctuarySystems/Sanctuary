@@ -75,7 +75,7 @@ const Profile = ({ navigation }) => {
         />
       </View>
       {/* SPACES */}
-      <SpacesList currentTab={currentTab} spaceData={spaceData} />
+      <SpacesList currentTab={currentTab} spaceData={spaceData} currentUser={userData.username} />
     </View>
   );
 };

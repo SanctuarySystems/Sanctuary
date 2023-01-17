@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, FlatList, StyleSheet } from 'react-native';
 import SpacesListing from './SpacesListing';
+import { SearchBar } from '@rneui/themed';
 
 const mockSpaceData = [
   {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SpacesList = ({ currentTab, spaceData }) => {
+const SpacesList = ({ currentTab, spaceData, currentUser }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const renderItem = ({ item }) => {
@@ -37,19 +38,38 @@ const SpacesList = ({ currentTab, spaceData }) => {
     // if (currentTab === 'created' && !item.admin) return;
 
     return (
-      <SpacesListing space={item} />
+      <SpacesListing space={item} currentUser={currentUser} />
     );
   };
 
   return (
     <View>
       {/* SEARCH */}
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         onChangeText={setSearchTerm}
         value={searchTerm}
         placeholder="Search..."
         keyboardType="web-search"
+      /> */}
+
+      <SearchBar
+        platform="ios"
+        containerStyle={{}}
+        inputContainerStyle={{}}
+        inputStyle={{}}
+        leftIconContainerStyle={{}}
+        rightIconContainerStyle={{}}
+        loadingProps={{}}
+        onChangeText={(newVal) => setSearchTerm(newVal)}
+        onClearText={() => setSearchTerm('')}
+        placeholder="Search..."
+        placeholderTextColor="#888"
+        showCancel
+        cancelButtonTitle="Cancel"
+        cancelButtonProps={{}}
+        onCancel={() => console.log('cancelling')}
+        value={searchTerm}
       />
 
       <FlatList

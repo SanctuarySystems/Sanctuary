@@ -14,12 +14,13 @@ const SpacesListing = ({ space, currentUser }) => {
   }, [space]);
 
   return (
-    <View>
+    <View style={{ align: 'center', width: '80%', borderWidth: 1 }}>
       <Text>{space}</Text>
-      <Text>
-        {spaceData.members.length}
-        members
-      </Text>
+
+      {/* <Text>
+        {spaceData.members.length} members
+      </Text> */}
+
       { space.created_by === currentUser && <Text>admin!</Text> }
       <Button
         title="View Space"

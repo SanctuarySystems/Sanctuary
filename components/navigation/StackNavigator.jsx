@@ -5,6 +5,10 @@ import TestPage from "../screens/TestPage.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
+<<<<<<< HEAD
+import ProfileTest from "../screens/ProfileTest.jsx";
+import Comments from '../Comments/Comments.js';
+=======
 import Profile from "../Profile/Profile";
 import Notifications from "../Profile/Notifications";
 
@@ -14,6 +18,7 @@ import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
 import Space from '../Space/Space.js';
+>>>>>>> development
 
 const Stack = createNativeStackNavigator();
 
@@ -30,11 +35,15 @@ const MainStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Test Page" component={TestPage} />
+<<<<<<< HEAD
+      <Stack.Screen name="Comments" component={Comments} />
+=======
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
       <Stack.Screen name="Login Screen" component={LoginScreen} />
       <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
+>>>>>>> development
     </Stack.Navigator>
   );
 };

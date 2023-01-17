@@ -11,9 +11,12 @@ const Space = ({navigation}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
   const [isAdmin, setIsAdmin] = React.useState(true);
+<<<<<<< HEAD
+=======
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
   const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
+>>>>>>> development
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
@@ -29,7 +32,11 @@ const Space = ({navigation}) => {
         {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(0)}}>
           <Text style={styles.leavejoinText}>leave</Text>
         </TouchableOpacity>}
+<<<<<<< HEAD
+        {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(2)}}>
+=======
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
+>>>>>>> development
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
       </View>
@@ -42,8 +49,13 @@ const Space = ({navigation}) => {
         {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
+<<<<<<< HEAD
+      {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
+      {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}} />}
+=======
       {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+>>>>>>> development
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
       <View style={{flex: 0.5, alignItems:'center'}}>
         <TouchableOpacity onPress={() => {setModalVisible(true)}}>

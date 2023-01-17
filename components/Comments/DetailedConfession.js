@@ -12,15 +12,12 @@ const DetailedConfession = () => {
 
 const styles = StyleSheet.create({
   confession: {
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    width: '100%',
     padding: '15%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     marginBottom: '3%',
-    borderWidth: '3',
   },
 });
 

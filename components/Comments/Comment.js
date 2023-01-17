@@ -1,38 +1,39 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
-const Comment = ({ username, body, pops }) => {
+const Comment = ({ username, body, pops, setShowModal }) => {
   const [pop, setPop] = useState(pops);
 
   return (
     <View style={styles.comment}>
-      <Text>I'm a comment</Text>
+      <Text>{body}</Text>
       <Text style={styles.username}>{username}</Text>
-      <Text style={styles.popCount}>{pop}</Text>
-      <Text style={styles.pop} onPress={() => setPop(pop + 1)}>pop</Text>
-      <Text style={styles.plop} onPress={() => setPop(pop - 1)}>plop</Text>
+      <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
+        <Entypo name="dots-three-horizontal" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={styles.vote}>
+        <TouchableOpacity style={styles.pop} onPress={() => setPop(pop + 1)}>
+          <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.popCount}>{pop}</Text>
+        <TouchableOpacity style={styles.plop} onPress={() => setPop(pop - 1)}>
+          <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   comment: {
-    backgroundColor: '#FAF9F6',
-    borderRadius: '5%',
-    borderWidth: 2,
-    borderColor: 'purple',
-    shadowColor: 'purple',
-    shadowOffset: {
-      width: 10,
-      height: 10,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
     justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
     padding: '20%',
-    width: '90%',
-    marginBottom: '5%',
+    width: '100%',
+    marginBottom: '3%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -41,20 +42,20 @@ const styles = StyleSheet.create({
     top: 10,
     left: 10,
   },
-  popCount: {
+  vote: {
+    flexDirection: 'row',
     position: 'absolute',
-    bottom: 10,
-    left: 10,
-  },
-  pop: {
-    position: 'absolute',
-    bottom: 10,
-    right: 50,
-  },
-  plop: {
-    position: 'absolute',
-    bottom: 10,
+    height: 50,
+    width: 80,
     right: 10,
+    bottom: 0,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  dots: {
+    position: 'absolute',
+    top: 10,
+    right: 15,
   }
 });
 

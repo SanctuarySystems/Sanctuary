@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
 import { auth } from 'firebase/app';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -14,6 +15,7 @@ const SignUpScreen = () => {
         await auth().createUserWithEmailAndPassword(email, password);
         const user = auth().currentUser;
         await user.sendEmailVerification();
+        navigation.navigate('Select Icon Screen');
       } catch (error) {
         console.log(error);
       }
@@ -39,11 +41,8 @@ const SignUpScreen = () => {
         onChangeText={text => setConfirmPassword(text)}
       />
       {noMatch ? (
-
-        <Text>Passwords Do Not Match</Text>
-        <Button onPress={() => setNoMatch(false)} />
-      ) : null}
-      <Button title="Create Account" onPress={handleSubmit} />
+        <Button title="Passwords Do Not Match, Try Again" onPress={() => setNoMatch(false)} />
+      ) : <Button title="Create Account" onPress={handleSubmit} />}
     </View>
   );
 };

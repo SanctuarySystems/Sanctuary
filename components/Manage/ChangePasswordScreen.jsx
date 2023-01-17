@@ -19,7 +19,6 @@ const ChangePassword = () => {
         throw new Error("New passwords don't match");
       }
       await user.updatePassword(newPassword);
-      // navigate to the login page
     } catch (error) {
       console.log(error);
     }

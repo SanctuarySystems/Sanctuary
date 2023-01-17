@@ -8,6 +8,7 @@ const App = () => {
       <HomeScreen />
     </NavigationContainer>
   );
+}
 };
 
 // const styles = StyleSheet.create({

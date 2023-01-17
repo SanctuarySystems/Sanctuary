@@ -350,11 +350,7 @@ MigrationBackup/
 .ionide/
 
 .env
-.expo/
+/.expo
+/android
+/ios
 .expo
-ios
-android/
-node_modules/
-app.json
-android
-android/

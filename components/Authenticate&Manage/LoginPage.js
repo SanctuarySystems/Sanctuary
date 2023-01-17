@@ -1,48 +1,90 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Input, Button } from 'react-native-elements';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const auth = getAuth();
 
-  const handleLogin = () => {
-    // Perform login logic here
-    console.log('Login button pressed');
-    if (username === 'test' && password === 'test') {
-      console.log('login success');
-    } else {
-      console.log('login failed');
+const { width } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  controls: {
+    flex: 1,
+  },
+
+  control: {
+    marginTop: 10,
+    width: width * .8
+  },
+
+  error: {
+    marginTop: 10,
+    padding: 10,
+    color: '#fff',
+    backgroundColor: '#D54826FF',
+  }
+});
+
+export default SignIn = () => {
+  const [value, setValue] = useState({
+    email: '',
+    password: '',
+    error: ''
+  });
+
+  async function signIn() {
+    if (value.email === '' || value.password === '') {
+      setValue({
+        ...value,
+        error: 'Email and password are mandatory.'
+      });
+      return;
     }
-  };
 
-  const handleSignup = () => {
-    // Navigate to signup page
-    console.log('Signup button pressed');
-    // navigation.navigate('Signup')
-  };
+    try {
+      await signInWithEmailAndPassword(auth, value.email, value.password);
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      });
+    }
+  }
 
   return (
-    <View>
-      <Text>Welcome to our app!</Text>
-      <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={text => setUsername(text)}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry={true}
-      />
-      <TouchableOpacity onPress={handleLogin}>
-        <Text>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleSignup}>
-        <Text>Create an account</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Text>Signin screen!</Text>
+
+      {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
+
+      <View style={styles.controls}>
+        <Input
+          placeholder='Email'
+          containerStyle={styles.control}
+          value={value.email}
+          onChangeText={(text) => setValue({ ...value, email: text })}
+        />
+
+        <Input
+          placeholder='Password'
+          containerStyle={styles.control}
+          value={value.password}
+          onChangeText={(text) => setValue({ ...value, password: text })}
+          secureTextEntry={true}
+        />
+
+        <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+      </View>
     </View>
   );
-};
-
-export default LoginPage;
+}

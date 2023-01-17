@@ -1,26 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Comments from './components/Comments/Comments.js';
-import ConfessionList from './components/Confession/ConfessionList';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './components/navigation/HomeScreen.jsx';
 
-// import Profile from './components/Profile/Profile';
-import Space from './components/Space/Space.js';
-
-export default function App() {
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Comments />
-    </View>
+    <NavigationContainer>
+      <HomeScreen />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f8ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
+
+// const App = () => {
+// return (
+//   <NavigationContainer>
+//     <Stack.Navigator initialRouteName="Home">
+//       <Stack.Screen name="Home" component={Home} />
+//       <Stack.Screen name="Second Page" component={SecondPageTest} />
+//     </Stack.Navigator>
+//   </NavigationContainer>
+// );
+// };
+
+export default App;

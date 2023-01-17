@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './components/navigation/HomeScreen.jsx';
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Hello this is a test</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <HomeScreen />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
+
+// const App = () => {
+// return (
+//   <NavigationContainer>
+//     <Stack.Navigator initialRouteName="Home">
+//       <Stack.Screen name="Home" component={Home} />
+//       <Stack.Screen name="Second Page" component={SecondPageTest} />
+//     </Stack.Navigator>
+//   </NavigationContainer>
+// );
+// };
+
+// return (
+//   <Tab.Navigator>
+//     <Tab.Screen name="Home" component={Home} />
+//     <Tab.Screen name="Page2" component={SecondPageTest} />
+//   </Tab.Navigator>
+// );
+
+export default App;

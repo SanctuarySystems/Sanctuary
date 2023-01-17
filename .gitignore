@@ -355,3 +355,4 @@ MigrationBackup/
 /android
 /ios
 .expo
+package-lock.json

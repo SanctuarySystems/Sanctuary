@@ -8,7 +8,6 @@ const App = () => {
       <HomeScreen />
     </NavigationContainer>
   );
-}
 };
 
 // const styles = StyleSheet.create({
@@ -30,12 +29,5 @@ const App = () => {
 //   </NavigationContainer>
 // );
 // };
-
-// return (
-//   <Tab.Navigator>
-//     <Tab.Screen name="Home" component={Home} />
-//     <Tab.Screen name="Page2" component={SecondPageTest} />
-//   </Tab.Navigator>
-// );
 
 export default App;

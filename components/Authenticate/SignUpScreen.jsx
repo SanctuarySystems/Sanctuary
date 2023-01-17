@@ -39,6 +39,7 @@ const SignUpScreen = () => {
         onChangeText={text => setConfirmPassword(text)}
       />
       {noMatch ? (
+
         <Text>Passwords Do Not Match</Text>
         <Button onPress={() => setNoMatch(false)} />
       ) : null}

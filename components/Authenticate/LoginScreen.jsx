@@ -9,7 +9,6 @@ const LoginScreen = () => {
   const handleSubmit = async () => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
-      // navigate to the home page
     } catch (error) {
       console.log(error);
     }

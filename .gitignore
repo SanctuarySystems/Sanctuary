@@ -58,6 +58,7 @@ BenchmarkDotNet.Artifacts/
 
 # .NET Core
 project.lock.json
+project-lock.json
 project.fragment.lock.json
 artifacts/
 
@@ -354,3 +355,4 @@ MigrationBackup/
 /android
 /ios
 .expo
+package-lock.json

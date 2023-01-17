@@ -6,11 +6,13 @@ import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
 import ProfileTest from "../screens/ProfileTest.jsx";
+
 import WelcomeScreen from "../Authenticate/WelcomeScreen.jsx";
 import LoginScreen from "../Authenticate/LoginScreen.jsx";
 import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
+import Space from '../Space/Space.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +42,7 @@ const SpaceStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} />
+      <Stack.Screen name="Space" component={Space} />
     </Stack.Navigator>
   );
 };

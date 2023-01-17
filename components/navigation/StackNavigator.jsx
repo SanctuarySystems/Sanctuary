@@ -6,6 +6,7 @@ import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
 import ProfileTest from "../screens/ProfileTest.jsx";
+import Comments from '../Comments/Comments.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const MainStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Test Page" component={TestPage} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

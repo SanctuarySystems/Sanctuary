@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
 const Comment = ({ username, body, pops, setShowModal }) => {
   const [pop, setPop] = useState(pops);
@@ -24,7 +23,7 @@ const Comment = ({ username, body, pops, setShowModal }) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   comment: {
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 15,
-  }
+  },
 });
 
 export default Comment;

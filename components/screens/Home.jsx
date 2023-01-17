@@ -10,6 +10,10 @@ const Home = ({ navigation }) => {
         title="Go to Test Page"
         onPress={() => navigation.navigate('Test Page')}
       />
+      <Button
+        title="Go to Comments Page"
+        onPress={() => navigation.navigate('Comments')}
+      />
     </View>
   );
 };

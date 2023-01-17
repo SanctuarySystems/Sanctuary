@@ -1,14 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 const DetailedConfession = () => {
-
   return (
     <View style={styles.confession}>
-      <Text>I'm a DETAILED confession.</Text>
+      <Text>I am a Detailed confession.</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   confession: {

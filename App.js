@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-
+      <Comments />
     </View>
   );
 }
@@ -23,6 +23,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   }
-
-
 });

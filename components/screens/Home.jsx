@@ -10,10 +10,16 @@ const Home = ({ navigation }) => {
         title="Go to Test Page"
         onPress={() => navigation.navigate('Test Page')}
       />
+<<<<<<< HEAD
+      <Button
+        title="Go to Comments Page"
+        onPress={() => navigation.navigate('Comments')}
+=======
       <Text>Welcome Page</Text>
       <Button
         title="Go to Welcome Screen"
         onPress={() => navigation.navigate('Welcome Screen')}
+>>>>>>> development
       />
     </View>
   );

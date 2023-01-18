@@ -6,30 +6,22 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import MemberInfo from './MemberInfo.js';
+import axios from 'axios';
+import MemberInfo from './MemberInfo.js';
 
+const Space = ({route, navigation}) => {
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
   const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
+  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
   const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
   const [spaceMembers, setSpaceMembers] = React.useState([]);
   const [numMembers, setNumMembers] = React.useState(0);
-
-  React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`)
-      .then((data) => {setSpaceDescription(data.data.description);
-        setSpaceGuidelines(data.data.guidelines.join('\n'));
-        setNumMembers(data.data.members.length);
-        if (isAdmin) {
-          setSpaceMembers(data.data.members);
-        }
-      }).catch((err) => console.log(err))
-
-  })
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`)
@@ -50,8 +42,6 @@ const Space = ({route, navigation}) => {
         <View>
           <Text style={{fontSize: '20%'}}>{route.params.space_name}</Text>
           <Text>{numMembers} Members</Text>
-          <Text style={{fontSize: '20%'}}>{route.params.space_name}</Text>
-          <Text>{numMembers} Members</Text>
         </View>
         {(leavejoin===0 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(1)}}>
           <Text style={styles.leavejoinText}>join</Text>
@@ -59,12 +49,12 @@ const Space = ({route, navigation}) => {
         {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(0)}}>
           <Text style={styles.leavejoinText}>leave</Text>
         </TouchableOpacity>}
+
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
       </View>
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%'}} >
-        <Text>{spaceDescription} </Text>
         <Text>{spaceDescription} </Text>
       </View>
       <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>

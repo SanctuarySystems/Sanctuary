@@ -151,13 +151,13 @@ export default function ConfessionList() {
             <View style={styles.buttonStyleHug}>
               <Button
                 title={'Hug ' + item.hugs}
-                color="red"
+                color="blue"
                 accessibilityLabel="Learn more about this purple button"/>
             </View>
             <View style={styles.buttonStyleComment}>
               <Button
                 title={"Comment " + item.comments}
-                color="red"
+                color="blue"
                 accessibilityLabel="Learn more about this purple button"/>
             </View>
           </View>
@@ -182,11 +182,11 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: '#fff',
     borderColor: 'black',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: '1.5%',
+    marginBottom: '1.5%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '98%'
+    width: '100%'
   },
 
   containerPost: {

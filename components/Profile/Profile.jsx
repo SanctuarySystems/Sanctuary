@@ -14,12 +14,15 @@ const Profile = ({ navigation }) => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({});
   const [spaceData, setSpaceData] = React.useState([]);
+  const [created, setCreated] = React.useState([]);
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
       .then(({ data }) => {
         setUserData(data);
         setSpaceData(data.spaces_joined);
+        setCreated(data.spaces_created);
+        console.log('created', created);
       })
       .catch((err) => console.log('axios error in profile', err));
   }, []);
@@ -43,7 +46,7 @@ const Profile = ({ navigation }) => {
             <Button
               title="Notifications"
               type="clear"
-              onPress={() => navigation.navigate('Notifications')}
+              onPress={() => navigation.navigate('Notifications', { spaces: created })}
             />
             <Badge
               status="error"

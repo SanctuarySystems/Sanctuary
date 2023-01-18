@@ -36,11 +36,6 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         value={searchTerm}
       />
 
-      {/* <FlatList
-        data={spaceData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item}
-      /> */}
       <View>
         { spaceArray.length === 0 &&
           <Text>You're not in any spaces!</Text>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
-import SpacesList from './SpacesList';
+import { Text, View, ScrollView } from 'react-native';
+import { Button, Avatar, Tab, Badge } from '@rneui/themed';
 import axios from 'axios';
+import SpacesList from './SpacesList';
 
 const mockData = {
   username: 'lookingforpeace',
@@ -18,65 +19,92 @@ const Profile = ({ navigation }) => {
         setUserData(data);
         setSpaceData(data.spaces_joined);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('axios error in profile', err));
   }, []);
 
   return (
-    <View>
+    <ScrollView
+      style={{ position: 1 }}
+      stickyHeaderIndices={[1]}
+    >
       <View>
-        <View style={{ height: '40%' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ height: '100%' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '20%' }}>
             {/* LOG OUT BUTTON */}
             <Button
-              style={{ flex: 1 }}
               title="Log out"
-              onPress={() => console.log('Logged Out')}
+              type="clear"
+              onPress={() => navigation.navigate('Welcome Screen')}
             />
 
             {/* NOTIFICATIONS */}
             <Button
-              style={{ flex: 1 }}
               title="Notifications"
+              type="clear"
               onPress={() => navigation.navigate('Notifications')}
+            />
+            <Badge
+              status="error"
+              value={10}
+              containerStyle={{ position: 'absolute', top: 6, right: 115 }}
             />
           </View>
 
-          <View style={{ flexDirection: 'column', height: '90%' }}>
-            <View>
+          <View style={{ flexDirection: 'column', height: '80%' }}>
+            <View style={{ flex: 1, alignContent: 'center' }}>
               {/* AVATAR */}
-              <Text>avatar img</Text>
+              <Avatar
+                size={100}
+                rounded
+                containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
+                source={{ uri: userData.avatar }}
+              />
               {/* EDIT AVATAR */}
-              <Button
-                title="Edit"
+              <Avatar
+                size={25}
+                rounded
+                containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
+                source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
                 onPress={() => console.log('editing avatar')}
               />
             </View>
             {/* USERNAME */}
-            <Text>{userData.username}</Text>
+            <Text
+              style={{ flex: 0.2, alignSelf: 'center' }}
+            >
+              {userData.username}
+            </Text>
           </View>
         </View>
       </View>
 
       {/* TABS */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-        <Button
-          title="Joined Spaces"
-          onPress={() => {
-            console.log('showing joined') || setCurrentTab('joined');
-            console.log('showing joined') || setSpaceData(userData.spaces_joined);
+      <View>
+        {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
+        <Tab
+          value={currentTab}
+          dense
+          buttonStyle='View Style'
+          onChange={(e) => {
+            if (!e) {
+              console.log('showing joined');
+              setCurrentTab('joined');
+              setSpaceData(userData.spaces_joined);
+            } else {
+              console.log('showing created');
+              setCurrentTab('created');
+              setSpaceData(userData.spaces_created);
+            }
           }}
-        />
-        <Button
-          title="Created Spaces"
-          onPress={() => {
-            console.log('showing created') || setCurrentTab('created');
-            console.log('showing created') || setSpaceData(userData.spaces_created);
-          }}
-        />
+        >
+          <Tab.Item title='Joined Spaces' />
+          <Tab.Item title='Created Spaces' />
+        </Tab>
+
+        {/* SPACES */}
+        <SpacesList currentTab={currentTab} spaceData={spaceData} currentUser={userData.username} navigation={navigation} />
       </View>
-      {/* SPACES */}
-      <SpacesList currentTab={currentTab} spaceData={spaceData} currentUser={userData.username} />
-    </View>
+    </ScrollView>
   );
 };
 

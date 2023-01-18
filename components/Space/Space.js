@@ -42,6 +42,8 @@ const Space = ({navigation}) => {
         {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
+      {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
+      {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}} />}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}

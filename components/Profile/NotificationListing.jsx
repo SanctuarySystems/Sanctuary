@@ -1,23 +1,29 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import { Button } from '@rneui/themed';
 
 const NotificationListing = ({ item }) => {
-  console.log(item.reporter);
   return (
-    <View>
-      <Text>
+    <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
+      {/* <Text>
         {item.reporter}'s comment in {item.space} reported by {item.reportee}
+      </Text> */}
+      <Text>
+        lookingforpeace's post in Serenity has been reported by peacelover
       </Text>
-      <Button
-        // styles={styles.align_right}
-        title="Ban Reporter"
-        onPress={() => console.log('Banning reporter')}
-      />
-      <Button
-        // styles={styles.align_right}
-        title="View Comment"
-        onPress={() => console.log('View Comment')}
-      />
+      <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'space-evenly' }}>
+        <Button
+          buttonStyle={{ borderRadius: 30 }}
+          title="Ban Reporter"
+          type="outline"
+          onPress={() => console.log('Banning reporter')}
+        />
+        <Button
+          buttonStyle={{ borderRadius: 30 }}
+          title="View Post"
+          onPress={() => console.log('View Post')}
+        />
+      </View>
     </View>
   );
 };

@@ -1,36 +1,21 @@
 import React from 'react';
-import { View, TextInput, FlatList, StyleSheet } from 'react-native';
-import SpacesListing from './SpacesListing';
+import { View, FlatList } from 'react-native';
 import { SearchBar } from '@rneui/themed';
+import SpacesListing from './SpacesListing';
 
-const mockSpaceData = [
-  {
-    space_name: 'outerspace',
-    createdAt: "2023-01-17T00:46:30.433Z",
-    member_count: 180,
-    admin: true,
-  },
-  {
-    space_name: 'earth',
-    member_count: 1,
-    admin: false,
-  },
-];
+// const styles = StyleSheet.create({
+//   input: {
+//     height: 40,
+//     margin: 12,
+//     borderWidth: 1,
+//     padding: 10,
+//   },
+// });
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
-
-const SpacesList = ({ currentTab, spaceData, currentUser }) => {
+const SpacesList = ({ currentTab, spaceData, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const renderItem = ({ item }) => {
-    console.log('space', item);
     const name = item.toLowerCase();
     const search = searchTerm.toLowerCase();
 
@@ -38,7 +23,9 @@ const SpacesList = ({ currentTab, spaceData, currentUser }) => {
     // if (currentTab === 'created' && !item.admin) return;
 
     return (
-      <SpacesListing space={item} currentUser={currentUser} />
+      <View style={{ padding: 10 }}>
+        <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+      </View>
     );
   };
 

@@ -4,6 +4,38 @@ import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
 const Comment = ({ username, body, pops, setShowModal }) => {
   const [pop, setPop] = useState(pops);
+  const [popped, setPopped] = useState(false);
+  const [plopped, setPlopped] = useState(false);
+
+  const handlePop = () => {
+    if (popped === false) {
+      if (plopped === true) {
+        setPlopped(false);
+        setPop(pop + 2);
+      } else {
+        setPop(pop + 1);
+      }
+      setPopped(true);
+    } else {
+      setPop(pop - 1);
+      setPopped(false);
+    }
+  };
+
+  const handlePlop = () => {
+    if (plopped === false) {
+      if (popped === true) {
+        setPopped(false);
+        setPop(pop - 2);
+      } else {
+        setPop(pop - 1);
+      }
+      setPlopped(true);
+    } else {
+      setPop(pop + 1);
+      setPlopped(false);
+    }
+  };
 
   return (
     <View style={styles.comment}>
@@ -13,11 +45,11 @@ const Comment = ({ username, body, pops, setShowModal }) => {
         <Entypo name="dots-three-horizontal" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.vote}>
-        <TouchableOpacity style={styles.pop} onPress={() => setPop(pop + 1)}>
+        <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
           <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.popCount}>{pop}</Text>
-        <TouchableOpacity style={styles.plop} onPress={() => setPop(pop - 1)}>
+        <Text style={styles.popCount}>{pop > 1 ? pop : 1}</Text>
+        <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
           <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -55,6 +87,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 15,
+  },
+  pop: {
+    backgroundColor: 'lightgreen',
+    borderRadius: '50%',
+  },
+  plop: {
+    backgroundColor: 'red',
+    borderRadius: '55%',
   },
 });
 

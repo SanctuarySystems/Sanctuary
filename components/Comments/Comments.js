@@ -5,15 +5,44 @@ import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
 
 const Comments = () => {
-  const [comments, setComments] = useState([
-    { username: 'notMax', body: `I'm a comment1`, pops: 3, id: 1 },
-    { username: 'notChad', body: `I'm a comment2`, pops: 4, id: 2 },
-    { username: 'notKimberly', body: `I'm a comment3`, pops: 6, id: 3 },
-    { username: 'notWarren', body: `I'm a comment4`, pops: 4, id: 4 },
-    { username: 'notSai', body: `I'm a comment5`, pops: 10, id: 5 },
-    { username: 'notJoseph', body: `I'm a comment6`, pops: 7, id: 6 },
-    { username: 'notJustin', body: `I'm a comment7`, pops: 1, id: 7 },
-  ]);
+  const [comments, setComments] = useState({
+    _id: "63c709355b387cef7dae4143",
+    created_by: "lookingforpeace",
+    confession: "my innermost darkest secret revealed here...",
+    reported: [
+      "lookingforcalm",
+    ],
+    space_name: "tranquility",
+    hugs: 0,
+    comments: [
+      {
+        created_by: "lookingforpeace",
+        comment: "the very first comment",
+        reported: [
+          "lookingforcalm",
+        ],
+        pops: 2,
+        _id: "63c7093a5b387cef7dae4147",
+        createdAt: "2023-01-17T20:46:51.003Z",
+        updatedAt: "2023-01-18T18:42:27.896Z",
+        comment_id: 1,
+      },
+      {
+        created_by: "lookingforpeace",
+        comment: "the very first comment",
+        reported: [],
+        pops: 0,
+        _id: "63c83d907b8ffbde049e49be",
+        createdAt: "2023-01-18T18:42:24.482Z",
+        updatedAt: "2023-01-18T18:42:24.482Z",
+        comment_id: 2,
+      },
+    ],
+    createdAt: "2023-01-17T20:46:45.511Z",
+    updatedAt: "2023-01-18T18:42:27.896Z",
+    confession_id: 1,
+    __v: 4,
+  });
 
   const [showModal, setShowModal] = useState(false);
 
@@ -38,7 +67,7 @@ const Comments = () => {
       </Modal>
       <FlatList
         nestedScrollEnabled
-        ListHeaderComponent={<DetailedConfession />}
+        ListHeaderComponent={<DetailedConfession setShowModal={setShowModal}/>}
         keyExtractor={(comment) => comment.id}
         data={comments.sort((a, b) => b.pops - a.pops)}
         renderItem={({ item }) =>

@@ -10,10 +10,38 @@ const Space = ({navigation}) => {
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
+<<<<<<< Updated upstream
   const [isAdmin, setIsAdmin] = React.useState(true);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
   const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
+=======
+<<<<<<< HEAD
+  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
+  const [editMode, setEditMode] = React.useState(false);
+  const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
+  const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
+  const [spaceMembers, setSpaceMembers] = React.useState([]);
+  const [numMembers, setNumMembers] = React.useState(0);
+
+  React.useEffect(() => {
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`)
+      .then((data) => {setSpaceDescription(data.data.description);
+        setSpaceGuidelines(data.data.guidelines.join('\n'));
+        setNumMembers(data.data.members.length);
+        if (isAdmin) {
+          setSpaceMembers(data.data.members);
+        }
+      }).catch((err) => console.log(err))
+
+  })
+=======
+  const [isAdmin, setIsAdmin] = React.useState(true);
+  const [editMode, setEditMode] = React.useState(false);
+  const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
+  const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
+>>>>>>> 1feb01d (profile pages)
+>>>>>>> Stashed changes
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
@@ -29,6 +57,13 @@ const Space = ({navigation}) => {
         {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(0)}}>
           <Text style={styles.leavejoinText}>leave</Text>
         </TouchableOpacity>}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1feb01d (profile pages)
+>>>>>>> Stashed changes
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
@@ -42,11 +77,27 @@ const Space = ({navigation}) => {
         {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
+<<<<<<< Updated upstream
       {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}} />}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
+=======
+<<<<<<< HEAD
+      {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
+      {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+      {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%', paddingTop: '4%'}} >
+        <ScrollView>
+        {spaceMembers.map((member) => <MemberInfo space_name={route.params.space_name} username={member}/>)}
+        </ScrollView>
+        </View>}
+=======
+      {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
+      {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+      {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
+>>>>>>> 1feb01d (profile pages)
+>>>>>>> Stashed changes
       <View style={{flex: 0.5, alignItems:'center'}}>
         <TouchableOpacity onPress={() => {setModalVisible(true)}}>
           <Icon name="md-create-outline" size='35%'/>

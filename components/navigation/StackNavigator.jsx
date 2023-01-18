@@ -51,7 +51,7 @@ const SpaceStackNavigator = () => {
 const SearchStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
     </Stack.Navigator>
   );
@@ -76,4 +76,5 @@ const AuthenticateStackNavigator = () => {
   );
 };
 
+// eslint-disable-next-line max-len
 export { MainStackNavigator, ProfileStackNavigator, SpaceStackNavigator, SearchStackNavigator, AuthenticateStackNavigator };

@@ -11,38 +11,14 @@ const Notifications = ({ route, navigation }) => {
     const reports = [];
 
     spaces.map(async (space) => {
-      await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=tranquility&reported=true`)
+      await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
         .then(({ data }) => {
-          console.log(data[0]) || reports.push(data[0])
+          console.log('notifs', data[0]) || reports.push(data[0])
           setReported(reports);
         })
         .catch((err) => console.log('axios error in notifications', err));
     });
-
-
   }, [route]);
-
-  // {"__v": 4,
-  // "_id": "63c709355b387cef7dae4143",
-  // "comments": [{
-  //   "_id": "63c7093a5b387cef7dae4147",
-  //   "comment": "the very first comment",
-  //   "comment_id": 1,
-  //   "createdAt": "2023-01-17T20:46:51.003Z",
-  //   "created_by": "lookingforpeace",
-  //   "pops": 2,
-  //   "reported": [Array],
-  //   "updatedAt": "2023-01-18T18:42:27.896Z"
-  // }],
-  // "confession": "my innermost darkest secret revealed here...",
-  // "confession_id": 1,
-  // "createdAt": "2023-01-17T20:46:45.511Z",
-  // "created_by": "lookingforpeace",
-  // "hugs": 0,
-  // "reported": ["lookingforcalm"],
-  // "space_name": "tranquility",
-  //   "updatedAt": "2023-01-18T18:42:27.896Z"}
-
 
   return (
     <View style={{ padding: 10 }}>
@@ -52,7 +28,7 @@ const Notifications = ({ route, navigation }) => {
             return (
               <NotificationListing
                 navigation={navigation}
-                reported={confession.created_By}
+                reported={confession.created_by}
                 reportedBy={confession.reported[0]}
                 spaceName={confession.space_name}
                 confessionId={confession.confession_id}
@@ -64,7 +40,7 @@ const Notifications = ({ route, navigation }) => {
               return (
                 <NotificationListing
                   navigation={navigation}
-                  reported={comment.created_By}
+                  reported={comment.created_by}
                   reportedBy={comment.reported[0]}
                   spaceName={confession.space_name}
                   commentId={comment.comment_id}

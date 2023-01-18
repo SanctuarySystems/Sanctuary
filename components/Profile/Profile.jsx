@@ -8,8 +8,6 @@ const mockData = {
   username: 'lookingforpeace',
 };
 
-console.log('merging conflicts');
-
 const Profile = ({ navigation }) => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({});
@@ -50,7 +48,7 @@ const Profile = ({ navigation }) => {
             />
             <Badge
               status="error"
-              value={10}
+              value={1}
               containerStyle={{ position: 'absolute', top: 6, right: 115 }}
             />
           </View>

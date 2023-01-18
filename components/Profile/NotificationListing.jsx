@@ -2,12 +2,6 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from '@rneui/themed';
 
-// reported={comment.created_By}
-//                   reportedBy={comment.reported[0]}
-//                   spaceName={confession.space_name}
-//                   commentId={comment.comment_id}
-//                   confessionId={confession.confession_id}
-
 const NotificationListing = ({ reported, reportedBy, spaceName, commentId, confessionId, navigation }) => {
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>

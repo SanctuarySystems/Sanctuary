@@ -3,15 +3,6 @@ import { View, Text } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import SpacesListing from './SpacesListing';
 
-// const styles = StyleSheet.create({
-//   input: {
-//     height: 40,
-//     margin: 12,
-//     borderWidth: 1,
-//     padding: 10,
-//   },
-// });
-
 const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
@@ -22,8 +13,6 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         containerStyle={{}}
         inputContainerStyle={{}}
         inputStyle={{}}
-        leftIconContainerStyle={{}}
-        rightIconContainerStyle={{}}
         loadingProps={{}}
         onChangeText={(newVal) => setSearchTerm(newVal)}
         onClearText={() => setSearchTerm('')}

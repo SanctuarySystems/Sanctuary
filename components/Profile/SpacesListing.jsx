@@ -9,7 +9,6 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}`)
       .then(({ data }) => {
         setSpaceData(data[0]);
-        // console.log(spaceData);
       })
       .catch((err) => console.log('err from spaceslisting', err));
   }, [space]);
@@ -30,7 +29,10 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
         <Button
           title="View Space"
           onPress={() => console.log('lead to space') ||
-            navigation.navigate('Space', { space_name: spaceData.space_name, isAdmin: spaceData.created_by === currentUser })
+            navigation.navigate('Space', {
+              space_name: spaceData.space_name,
+              isAdmin: spaceData.created_by === currentUser
+            })
           }
         />
       </View>

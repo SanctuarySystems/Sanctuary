@@ -2,14 +2,17 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from '@rneui/themed';
 
-const NotificationListing = ({ item }) => {
+// reported={comment.created_By}
+//                   reportedBy={comment.reported[0]}
+//                   spaceName={confession.space_name}
+//                   commentId={comment.comment_id}
+//                   confessionId={confession.confession_id}
+
+const NotificationListing = ({ reported, reportedBy, spaceName, commentId, confessionId, navigation }) => {
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
-      {/* <Text>
-        {item.reporter}'s comment in {item.space} reported by {item.reportee}
-      </Text> */}
       <Text>
-        lookingforpeace's post in Serenity has been reported by peacelover
+        {reported}'s comment in {spaceName} has been reported by {reportedBy}.
       </Text>
       <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'space-evenly' }}>
         <Button
@@ -21,7 +24,10 @@ const NotificationListing = ({ item }) => {
         <Button
           buttonStyle={{ borderRadius: 30 }}
           title="View Post"
-          onPress={() => console.log('View Post')}
+          onPress={() => navigation.navigate('Comments', {
+            confession_id: confessionId,
+            comment_id: commentId,
+          })}
         />
       </View>
     </View>

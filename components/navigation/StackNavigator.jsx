@@ -44,7 +44,12 @@ const MainStackNavigator = () => {
 const SpaceStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
+<<<<<<< HEAD
       <Stack.Screen name="Spaces" component={Spaces} />
+=======
+      <Stack.Screen name="Spaces" component={Spaces} options={{ username: 'lookingforpeace' }} />
+      <Stack.Screen name="Space" component={Space} />
+>>>>>>> 498a625 (added member list and some api implementation)
     </Stack.Navigator>
   );
 };

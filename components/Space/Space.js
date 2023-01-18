@@ -12,7 +12,7 @@ const Space = ({route, navigation}) => {
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
-  const [isAdmin, setIsAdmin] = React.useState(true);
+  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
   const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
@@ -36,8 +36,8 @@ const Space = ({route, navigation}) => {
       <View style={styles.container}>
       <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%'}}>
         <View>
-          <Text style={{fontSize: '20%'}}>Space Name</Text>
-          <Text>## Users</Text>
+          <Text style={{fontSize: '20%'}}>{route.params.space_name}</Text>
+          <Text>{numMembers} Members</Text>
         </View>
         {(leavejoin===0 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(1)}}>
           <Text style={styles.leavejoinText}>join</Text>
@@ -58,22 +58,28 @@ const Space = ({route, navigation}) => {
         {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
-      {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
+      {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+<<<<<<< HEAD
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}} />}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+=======
+>>>>>>> 498a625 (added member list and some api implementation)
       {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%', paddingTop: '4%'}} >
         <ScrollView>
         {spaceMembers.map((member) => <MemberInfo space_name={route.params.space_name} username={member}/>)}
         </ScrollView>
         </View>}
+<<<<<<< HEAD
       {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
 
+=======
+>>>>>>> 498a625 (added member list and some api implementation)
       <View style={{flex: 0.5, alignItems:'center'}}>
         <TouchableOpacity onPress={() => {setModalVisible(true)}}>
           <Icon name="md-create-outline" size='35%'/>

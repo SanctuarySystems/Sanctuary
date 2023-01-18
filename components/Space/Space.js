@@ -45,6 +45,7 @@ const Space = ({route, navigation}) => {
         {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(0)}}>
           <Text style={styles.leavejoinText}>leave</Text>
         </TouchableOpacity>}
+
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}

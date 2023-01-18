@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const Header = () => {
-
   return (
     <View style={styles.header}>
       <Text style={styles.title}>Coding Addicts</Text>
@@ -11,8 +10,8 @@ const Header = () => {
         <FontAwesome5 name='arrow-left' size={40} color='white' />
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     color: 'white',
     fontWeight: 'bold',
-  }
+  },
 });
 
 export default Header;

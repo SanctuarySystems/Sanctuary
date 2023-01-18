@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, TextInput, FlatList, StyleSheet } from 'react-native';
 import SpacesListing from './SpacesListing';
+import { SearchBar } from '@rneui/themed';
 
 const mockSpaceData = [
   {
-    id: 1,
-    name: 'outerspace',
+    space_name: 'outerspace',
+    createdAt: "2023-01-17T00:46:30.433Z",
     member_count: 180,
     admin: true,
   },
   {
-    id: 2,
-    name: 'earth',
+    space_name: 'earth',
     member_count: 1,
     admin: false,
   },
@@ -26,36 +26,56 @@ const styles = StyleSheet.create({
   },
 });
 
-const SpacesList = ({ currentTab }) => {
+const SpacesList = ({ currentTab, spaceData, currentUser }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const renderItem = ({ item }) => {
-    const name = item.name.toLowerCase();
+    console.log('space', item);
+    const name = item.toLowerCase();
     const search = searchTerm.toLowerCase();
 
     if (searchTerm.length !== 0 && name.indexOf(search) < 0) return;
-    if (currentTab === 'created' && !item.admin) return;
+    // if (currentTab === 'created' && !item.admin) return;
 
     return (
-      <SpacesListing space={item} />
+      <SpacesListing space={item} currentUser={currentUser} />
     );
   };
 
   return (
     <View>
       {/* SEARCH */}
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         onChangeText={setSearchTerm}
         value={searchTerm}
         placeholder="Search..."
         keyboardType="web-search"
+      /> */}
+
+      <SearchBar
+        platform="ios"
+        containerStyle={{}}
+        inputContainerStyle={{}}
+        inputStyle={{}}
+        leftIconContainerStyle={{}}
+        rightIconContainerStyle={{}}
+        loadingProps={{}}
+        onChangeText={(newVal) => setSearchTerm(newVal)}
+        onClearText={() => setSearchTerm('')}
+        placeholder="Search..."
+        placeholderTextColor="#888"
+        showCancel
+        cancelButtonTitle="Cancel"
+        cancelButtonProps={{}}
+        onCancel={() => console.log('cancelling')}
+        value={searchTerm}
       />
 
       <FlatList
-        data={mockSpaceData}
+        data={spaceData}
         renderItem={renderItem}
-        keyExtractor={(space) => space.id}
+        keyExtractor={(item) => item}
       />
     </View>
   );

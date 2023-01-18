@@ -6,8 +6,6 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import MemberInfo from './MemberInfo.js';
-import axios from 'axios';
-import MemberInfo from './MemberInfo.js';
 
 const Space = ({route, navigation}) => {
 const Space = ({route, navigation}) => {

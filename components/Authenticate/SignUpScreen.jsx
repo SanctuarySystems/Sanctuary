@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
-import { auth } from 'firebase/app';
+import { View, TextInput, Button, Text } from 'react-native';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { authentication } from "./firebase.js";
 
 const SignUpScreen = ({ navigation }) => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [noMatch, setNoMatch] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
-    if (password === confirmPassword) {
-      try {
-        await auth().createUserWithEmailAndPassword(email, password);
-        const user = auth().currentUser;
-        await user.sendEmailVerification();
-        navigation.navigate('Select Icon Screen');
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setNoMatch(true);
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match, please try again.");
+      return;
+    }
+    try {
+      createUserWithEmailAndPassword(authentication, email, password)
+        .then(async (userCredential) => {
+          const { user } = userCredential;
+          await user.sendEmailVerification();
+          navigation.navigate('Welcome Screen');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -28,21 +33,20 @@ const SignUpScreen = ({ navigation }) => {
     <View>
       <TextInput
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
+        secureTextEntry
+        onChangeText={(text) => setPassword(text)}
       />
       <TextInput
         placeholder="Confirm Password"
-        secureTextEntry={true}
-        onChangeText={text => setConfirmPassword(text)}
+        secureTextEntry
+        onChangeText={(text) => setConfirmPassword(text)}
       />
-      {noMatch ? (
-        <Button title="Passwords Do Not Match, Try Again" onPress={() => setNoMatch(false)} />
-      ) : <Button title="Create Account" onPress={handleSubmit} />}
+      {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+      <Button title="Signup" onPress={handleSubmit} />
     </View>
   );
 };

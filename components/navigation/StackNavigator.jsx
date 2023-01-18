@@ -63,7 +63,8 @@ const SearchStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Profile" component={ProfileTest} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Notifications" component={Notifications} />
     </Stack.Navigator>
   );
 };

@@ -8,12 +8,10 @@ import axios from 'axios';
 import MemberInfo from './MemberInfo.js';
 
 const Space = ({route, navigation}) => {
-const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
-  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
@@ -32,8 +30,6 @@ const Space = ({route, navigation}) => {
       }).catch((err) => console.log(err))
 
   })
-  const [spaceMembers, setSpaceMembers] = React.useState([]);
-  const [numMembers, setNumMembers] = React.useState(0);
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`)

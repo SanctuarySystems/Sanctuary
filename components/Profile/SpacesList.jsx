@@ -24,7 +24,7 @@ const SpacesList = ({ currentTab, spaceData, currentUser, navigation }) => {
 
     return (
       <View style={{ padding: 10 }}>
-        <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+        {/* <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} /> */}
       </View>
     );
   };

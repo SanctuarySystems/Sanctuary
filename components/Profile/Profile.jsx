@@ -8,6 +8,8 @@ const mockData = {
   username: 'lookingforpeace',
 };
 
+console.log('merging conflicts');
+
 const Profile = ({ navigation }) => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({});

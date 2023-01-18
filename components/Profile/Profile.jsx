@@ -1,86 +1,120 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
+import { Button, Avatar, Tab, Badge } from '@rneui/themed';
+import axios from 'axios';
 import SpacesList from './SpacesList';
 
 const mockData = {
-  username: 'anon',
-  avatar: 'url',
+  username: 'lookingforpeace',
 };
 
-const styles = StyleSheet.create({
-  profile: {
-    flexDirection: 'column',
-  },
-  container: {
-    marginTop: StatusBar.currentHeight || 0,
-    padding: 20,
-    height: '100%',
-  },
-  align_right: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  tabs: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-});
+console.log('merging conflicts');
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
-  // const [profileView, setProfileView] = React.useState(true);
+  const [userData, setUserData] = React.useState({});
+  const [spaceData, setSpaceData] = React.useState([]);
+  const [created, setCreated] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
+      .then(({ data }) => {
+        setUserData(data);
+        setSpaceData(data.spaces_joined);
+        setCreated(data.spaces_created);
+        console.log('created', created);
+      })
+      .catch((err) => console.log('axios error in profile', err));
+  }, []);
 
   return (
-  // { (!profileView) &&
-  //   <Notifications></Notifications> }
+    <ScrollView
+      style={{ position: 1 }}
+      stickyHeaderIndices={[1]}
+    >
+      <View>
+        <View style={{ height: '120%' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '20%' }}>
+            {/* LOG OUT BUTTON */}
+            <Button
+              title="Log out"
+              type="clear"
+              onPress={() => navigation.navigate('Welcome Screen')}
+            />
 
-  // { profileView &&
-    <View styles={styles.profile}>
-      <View styles={styles.container}>
-        <View>
-          {/* LOG OUT BUTTON */}
-          <Button
-            styles={styles.align_right}
-            title="Log out"
-            onPress={() => console.log('Logged Out')}
-          />
+            {/* NOTIFICATIONS */}
+            <Button
+              title="Notifications"
+              type="clear"
+              onPress={() => navigation.navigate('Notifications', { spaces: created })}
+            />
+            <Badge
+              status="error"
+              value={10}
+              containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+            />
+          </View>
 
-          {/* NOTIFICATIONS */}
-          <Button
-            styles={styles.align_right}
-            title="Notifications"
-            onPress={() => {}}//setProfileView(false)}
-          />
-
-          {/* AVATAR */}
-          <Text>avatar img</Text>
-          {/* EDIT AVATAR */}
-          <Button
-            title="Edit"
-            onPress={() => console.log('editing avatar')}
-          />
-          {/* USERNAME */}
-          <Text>{mockData.username}</Text>
-        </View>
-
-        {/* TABS */}
-        <View styles={styles.tabs}>
-          <Button
-            title="Joined Spaces"
-            onPress={() => console.log('showing joined') || setCurrentTab('joined')}
-          />
-          <Button
-            title="Created Spaces"
-            onPress={() => console.log('showing created') || setCurrentTab('created')}
-          />
+          <View style={{ flexDirection: 'column', height: '60%' }}>
+            <View style={{ flex: 1, alignContent: 'center' }}>
+              {/* AVATAR */}
+              <Avatar
+                size={100}
+                rounded
+                containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
+                source={{ uri: userData.avatar }}
+              />
+              {/* EDIT AVATAR */}
+              <Avatar
+                size={25}
+                rounded
+                containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
+                source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
+                onPress={() => console.log('editing avatar')}
+              />
+            </View>
+            {/* USERNAME */}
+            <Text
+              style={{ flex: 0.2, alignSelf: 'center', top: '10%' }}
+            >
+              {userData.username}
+            </Text>
+          </View>
         </View>
       </View>
 
-      {/* SPACES */}
-      <SpacesList currentTab={currentTab} />
-    </View>
-    // }
+      {/* TABS */}
+      <View>
+        {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
+        <Tab
+          value={currentTab}
+          dense
+          buttonStyle='View Style'
+          onChange={(e) => {
+            if (!e) {
+              console.log('showing joined');
+              setCurrentTab('joined');
+              setSpaceData(userData.spaces_joined);
+            } else {
+              console.log('showing created');
+              setCurrentTab('created');
+              setSpaceData(userData.spaces_created);
+            }
+          }}
+        >
+          <Tab.Item title='Joined Spaces' />
+          <Tab.Item title='Created Spaces' />
+        </Tab>
+
+        {/* SPACES */}
+        <SpacesList
+          currentTab={currentTab}
+          spaceArray={spaceData}
+          currentUser={userData.username}
+          navigation={navigation}
+        />
+      </View>
+    </ScrollView>
   );
 };
 

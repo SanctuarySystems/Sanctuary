@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { View, Text } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import SpacesListing from './SpacesListing';
 
@@ -12,34 +12,11 @@ import SpacesListing from './SpacesListing';
 //   },
 // });
 
-const SpacesList = ({ currentTab, spaceData, currentUser, navigation }) => {
+const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
-
-  const renderItem = ({ item }) => {
-    const name = item.toLowerCase();
-    const search = searchTerm.toLowerCase();
-
-    if (searchTerm.length !== 0 && name.indexOf(search) < 0) return;
-    // if (currentTab === 'created' && !item.admin) return;
-
-    return (
-      <View style={{ padding: 10 }}>
-        {/* <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} /> */}
-      </View>
-    );
-  };
 
   return (
     <View>
-      {/* SEARCH */}
-      {/* <TextInput
-        style={styles.input}
-        onChangeText={setSearchTerm}
-        value={searchTerm}
-        placeholder="Search..."
-        keyboardType="web-search"
-      /> */}
-
       <SearchBar
         platform="ios"
         containerStyle={{}}
@@ -59,11 +36,29 @@ const SpacesList = ({ currentTab, spaceData, currentUser, navigation }) => {
         value={searchTerm}
       />
 
-      <FlatList
+      {/* <FlatList
         data={spaceData}
         renderItem={renderItem}
         keyExtractor={(item) => item}
-      />
+      /> */}
+      <View>
+        { spaceArray.length === 0 &&
+          <Text>You're not in any spaces!</Text>
+        }
+        { spaceArray.length > 0 &&
+          spaceArray.map((item) => {
+            const name = item.toLowerCase();
+            const search = searchTerm.toLowerCase();
+            if (searchTerm.length !== 0 && name.indexOf(search) < 0) return;
+
+            return (
+              <View style={{ padding: 10 }}>
+                <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+              </View>
+            );
+          })
+        }
+      </View>
     </View>
   );
 };

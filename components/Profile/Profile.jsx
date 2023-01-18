@@ -28,7 +28,7 @@ const Profile = ({ navigation }) => {
       stickyHeaderIndices={[1]}
     >
       <View>
-        <View style={{ height: '100%' }}>
+        <View style={{ height: '120%' }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '20%' }}>
             {/* LOG OUT BUTTON */}
             <Button
@@ -50,7 +50,7 @@ const Profile = ({ navigation }) => {
             />
           </View>
 
-          <View style={{ flexDirection: 'column', height: '80%' }}>
+          <View style={{ flexDirection: 'column', height: '60%' }}>
             <View style={{ flex: 1, alignContent: 'center' }}>
               {/* AVATAR */}
               <Avatar
@@ -70,7 +70,7 @@ const Profile = ({ navigation }) => {
             </View>
             {/* USERNAME */}
             <Text
-              style={{ flex: 0.2, alignSelf: 'center' }}
+              style={{ flex: 0.2, alignSelf: 'center', top: '10%' }}
             >
               {userData.username}
             </Text>
@@ -102,7 +102,12 @@ const Profile = ({ navigation }) => {
         </Tab>
 
         {/* SPACES */}
-        <SpacesList currentTab={currentTab} spaceData={spaceData} currentUser={userData.username} navigation={navigation} />
+        <SpacesList
+          currentTab={currentTab}
+          spaceArray={spaceData}
+          currentUser={userData.username}
+          navigation={navigation}
+        />
       </View>
     </ScrollView>
   );

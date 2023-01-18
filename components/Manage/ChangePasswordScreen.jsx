@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, Text } from 'react-native';
 import { auth } from 'firebase/app';
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match, please try again.");
+      return;
+    }
     try {
       const user = auth().currentUser;
       const credential = auth.EmailAuthProvider.credential(
@@ -41,6 +46,7 @@ const ChangePassword = () => {
         secureTextEntry
         onChangeText={(text) => setConfirmPassword(text)}
       />
+      {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <Button title="Change Password" onPress={handleSubmit} />
     </View>
   );

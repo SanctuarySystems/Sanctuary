@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
-import { auth } from 'firebase/app';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { authentication } from "./firebase.js";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
     try {
-      await auth().signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(authentication, email, password);
+      navigation.navigate('Welcome Screen');
     } catch (error) {
       console.log(error);
     }
@@ -18,12 +20,12 @@ const LoginScreen = () => {
     <View>
       <TextInput
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
+        secureTextEntry
+        onChangeText={(text) => setPassword(text)}
       />
       <Button title="Sign In" onPress={handleSubmit} />
     </View>

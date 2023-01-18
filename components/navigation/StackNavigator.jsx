@@ -5,9 +5,9 @@ import TestPage from "../screens/TestPage.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
+import ProfileTest from "../screens/ProfileTest.jsx";
 import Profile from "../Profile/Profile";
 import Notifications from "../Profile/Notifications";
-
 import WelcomeScreen from "../Authenticate/WelcomeScreen.jsx";
 import LoginScreen from "../Authenticate/LoginScreen.jsx";
 import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
@@ -43,7 +43,6 @@ const SpaceStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} />
-      <Stack.Screen name="Space" component={Space} />
     </Stack.Navigator>
   );
 };
@@ -60,8 +59,7 @@ const SearchStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="Profile" component={ProfileTest} />
     </Stack.Navigator>
   );
 };
@@ -76,4 +74,10 @@ const AuthenticateStackNavigator = () => {
   );
 };
 
-export { MainStackNavigator, ProfileStackNavigator, SpaceStackNavigator, SearchStackNavigator, AuthenticateStackNavigator };
+export {
+  MainStackNavigator,
+  ProfileStackNavigator,
+  SpaceStackNavigator,
+  SearchStackNavigator,
+  AuthenticateStackNavigator,
+};

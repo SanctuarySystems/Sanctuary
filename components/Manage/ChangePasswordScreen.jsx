@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { auth } from 'firebase/app';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import * as firebase from 'firebase/app';
+import { authentication } from "../Authenticate/firebase.js";
 
-const ChangePassword = () => {
+const ChangePasswordScreen = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       setErrorMessage("Passwords do not match, please try again.");
       return;
     }
     try {
-      const user = auth().currentUser;
-      const credential = auth.EmailAuthProvider.credential(
+      const user = await authentication.currentUser;
+      const credential = firebase.auth.EmailAuthProvider.credential(
         user.email,
         oldPassword,
       );
       await user.reauthenticateWithCredential(credential);
-      if (newPassword !== confirmPassword) {
-        throw new Error("New passwords don't match");
-      }
+
       await user.updatePassword(newPassword);
+      console.log('Password changed successfully');
+      navigation.navigate('Welcome Screen');
     } catch (error) {
       console.log(error);
     }
@@ -47,9 +48,11 @@ const ChangePassword = () => {
         onChangeText={(text) => setConfirmPassword(text)}
       />
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <Button title="Change Password" onPress={handleSubmit} />
+      <TouchableOpacity onPress={handleSubmit}>
+        <Text>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordScreen;

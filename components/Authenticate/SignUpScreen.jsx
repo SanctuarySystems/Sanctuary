@@ -7,6 +7,7 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
@@ -18,8 +19,11 @@ const SignUpScreen = ({ navigation }) => {
       createUserWithEmailAndPassword(authentication, email, password)
         .then(async (userCredential) => {
           const { user } = userCredential;
+          await user.updateProfile({ displayName: username });
           await user.sendEmailVerification();
-          navigation.navigate('Welcome Screen');
+          navigation.navigate('Welcome Screen', {
+            username,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -31,6 +35,10 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View>
+      <TextInput
+        placeholder="Username"
+        onChangeText={(text) => setUsername(text)}
+      />
       <TextInput
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}

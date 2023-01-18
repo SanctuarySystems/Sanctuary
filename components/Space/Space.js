@@ -6,16 +6,12 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import MemberInfo from './MemberInfo.js';
-import axios from 'axios';
-import MemberInfo from './MemberInfo.js';
 
-const Space = ({route, navigation}) => {
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
-  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')

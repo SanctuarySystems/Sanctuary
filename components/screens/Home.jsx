@@ -18,7 +18,6 @@ const Home = ({ navigation }) => {
       <Button
         title="Go to Welcome Screen"
         onPress={() => navigation.navigate('Welcome Screen')}
->>>>>>> development
       />
     </View>
   );

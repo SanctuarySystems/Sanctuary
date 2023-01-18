@@ -6,6 +6,7 @@ import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
 import ProfileTest from "../screens/ProfileTest.jsx";
+import Comments from "../Comments/Comments";
 import Profile from "../Profile/Profile";
 import Notifications from "../Profile/Notifications";
 import WelcomeScreen from "../Authenticate/WelcomeScreen.jsx";
@@ -61,7 +62,8 @@ const SearchStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Profile" component={ProfileTest} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Notifications" component={Notifications} />
     </Stack.Navigator>
   );
 };

@@ -4,20 +4,15 @@ import Comments from './../Comments/Comments.js';
 import ConfessionList from './../Confession/ConfessionList.js';
 import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import MemberInfo from './MemberInfo.js';
 
-const Space = ({navigation}) => {
+const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
   const [leavejoin, setLeaveJoin] = React.useState(0);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [writeConfession, changeWriteConfession] = React.useState('');
-<<<<<<< Updated upstream
   const [isAdmin, setIsAdmin] = React.useState(true);
-  const [editMode, setEditMode] = React.useState(false);
-  const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
-  const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
-=======
-<<<<<<< HEAD
-  const [isAdmin, setIsAdmin] = React.useState(route.params.admin);
   const [editMode, setEditMode] = React.useState(false);
   const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
   const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
@@ -35,13 +30,6 @@ const Space = ({navigation}) => {
       }).catch((err) => console.log(err))
 
   })
-=======
-  const [isAdmin, setIsAdmin] = React.useState(true);
-  const [editMode, setEditMode] = React.useState(false);
-  const [spaceDescription, setSpaceDescription] = React.useState('space description. space description. space description. space description.')
-  const [spaceGuidelines, setSpaceGuidelines] = React.useState('GUIDELINES');
->>>>>>> 1feb01d (profile pages)
->>>>>>> Stashed changes
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
@@ -57,19 +45,12 @@ const Space = ({navigation}) => {
         {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setLeaveJoin(0)}}>
           <Text style={styles.leavejoinText}>leave</Text>
         </TouchableOpacity>}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 1feb01d (profile pages)
->>>>>>> Stashed changes
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
       </View>
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%'}} >
-        <Text>space description. space description. space description. space description. </Text>
+        <Text>{spaceDescription} </Text>
       </View>
       <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>FEED</Text>
@@ -77,14 +58,11 @@ const Space = ({navigation}) => {
         {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
-<<<<<<< Updated upstream
       {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}} />}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
-=======
-<<<<<<< HEAD
       {tab === 0 && <View style={{ flex: 8 }} ><Comments /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%', paddingTop: '4%'}} >
@@ -92,12 +70,10 @@ const Space = ({navigation}) => {
         {spaceMembers.map((member) => <MemberInfo space_name={route.params.space_name} username={member}/>)}
         </ScrollView>
         </View>}
-=======
       {tab === 0 && <View style={{ flex: 8 }} ><ConfessionList /></View>}
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 2 && <View style={{ flex: 8, backgroundColor: 'blue'}} />}
->>>>>>> 1feb01d (profile pages)
->>>>>>> Stashed changes
+
       <View style={{flex: 0.5, alignItems:'center'}}>
         <TouchableOpacity onPress={() => {setModalVisible(true)}}>
           <Icon name="md-create-outline" size='35%'/>
@@ -173,7 +149,7 @@ const styles = StyleSheet.create({
   leavejoinContainer:{
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#009688",
+    borderColor: "#734f96",
     borderRadius: 10,
     paddingVertical: 9,
     // paddingHorizontal: 11,
@@ -181,7 +157,7 @@ const styles = StyleSheet.create({
   },
   leavejoinText: {
     fontSize: 16,
-    color: "#009688",
+    color: "#734f96",
     // fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center'

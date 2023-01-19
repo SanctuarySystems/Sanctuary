@@ -6,24 +6,6 @@ import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
 
-const getCookies = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('reported');
-    return jsonValue ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-// grab cookies for viewed notifications every 30k seconds
-const refreshNotifications = (cb) => {
-  setInterval(() => {
-    const cookies = getCookies()._z;
-    cb(cookies);
-    console.log("cookies", cookies);
-  }, 30000);
-};
-
 const Profile = ({ navigation }) => {
   const username = React.useContext(UsernameContext); // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
@@ -37,15 +19,26 @@ const Profile = ({ navigation }) => {
   //const [loadedNotifsNum, setLoadedNotifsNum] = React.useState(false); // passed down to notifications
   const [reportedPosts, setReportedPosts] = React.useState([]);
 
-  React.useEffect(() => {
-    // grab user data
+  const getUser = (username, cb) => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then(({ data }) => {
-        setUserData(data);
-        setSpaceData(data.spaces_joined);
-        setCreated(data.spaces_created);
-      })
+      .then(({ data }) => cb(data))
       .catch((err) => console.log('axios error in profile', err));
+  };
+
+  React.useEffect(() => {
+    getUser(username, (data) => {
+      setUserData(data);
+      setSpaceData(data.spaces_joined);
+      setCreated(data.spaces_created);
+    });
+    // // grab user data
+    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+    //   .then(({ data }) => {
+    //     setUserData(data);
+    //     setSpaceData(data.spaces_joined);
+    //     setCreated(data.spaces_created);
+    //   })
+    //   .catch((err) => console.log('axios error in profile', err));
 
     // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?createdby={}&reported=true`)
     //   .then(({ data }) => {
@@ -188,6 +181,24 @@ const Profile = ({ navigation }) => {
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+const getCookies = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('reported');
+    return jsonValue ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// grab cookies for viewed notifications every 30k seconds
+const refreshNotifications = (cb) => {
+  setInterval(() => {
+    const cookies = getCookies()._z;
+    cb(cookies);
+    console.log("cookies", cookies);
+  }, 30000);
 };
 
 export default Profile;

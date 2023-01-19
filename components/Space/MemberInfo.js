@@ -57,15 +57,15 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
         <View style={{ flex: 1, marginTop: '70%' }}>
           <View style={styles.modal}>
             <Text>Ban user </Text>
-            <Text style={{fontWeight:"bold"}}>{username}</Text>
+            <Text style={{fontWeight:"bold", fontSize: 16}}>{username}</Text>
             <Text>from space </Text>
-            <Text style={{fontWeight:'bold'}}>{space_name}?</Text>
+            <Text style={{fontWeight:'bold', fontSize: 16}}>{space_name}?</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <TouchableOpacity style={styles.leavejoinContainer} onPress={()=>setBanModal(false)}>
                 <Text style={styles.leavejoinText}>No</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {banUser(username, space_name); setBanModal(false);}}>
-                <Text style={styles.leavejoinText}>Ban</Text>
+              <TouchableOpacity style={styles.leavejoinContainerBan} onPress={() => {banUser(username, space_name); setBanModal(false);}}>
+                <Text style={styles.leavejoinTextBan}>Ban</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -80,12 +80,20 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'cornflowerblue',
+    backgroundColor: '#ffb085',
     padding: '4%',
     paddingLeft: '4%',
     paddingRight: '4%',
     marginBottom: '4%',
     borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   username: {
     fontSize: 16,
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
   leavejoinContainer: {
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#734f96",
+    borderColor: "#90aacb",
     borderRadius: 10,
     paddingVertical: 9,
     // paddingHorizontal: 11,
@@ -102,7 +110,24 @@ const styles = StyleSheet.create({
   },
   leavejoinText: {
     fontSize: 12,
-    color: "#734f96",
+    color: "#90aacb",
+    fontWeight: "bold",
+    alignSelf: "center",
+    alignItems:'center',
+  },
+  leavejoinContainerBan: {
+    // backgroundColor: "#009688",
+    borderWidth:'1px',
+    borderColor: "#90aacb",
+    backgroundColor: '#90aacb',
+    borderRadius: 10,
+    paddingVertical: 9,
+    // paddingHorizontal: 11,
+    width:'20%'
+  },
+  leavejoinTextBan: {
+    fontSize: 12,
+    color: "#f9d5a7",
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',
@@ -111,6 +136,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#009688",
     borderWidth:'1px',
     borderColor: "white",
+    backgroundColor: "white",
     borderRadius: 10,
     paddingVertical: 9,
     // paddingHorizontal: 11,
@@ -118,14 +144,14 @@ const styles = StyleSheet.create({
   },
   leavejoinTextAdmin: {
     fontSize: 12,
-    color: "white",
+    color: "#ffb085",
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',
   },
   modal: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#f9d5a7',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',

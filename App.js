@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './components/navigation/HomeScreen.jsx';
-
-export const UsernameContext = React.createContext();
 import WelcomeScreen from './components/Authenticate/WelcomeScreen.jsx';
 import { MainStackNavigator } from './components/navigation/StackNavigator.jsx';
 import LoginScreen from "./components/Authenticate/LoginScreen.jsx";
@@ -18,18 +16,18 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const [username, setUsername] = useState('lookingforpeace');
 
-  const [username, setUserName] = useState('lookingforcalm');
-
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
-        <Stack.Screen name="Login Screen" component={LoginScreen} setUsername={setUsername} />
-        <Stack.Screen name="Sign Up Screen" component={SignUpScreen} setUsername={setUsername} />
-        <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
-        <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
-      </Stack.Navigator>
+      <UsernameContext.Provider value={username}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
+          <Stack.Screen name="Login Screen" component={LoginScreen} setUsername={setUsername} />
+          <Stack.Screen name="Sign Up Screen" component={SignUpScreen} setUsername={setUsername} />
+          <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
+          <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
+          <Stack.Screen name="Home Screen" component={HomeScreen} />
+        </Stack.Navigator>
+      </UsernameContext.Provider>
     </NavigationContainer>
   );
 };

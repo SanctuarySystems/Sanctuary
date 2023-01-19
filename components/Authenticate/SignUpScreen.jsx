@@ -26,7 +26,6 @@ const SignUpScreen = ({ navigation, setUsername }) => {
       await sendEmailVerification(user);
       // setUsername(newUsername);
       console.log(newUsername);
-      navigation.navigate('Select Icon Screen');
     } catch (error) {
       console.log(error);
     }

@@ -11,11 +11,12 @@ const LoginScreen = ({ navigation, setUsername }) => {
     try {
       await signInWithEmailAndPassword(authentication, email, password);
       // setUsername(authentication.currentUser.username);
-      console.log(authentication.currentUser.username);
+      console.log('user', authentication.currentUser.displayName);
       navigation.navigate('Welcome Screen');
     } catch (error) {
       console.log(error);
     }
+    // navigation.navigate('Home Screen');
   };
   return (
     <SafeAreaView>

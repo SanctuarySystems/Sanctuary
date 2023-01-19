@@ -5,11 +5,12 @@ import ConfessionList from "../Confession/ConfessionList.js";
 import { UsernameContext } from "../../App.js";
 
 const Home = ({ navigation }) => {
-  const username = useContext(UsernameContext);
+  const { username } = useContext(UsernameContext);
   const [allConfessions, setAllConfessions] = useState([]);
 
   useEffect(() => {
     if (username) {
+      console.log('I am userame at Home.jsx: ', username);
       axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
         .then(async (data) => {
           const allSpaces = data.data.spaces_joined;

@@ -60,6 +60,7 @@ const Space = ({route, navigation}) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`, {description: description, guidelines: guidelines})
       .then(() => {
         setEditMode(false);
+        setDisableEdit(true);
         axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${route.params.space_name}`)
         .then((data) => {setSpaceDescription(data.data[0].description);
           setEditSpaceDescription(data.data[0].description);

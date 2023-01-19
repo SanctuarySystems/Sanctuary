@@ -15,6 +15,8 @@ const storeData = async (value) => {
 
 const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, unreadNotifs, setUnreadNofits }) => {
   const [isReported, setIsReported] = React.useState(false);
+  const name = reported === username ? 'Your' : username + "'s";
+  const post = commentId ? 'comment' : 'confession';
 
   const handleBan = () => {
     setIsReported(true);
@@ -42,12 +44,21 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
 
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
-      <Text>
+      {/* <Text>
         {reported}'s comment in {spaceName} has been reported by {reportedBy}.
-      </Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'space-evenly' }}>
+      </Text> */}
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 5 }}>
+        <Text style={{ fontWeight: 'bold' }}>{name} </Text>
+        <Text>{post} in the </Text>
+        <Text style={{ fontWeight: 'bold' }}>{spaceName} </Text>
+        <Text>space has been reported by </Text>
+        <Text style={{ fontWeight: 'bold' }}>{reportedBy}.</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
         { reported !== username &&
           <Button
+          // style={{ position: 'absolute', right: 5 }}
           buttonStyle={{ borderRadius: 30 }}
           title={isReported ? "User Banned" : "Ban Reported"}
           type="outline"
@@ -56,7 +67,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         }
         <Button
           buttonStyle={{ borderRadius: 30 }}
-          title="View Post"
+          title={`View ${post}`}
           onPress={() => navigation.navigate('Comments', {
             confession_id: confessionId,
             comment_id: commentId,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Button, Avatar, Tab, Badge } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
 
@@ -8,11 +9,23 @@ const mockData = {
   username: 'lookingforpeace',
 };
 
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('reported');
+    return jsonValue ? JSON.parse(jsonValue) : null;
+    // await AsyncStorage.clear();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const Profile = ({ navigation }) => {
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({});
   const [spaceData, setSpaceData] = React.useState([]);
   const [created, setCreated] = React.useState([]);
+  const [reportedCookie, setReportedCookie] = React.useState([]);
+  const [unreadNotifs, setUnreadNofits] = React.useState(0);
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
@@ -22,6 +35,10 @@ const Profile = ({ navigation }) => {
         setCreated(data.spaces_created);
       })
       .catch((err) => console.log('axios error in profile', err));
+
+    setInterval(() => {
+      setReportedCookie(getData());
+    }, 30000);
   }, []);
 
   return (
@@ -43,13 +60,19 @@ const Profile = ({ navigation }) => {
             <Button
               title="Notifications"
               type="clear"
-              onPress={() => navigation.navigate('Notifications', { spaces: created })}
+              onPress={() => navigation.navigate('Notifications', {
+                spaces: created,
+                reportedCookie: reportedCookie,
+                unreadNotifs: unreadNotifs,
+                setUnreadNofits: setUnreadNofits,
+              })}
             />
-            <Badge
-              status="error"
-              value={1}
-              containerStyle={{ position: 'absolute', top: 6, right: 115 }}
-            />
+            { unreadNotifs > 0 &&
+              <Badge
+                status="error"
+                value={unreadNotifs}
+                containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+              /> }
           </View>
 
           <View style={{ flexDirection: 'column', height: '60%' }}>

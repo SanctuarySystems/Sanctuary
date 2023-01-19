@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { Button, Avatar, Tab, Badge } from '@rneui/themed';
+import { Button, Avatar, Tab, Badge, SearchBar } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
@@ -24,6 +24,7 @@ const Profile = ({ navigation }) => {
   const [reportedCookie, setReportedCookie] = React.useState([]);
   const [unreadNotifs, setUnreadNofits] = React.useState(0);
   const [loadedNotifsNum, setLoadedNotifsNum] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState('');
 
   React.useEffect(() => {
     // grab user data
@@ -139,8 +140,28 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View>
+          <SearchBar
+            platform="ios"
+            containerStyle={{}}
+            inputContainerStyle={{}}
+            inputStyle={{}}
+            loadingProps={{}}
+            onChangeText={(newVal) => setSearchTerm(newVal)}
+            onClearText={() => setSearchTerm('')}
+            placeholder="Search..."
+            placeholderTextColor="#888"
+            showCancel
+            cancelButtonTitle="Cancel"
+            cancelButtonProps={{}}
+            onCancel={() => setSearchTerm('')}
+            value={searchTerm}
+          />
+        </View>
+
+        <View>
           {/* SPACES */}
           <SpacesList
+            searchTerm={searchTerm}
             currentTab={currentTab}
             spaceArray={spaceData}
             currentUser={userData.username}

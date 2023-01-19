@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Text, TextInput, Button } from 'react-native';
+import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet } from 'react-native';
 import * as firebase from 'firebase/app';
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -31,29 +31,75 @@ const ChangePasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
-      <Text>Old Password</Text>
-      <TextInput
-        placeholder="Old Password"
-        secureTextEntry
-        onChangeText={(text) => setOldPassword(text)}
-      />
-      <Text>New Password</Text>
-      <TextInput
-        placeholder="New Password"
-        secureTextEntry
-        onChangeText={(text) => setNewPassword(text)}
-      />
-      <Text>Confirm New Password</Text>
-      <TextInput
-        placeholder="Confirm New Password"
-        secureTextEntry
-        onChangeText={(text) => setConfirmPassword(text)}
-      />
+    <KeyboardAvoidingView style={styles.container}>
+      <Text style={styles.header}>Sanctuary</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Old Password"
+          onChangeText={(text) => setOldPassword(text)}
+        />
+        <TextInput
+          style={styles.inputBox}
+          placeholder="New Password"
+          secureTextEntry
+          onChangeText={(text) => setNewPassword(text)}
+        />
+        <TextInput
+          style={styles.inputBox}
+          placeholder="Confirm New Password"
+          onChangeText={(text) => setConfirmPassword(text)}
+        />
+      </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <Button title="Submit" onPress={handleSubmit} />
-    </SafeAreaView>
+      <View style={styles.buttonContainer}>
+        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FEF1E6',
+  },
+  header: {
+    fontFamily: 'Times New Roman',
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#90AACB',
+    marginBottom: 150,
+  },
+  inputContainer: {
+    alignItems: 'center',
+    width: '80%',
+  },
+  inputBox: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+    backgroundColor: '#FAF9F6',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    marginTop: 30,
+  },
+  button: {
+    fontFamily: 'Times New Roman',
+    backgroundColor: '#FFB085',
+    fontSize: 60,
+    marginHorizontal: 10,
+  },
+});
+
 
 export default ChangePasswordScreen;

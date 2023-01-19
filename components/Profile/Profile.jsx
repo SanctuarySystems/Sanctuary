@@ -49,7 +49,7 @@ const Profile = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         // style={{ position: 1, height: '100%' }}
-        stickyHeaderIndices={[2]}
+        stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
       >
         <View

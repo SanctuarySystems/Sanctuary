@@ -2,22 +2,69 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
-const Comment = ({ username, body, pops, setShowModal }) => {
+const Comment = ({ username, body, pops, setShowModal, date }) => {
   const [pop, setPop] = useState(pops);
+  const [popped, setPopped] = useState(false);
+  const [plopped, setPlopped] = useState(false);
+
+  const handlePop = () => {
+    if (popped === false) {
+      if (plopped === true) {
+        setPlopped(false);
+        if (pop === 1) {
+          setPop(pop + 1);
+        } else {
+          setPop(pop + 2);
+        }
+      } else {
+        setPop(pop + 1);
+      }
+      setPopped(true);
+    } else {
+      setPop(pop - 1);
+      setPopped(false);
+    }
+  };
+
+  const handlePlop = () => {
+    if (pop > 1 || (popped === true && pop > 2)) {
+      if (plopped === false) {
+        if (popped === true) {
+          if (popped === 2) {
+            setPopped(false);
+            setPop(pop - 1);
+          } else {
+            setPopped(false);
+            setPop(pop - 1);
+          }
+        } else {
+          setPop(pop - 1);
+        }
+        setPlopped(true);
+      } else {
+        setPop(pop + 1);
+        setPlopped(false);
+      }
+    }
+  };
 
   return (
     <View style={styles.comment}>
       <Text>{body}</Text>
-      <Text style={styles.username}>{username}</Text>
+      <View style={styles.info}>
+        <Text style={styles.username}>{username}</Text>
+        <Entypo name="dot-single" size={24} color="black" />
+        <Text>{new Date(date).toLocaleString("en-us", { month: "short", day: "numeric" })}</Text>
+      </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
         <Entypo name="dots-three-horizontal" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.vote}>
-        <TouchableOpacity style={styles.pop} onPress={() => setPop(pop + 1)}>
+        <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
           <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.popCount}>{pop}</Text>
-        <TouchableOpacity style={styles.plop} onPress={() => setPop(pop - 1)}>
+        <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
           <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -36,10 +83,12 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  username: {
+  info: {
     position: 'absolute',
-    top: 10,
+    top: 0,
     left: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   vote: {
     flexDirection: 'row',
@@ -55,6 +104,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 15,
+  },
+  pop: {
+    backgroundColor: 'lightgreen',
+    borderRadius: '50%',
+  },
+  plop: {
+    backgroundColor: 'red',
+    borderRadius: '55%',
   },
 });
 

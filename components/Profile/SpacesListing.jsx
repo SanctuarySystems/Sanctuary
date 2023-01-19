@@ -20,7 +20,7 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'space-between', borderWidth: 1, borderRadius: 15, padding: 10 }}>
       <View style={{ flexDirection: 'column' }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
+        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
         <Text>
           {spaceData.members.length} members
         </Text>

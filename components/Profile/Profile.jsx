@@ -16,31 +16,23 @@ const Profile = ({ navigation }) => {
 
   const [cookies, setCookies] = React.useState([]); // cookies stored via async storage
   const [unreadNotifs, setUnreadNofits] = React.useState(0); // # of unread notifications
-  //const [loadedNotifsNum, setLoadedNotifsNum] = React.useState(false); // passed down to notifications
   const [reportedPosts, setReportedPosts] = React.useState([]);
 
-  const getUser = (username, cb) => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+  const getUser = (name, cb) => {
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
       .then(({ data }) => cb(data))
       .catch((err) => console.log('axios error in profile', err));
   };
 
   React.useEffect(() => {
+    // grab user data
     getUser(username, (data) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
     });
-    // // grab user data
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-    //   .then(({ data }) => {
-    //     setUserData(data);
-    //     setSpaceData(data.spaces_joined);
-    //     setCreated(data.spaces_created);
-    //   })
-    //   .catch((err) => console.log('axios error in profile', err));
 
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?createdby={}&reported=true`)
+    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?createdby={name}&reported=true`)
     //   .then(({ data }) => {
     //     if (data.length > 1) {
     //       setReportedPosts(data);
@@ -88,8 +80,6 @@ const Profile = ({ navigation }) => {
               cookies,
               unreadNotifs,
               setUnreadNofits,
-              // loadedNotifsNum,
-              // setLoadedNotifsNum,
             })}
           />
           { unreadNotifs > 0 &&

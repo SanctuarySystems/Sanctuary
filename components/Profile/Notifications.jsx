@@ -27,9 +27,8 @@ const Notifications = ({ route, navigation }) => {
           if (confession.reported.length > 0) {
             return (
               <NotificationListing
-                key={confession.confession_id}
                 navigation={navigation}
-                reported={confession.created_by}
+                reported={confession.created_By}
                 reportedBy={confession.reported[0]}
                 spaceName={confession.space_name}
                 confessionId={confession.confession_id}
@@ -40,9 +39,8 @@ const Notifications = ({ route, navigation }) => {
             confession.comments.map((comment) => {
               return (
                 <NotificationListing
-                  key={confession.confession_id}
                   navigation={navigation}
-                  reported={comment.created_by}
+                  reported={comment.created_By}
                   reportedBy={comment.reported[0]}
                   spaceName={confession.space_name}
                   commentId={comment.comment_id}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, TextInput, Button } from 'react-native';
+import { View, SafeAreaView, TextInput, Button, Text } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firebase.js";
 
@@ -19,10 +19,12 @@ const LoginScreen = ({ navigation, setUsername }) => {
   };
   return (
     <SafeAreaView>
+      <Text>Email</Text>
       <TextInput
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
       />
+      <Text>Password</Text>
       <TextInput
         placeholder="Password"
         secureTextEntry

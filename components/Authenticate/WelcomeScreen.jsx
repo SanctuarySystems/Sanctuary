@@ -30,7 +30,7 @@ const WelcomeScreen = ({ navigation }) => {
       <Text>Home Screen</Text>
       <Button
         title="Go to Home Screen"
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Home Screen')}
       />
     </SafeAreaView>
   );

@@ -21,11 +21,17 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
     <View style={{ flexDirection: 'row', alignItems: 'space-between', borderWidth: 1, borderRadius: 15, padding: 10 }}>
       <View style={{ flexDirection: 'column' }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
-        <Text>{spaceData.members.length} members</Text>
+        <Text>
+          {spaceData.members.length} members
+        </Text>
       </View>
       <View>
         { spaceData.created_by === currentUser &&
-          <Text>you are an admin!</Text> }
+          // <Text>you are an admin!</Text>
+          <Button
+            title="Admin"
+            disabled
+          />}
       </View>
       <View>
         <Button

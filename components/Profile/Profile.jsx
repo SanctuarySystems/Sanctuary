@@ -1,13 +1,10 @@
 import React from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { Button, Avatar, Tab, Badge } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
-
-const mockData = {
-  username: 'lookingforpeace',
-};
+import { UsernameContext } from '../../App';
 
 const getData = async () => {
   try {
@@ -19,6 +16,7 @@ const getData = async () => {
 };
 
 const Profile = ({ navigation }) => {
+  const username = React.useContext(UsernameContext);
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({});
   const [spaceData, setSpaceData] = React.useState([]);
@@ -29,7 +27,7 @@ const Profile = ({ navigation }) => {
 
   React.useEffect(() => {
     // grab user data
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
       .then(({ data }) => {
         setUserData(data);
         setSpaceData(data.spaces_joined);
@@ -41,18 +39,27 @@ const Profile = ({ navigation }) => {
 
     // grab localstorage cookies for viewed notifications every 30k seconds
     setInterval(() => {
-      setReportedCookie(getData());
-      console.log("reportedCookie", reportedCookie._z);
+      const storedData = getData()._z;
+      setReportedCookie(storedData);
+      console.log("reportedCookie", storedData);
     }, 30000);
   }, []);
 
   return (
-    <ScrollView
-      // style={{ position: 1 }}
-      // stickyHeaderIndices={[2]}
-    >
-      <View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '18%' }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        // style={{ position: 1, height: '100%' }}
+        stickyHeaderIndices={[2]}
+        automaticallyAdjustKeyboardInsets
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: 5,
+            height: 50,
+          }}
+        >
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
@@ -65,23 +72,26 @@ const Profile = ({ navigation }) => {
             title="Notifications"
             type="clear"
             onPress={() => navigation.navigate('Notifications', {
+              username: userData.username,
               spaces: created,
-              reportedCookie: reportedCookie,
-              unreadNotifs: unreadNotifs,
-              setUnreadNofits: setUnreadNofits,
-              loadedNotifsNum: loadedNotifsNum,
-              setLoadedNotifsNum: setLoadedNotifsNum,
+              reportedCookie,
+              unreadNotifs,
+              setUnreadNofits,
+              loadedNotifsNum,
+              setLoadedNotifsNum,
             })}
           />
           { unreadNotifs > 0 &&
-            <Badge
-              status="error"
-              value={unreadNotifs}
-              containerStyle={{ position: 'absolute', top: 6, right: 115 }}
-            /> }
+            (
+              <Badge
+                status="error"
+                value={unreadNotifs}
+                containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+              />
+            )}
         </View>
 
-        <View style={{ flexDirection: 'column', height: '70%' }}>
+        <View style={{ flexDirection: 'column', height: 200 }}>
           <View style={{ flex: 1, alignContent: 'center' }}>
             {/* AVATAR */}
             <Avatar
@@ -89,15 +99,14 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
               source={{ uri: userData.avatar }}
-            />
-            {/* EDIT AVATAR */}
-            <Avatar
-              size={25}
-              rounded
-              containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
-              source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
-              onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
-            />
+            >
+              {/* EDIT AVATAR */}
+              <Avatar.Accessory
+                size={24}
+                onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
+              />
+            </Avatar>
+
           </View>
           {/* USERNAME */}
           <Text style={{ flex: 0.2, alignSelf: 'center', top: '1%' }}>
@@ -106,12 +115,12 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* TABS */}
-        <View style={{ height: '20%' }}>
-          {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
+        <View style={{ height: 50 }}>
           <Tab
             value={currentTab}
             dense
             buttonStyle='View Style'
+            style={{ backgroundColor: 'white' }}
             onChange={(e) => {
               if (!e) {
                 console.log('showing joined');
@@ -127,7 +136,9 @@ const Profile = ({ navigation }) => {
             <Tab.Item title='Joined Spaces' />
             <Tab.Item title='Created Spaces' />
           </Tab>
+        </View>
 
+        <View>
           {/* SPACES */}
           <SpacesList
             currentTab={currentTab}
@@ -136,8 +147,8 @@ const Profile = ({ navigation }) => {
             navigation={navigation}
           />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

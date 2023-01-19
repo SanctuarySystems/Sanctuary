@@ -6,6 +6,13 @@ import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
 
+const colorTheme = {
+  beige: '#FEF1E6',
+  yellow: '#F9D5A7',
+  orange: '#FFB085',
+  blue: '#90AACB',
+};
+
 const Profile = ({ navigation }) => {
   const username = React.useContext(UsernameContext); // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
@@ -61,12 +68,14 @@ const Profile = ({ navigation }) => {
             justifyContent: 'space-between',
             padding: 5,
             height: 50,
+            backgroundColor: 'white',
           }}
         >
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
             type="clear"
+            color={`${colorTheme.blue}`}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -74,6 +83,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
+            color={`${colorTheme.blue}`}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               spaces: created,
@@ -92,7 +102,7 @@ const Profile = ({ navigation }) => {
             )}
         </View>
 
-        <View style={{ flexDirection: 'column', height: 220 }}>
+        <View style={{ flexDirection: 'column', height: 220, backgroundColor: 'white' }}>
           <View style={{ flex: 0.7 }}>
             {/* AVATAR */}
             <Avatar
@@ -104,6 +114,7 @@ const Profile = ({ navigation }) => {
               {/* EDIT AVATAR */}
               <Avatar.Accessory
                 size={24}
+                containerStyle={{ boxShadow: 'none' }}
                 onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
               />
             </Avatar>
@@ -116,12 +127,12 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* TABS */}
-        <View style={{ height: 50 }}>
+        <View style={{ height: 40, backgroundColor: 'white' }}>
           <Tab
             value={currentTab}
             dense
             buttonStyle='View Style'
-            style={{ backgroundColor: 'white' }}
+            style={{ backgroundColor: 'white', color: `${colorTheme.blue}` }}
             onChange={(e) => {
               if (!e) {
                 console.log('showing joined');
@@ -142,8 +153,8 @@ const Profile = ({ navigation }) => {
         <View>
           <SearchBar
             platform="ios"
-            containerStyle={{}}
-            inputContainerStyle={{}}
+            containerStyle={{ backgroundColor: 'white' }}
+            inputContainerStyle={{ backgroundColor: `${colorTheme.beige}` }}
             inputStyle={{}}
             loadingProps={{}}
             onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -161,6 +172,7 @@ const Profile = ({ navigation }) => {
         <View>
           {/* SPACES */}
           <SpacesList
+            colorTheme={colorTheme}
             searchTerm={searchTerm}
             currentTab={currentTab}
             spaceArray={spaceData}

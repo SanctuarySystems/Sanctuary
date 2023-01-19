@@ -21,14 +21,6 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const handleBan = () => {
     setIsReported(true);
 
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
-    //   .then(({ data }) => {
-    //     setUserData(data);
-    //     setSpaceData(data.spaces_joined);
-    //     setCreated(data.spaces_created);
-    //   })
-    //   .catch((err) => console.log('axios error in profile', err));
-
     let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
     temporaryCookie.push({
       reportedUser: reported,
@@ -44,9 +36,6 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
 
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
-      {/* <Text>
-        {reported}'s comment in {spaceName} has been reported by {reportedBy}.
-      </Text> */}
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 5 }}>
         <Text style={{ fontWeight: 'bold' }}>{name} </Text>
         <Text>{post} in the </Text>
@@ -55,10 +44,12 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         <Text style={{ fontWeight: 'bold' }}>{reportedBy}.</Text>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+      <View style={{ flexDirection: 'row' }}>
+      {/* , justifyContent: 'space-evenly'  */}
         { reported !== username &&
           <Button
           // style={{ position: 'absolute', right: 5 }}
+          size="sm"
           buttonStyle={{ borderRadius: 30 }}
           title={isReported ? "User Banned" : "Ban Reported"}
           type="outline"
@@ -66,6 +57,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           />
         }
         <Button
+          size="sm"
           buttonStyle={{ borderRadius: 30 }}
           title={`View ${post}`}
           onPress={() => navigation.navigate('Comments', {

@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import SpacesListing from './SpacesListing';
 
-const SpacesList = ({ searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
-
+const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
   return (
-    <View>
+    <View style={{ backgroundColor: 'white' }}>
       <View>
         { spaceArray.length === 0 &&
           <Text style={{ position: 'relative' }}>You are not in any spaces!</Text> }
@@ -19,6 +18,7 @@ const SpacesList = ({ searchTerm, currentTab, spaceArray, currentUser, navigatio
               <View style={{ padding: 10 }}>
                 <SpacesListing
                   key={item}
+                  colorTheme={colorTheme}
                   currentTab={currentTab}
                   space={item}
                   currentUser={currentUser}

@@ -6,4 +6,9 @@ export default StyleSheet.create({
     backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
+    droidSafeArea: {
+        flex: 1,
+        backgroundColor: "#fef1e6",
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    },
 });

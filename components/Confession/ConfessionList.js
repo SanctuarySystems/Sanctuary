@@ -13,7 +13,29 @@ export default function ConfessionList({ allConfessions, nav, isRoom}) {
     require(`../../assets/avatars/007.png`),
     require(`../../assets/avatars/008.png`),
     require(`../../assets/avatars/009.png`),
-    require(`../../assets/avatars/010.png`),
+    require(`../../assets/avatars/011.png`),
+    require(`../../assets/avatars/012.png`),
+    require(`../../assets/avatars/013.png`),
+    require(`../../assets/avatars/014.png`),
+    require(`../../assets/avatars/015.png`),
+    require(`../../assets/avatars/016.png`),
+    require(`../../assets/avatars/017.png`),
+    require(`../../assets/avatars/018.png`),
+    require(`../../assets/avatars/019.png`),
+    require(`../../assets/avatars/020.png`),
+    require(`../../assets/avatars/021.png`),
+    require(`../../assets/avatars/022.png`),
+    require(`../../assets/avatars/023.png`),
+    require(`../../assets/avatars/024.png`),
+    require(`../../assets/avatars/025.png`),
+    require(`../../assets/avatars/026.png`),
+    require(`../../assets/avatars/027.png`),
+    require(`../../assets/avatars/028.png`),
+    require(`../../assets/avatars/029.png`),
+    require(`../../assets/avatars/030.png`),
+    require(`../../assets/avatars/031.png`),
+    require(`../../assets/avatars/032.png`),
+    require(`../../assets/avatars/033.png`),
 
   ];
 
@@ -172,7 +194,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(254, 241 , 230, 1)',
+    backgroundColor: 'rgba(254, 241 , 230, .8)',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0
@@ -180,7 +202,8 @@ const styles = StyleSheet.create({
 
   containerConfess: {
     borderWidth: 0,
-    backgroundColor: 'rgba(144, 170 , 203, .2)',
+    // backgroundColor: 'rgba(144, 170 , 203, .2)',
+    backgroundColor: 'rgba(255, 255, 255, .85)',
     borderColor: 'black',
     borderRadius: 10,
     marginTop: '1.5%',

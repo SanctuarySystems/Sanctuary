@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
       {allConfessions.length !== 0 &&
-        <ConfessionList allConfessions={allConfessions} navigation={navigation} />}
+        <ConfessionList allConfessions={allConfessions} nav={navigation} />}
 
       <Button
         title="Go to Test Page"

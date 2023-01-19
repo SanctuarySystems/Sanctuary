@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import moment from 'moment';
 
 const Comment = ({ username, body, pops, setShowModal, date }) => {
   const [pop, setPop] = useState(pops);
@@ -54,7 +55,7 @@ const Comment = ({ username, body, pops, setShowModal, date }) => {
       <View style={styles.info}>
         <Text style={styles.username}>{username}</Text>
         <Entypo name="dot-single" size={24} color="black" />
-        <Text>{new Date(date).toLocaleString("en-us", { month: "short", day: "numeric" })}</Text>
+        <Text>{moment(date).fromNow()}</Text>
       </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
         <Entypo name="dots-three-horizontal" size={24} color="black" />

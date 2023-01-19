@@ -42,7 +42,7 @@ const Comments = () => {
       <>
         <FlatList
           nestedScrollEnabled
-          ListHeaderComponent={<DetailedConfession username={confession.created_by} space={confession.space_name} body={confession.confession} setShowModal={setShowModal} />}
+          ListHeaderComponent={<DetailedConfession username={confession.created_by} date={confession.createdAt} space={confession.space_name} body={confession.confession} setShowModal={setShowModal} />}
           keyExtractor={(comment) => comment.id}
           data={confession.comments.sort((a, b) => b.pops - a.pops)}
           renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} />}

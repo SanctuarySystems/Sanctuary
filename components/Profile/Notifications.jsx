@@ -4,7 +4,7 @@ import axios from 'axios';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, spaces, reportedCookie, unreadNotifs, setUnreadNofits } = route.params;
+  const { username, spaces, reportedCookie, unreadNotifs, setUnreadNofits, reportedPosts } = route.params;
   const [reports, setReports] = React.useState([]);
 
   React.useEffect(() => {

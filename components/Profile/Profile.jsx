@@ -39,7 +39,7 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?createdby={name}&reported=true`)
+    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
     //   .then(({ data }) => {
     //     if (data.length > 1) {
     //       setReportedPosts(data);
@@ -90,9 +90,10 @@ const Profile = ({ navigation }) => {
               cookies,
               unreadNotifs,
               setUnreadNofits,
+              reportedPosts,
             })}
           />
-          { unreadNotifs > 0 &&
+          { reportedPosts > cookies &&
             (
               <Badge
                 status="error"

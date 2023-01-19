@@ -26,7 +26,7 @@ const screenOptionStyle = {
   headerBackTitle: "Back",
 };
 
-const MainStackNavigator = () => {
+const MainStackNavigator = ({ setUsername }) => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
@@ -34,8 +34,6 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Comments" component={Comments} />
       <Stack.Screen name="Home Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
-      <Stack.Screen name="Login Screen" component={LoginScreen} />
-      <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
     </Stack.Navigator>
@@ -54,7 +52,7 @@ const SpaceStackNavigator = () => {
 const SearchStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
     </Stack.Navigator>
   );
@@ -65,24 +63,27 @@ const ProfileStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="Space" component={Space} />
+      <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
     </Stack.Navigator>
   );
 };
-
-const AuthenticateStackNavigator = () => {
-  return (
-    <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
-      <Stack.Screen name="Login Screen" component={LoginScreen} />
-      <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
-    </Stack.Navigator>
-  );
-};
+// { setUsername }
+// const AuthenticateStackNavigator = () => {
+//   return (
+//     <Stack.Navigator screenOptions={screenOptionStyle}>
+//       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
+//       <Stack.Screen name="Login Screen" component={LoginScreen} />
+//       <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
+//       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
+//       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
+//     </Stack.Navigator>
+//   );
+// };
 
 export {
   MainStackNavigator,
   ProfileStackNavigator,
   SpaceStackNavigator,
   SearchStackNavigator,
-  AuthenticateStackNavigator,
 };

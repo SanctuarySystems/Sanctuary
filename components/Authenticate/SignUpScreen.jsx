@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { View, SafeAreaView, TextInput, Button, Text } from 'react-native';
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { authentication } from "./firebase.js";
+import GlobalStyles from '../GlobalStyles.js';
 
-const SignUpScreen = ({ navigation }) => {
+const auth = getAuth();
+
+const SignUpScreen = ({ navigation, setUsername }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
@@ -15,31 +19,37 @@ const SignUpScreen = ({ navigation }) => {
       return;
     }
     try {
-      createUserWithEmailAndPassword(authentication, email, password)
-        .then(async (userCredential) => {
-          const { user } = userCredential;
-          await user.sendEmailVerification();
-          navigation.navigate('Welcome Screen');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      console.log('user', user);
+      await updateProfile(user, { displayName: newUsername });
+      await sendEmailVerification(user);
+      // setUsername(newUsername);
+      console.log(newUsername);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <View>
+    <SafeAreaView>
+      <Text>Username</Text>
+      <TextInput
+        placeholder="Username"
+        onChangeText={(text) => setNewUsername(text)}
+      />
+      <Text>Email</Text>
       <TextInput
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
       />
+      <Text>Password</Text>
       <TextInput
         placeholder="Password"
         secureTextEntry
         onChangeText={(text) => setPassword(text)}
       />
+      <Text>Confirm Password</Text>
       <TextInput
         placeholder="Confirm Password"
         secureTextEntry
@@ -47,7 +57,7 @@ const SignUpScreen = ({ navigation }) => {
       />
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <Button title="Signup" onPress={handleSubmit} />
-    </View>
+    </SafeAreaView>
   );
 };
 

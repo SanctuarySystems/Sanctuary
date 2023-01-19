@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import React from 'react';
+import { Button, Text, View, SafeAreaView } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>
         Welcome to Sanctuary!
       </Text>
@@ -27,7 +27,12 @@ const WelcomeScreen = ({ navigation }) => {
         title="Go to Change Password Screen"
         onPress={() => navigation.navigate('Change Password Screen')}
       />
-    </View>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Home Screen"
+        onPress={() => navigation.navigate('Home Screen')}
+      />
+    </SafeAreaView>
   );
 };
 

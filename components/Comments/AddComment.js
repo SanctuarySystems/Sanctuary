@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity, Text, Keyboard } from 'react-native';
+import axios from 'axios';
 
 const AddComment = ({ add }) => {
-  const [comment, setComment] = useState({ username: 'testuser', pops: 1, body: '' });
+  const [comment, setComment] = useState({ created_by: 'lookingforpeace', pops: 1, comment: '' });
 
   const handlePress = () => {
-    if (comment.body.length !== 0) {
-      add(comment);
-      const copy = { ...comment };
-      copy.body = '';
-      setComment(copy);
+    if (comment.comment.length !== 0) {
+      const copy = { ...comment, createdAt: new Date().toISOString() };
+      add(copy);
+      setComment({ created_by: 'lookingforpeace', pops: 1, comment: '' });
       Keyboard.dismiss();
     }
+
+    axios.post('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/comments', {
+      confession_id: 1,
+      created_by: 'lookingforcalm',
+      comment: comment.comment,
+    });
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={100}>
       <TextInput
         multiline
-        value={comment.body}
-        onChangeText={(text) => setComment({ ...comment, body: text })}
+        value={comment.comment}
+        onChangeText={(text) => setComment({ ...comment, comment: text })}
         style={styles.input}
         placeholder='Add a comment...'
       />

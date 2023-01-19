@@ -1,55 +1,59 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { auth } from 'firebase/app';
+import { View, SafeAreaView, Text, TextInput, Button } from 'react-native';
+import * as firebase from 'firebase/app';
+import { authentication } from "../Authenticate/firebase.js";
 
-const ChangePassword = () => {
+const ChangePasswordScreen = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       setErrorMessage("Passwords do not match, please try again.");
       return;
     }
     try {
-      const user = auth().currentUser;
-      const credential = auth.EmailAuthProvider.credential(
+      const user = await authentication.currentUser;
+      const credential = firebase.auth.EmailAuthProvider.credential(
         user.email,
         oldPassword,
       );
       await user.reauthenticateWithCredential(credential);
-      if (newPassword !== confirmPassword) {
-        throw new Error("New passwords don't match");
-      }
+
       await user.updatePassword(newPassword);
+      console.log('Password changed successfully');
+      navigation.navigate('Home Screen');
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <View>
+    <SafeAreaView>
+      <Text>Old Password</Text>
       <TextInput
         placeholder="Old Password"
         secureTextEntry
         onChangeText={(text) => setOldPassword(text)}
       />
+      <Text>New Password</Text>
       <TextInput
         placeholder="New Password"
         secureTextEntry
         onChangeText={(text) => setNewPassword(text)}
       />
+      <Text>Confirm New Password</Text>
       <TextInput
         placeholder="Confirm New Password"
         secureTextEntry
         onChangeText={(text) => setConfirmPassword(text)}
       />
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <Button title="Change Password" onPress={handleSubmit} />
-    </View>
+      <Button title="Submit" onPress={handleSubmit} />
+    </SafeAreaView>
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordScreen;

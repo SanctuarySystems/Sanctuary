@@ -13,9 +13,12 @@ const Notifications = ({ route, navigation }) => {
     spaces.map(async (space) => {
       await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
         .then(({ data }) => {
-          reportArray.push(data[0]);
-          setReports(reportArray);
-          console.log(data[0]);
+          if (data[0]) {
+            reportArray.push(data[0]);
+            setReports(reportArray);
+            console.log('reportArray within notif useeffect', data[0]);
+            setUnreadNofits(unreadNotifs + 1);
+          }
         })
         .catch((err) => console.log('axios error in notifications', err));
     });

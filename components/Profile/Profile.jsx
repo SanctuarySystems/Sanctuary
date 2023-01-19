@@ -74,7 +74,7 @@ const Profile = ({ navigation }) => {
             <Badge
               status="error"
               value={unreadNotifs}
-              // containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+              containerStyle={{ position: 'absolute', top: 6, right: 115 }}
             /> }
         </View>
 

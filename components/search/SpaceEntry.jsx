@@ -20,7 +20,7 @@ const SpaceEntry = ({ navigation, space }) => {
           marginVertical: 10,
         }}
         title={space.space_name}
-        onPress={() => navigation.navigate('Space', {
+        onPress={() => navigation.navigate('Space1', {
           space_name: space.space_name,
           admin: true,
           username,

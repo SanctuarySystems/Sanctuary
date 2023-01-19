@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <UsernameContext.Provider value={username}>
+      <UsernameContext.Provider value={{ username, setUsername }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
           <Stack.Screen name="Login Screen" component={LoginScreen} setUsername={setUsername} />

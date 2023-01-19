@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 
-const Comment = ({ username, body, pops, setShowModal }) => {
+const Comment = ({ username, body, pops, setShowModal, date }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
@@ -11,7 +11,11 @@ const Comment = ({ username, body, pops, setShowModal }) => {
     if (popped === false) {
       if (plopped === true) {
         setPlopped(false);
-        setPop(pop + 2);
+        if (pop === 1) {
+          setPop(pop + 1);
+        } else {
+          setPop(pop + 2);
+        }
       } else {
         setPop(pop + 1);
       }
@@ -23,24 +27,35 @@ const Comment = ({ username, body, pops, setShowModal }) => {
   };
 
   const handlePlop = () => {
-    if (plopped === false) {
-      if (popped === true) {
-        setPopped(false);
-        setPop(pop - 2);
+    if (pop > 1 || (popped === true && pop > 2)) {
+      if (plopped === false) {
+        if (popped === true) {
+          if (popped === 2) {
+            setPopped(false);
+            setPop(pop - 1);
+          } else {
+            setPopped(false);
+            setPop(pop - 1);
+          }
+        } else {
+          setPop(pop - 1);
+        }
+        setPlopped(true);
       } else {
-        setPop(pop - 1);
+        setPop(pop + 1);
+        setPlopped(false);
       }
-      setPlopped(true);
-    } else {
-      setPop(pop + 1);
-      setPlopped(false);
     }
   };
 
   return (
     <View style={styles.comment}>
       <Text>{body}</Text>
-      <Text style={styles.username}>{username}</Text>
+      <View style={styles.info}>
+        <Text style={styles.username}>{username}</Text>
+        <Entypo name="dot-single" size={24} color="black" />
+        <Text>{new Date(date).toLocaleString("en-us", { month: "short", day: "numeric" })}</Text>
+      </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
         <Entypo name="dots-three-horizontal" size={24} color="black" />
       </TouchableOpacity>
@@ -48,7 +63,7 @@ const Comment = ({ username, body, pops, setShowModal }) => {
         <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
           <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.popCount}>{pop > 1 ? pop : 1}</Text>
+        <Text style={styles.popCount}>{pop}</Text>
         <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
           <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
         </TouchableOpacity>
@@ -68,10 +83,12 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  username: {
+  info: {
     position: 'absolute',
-    top: 10,
+    top: 0,
     left: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   vote: {
     flexDirection: 'row',

@@ -66,7 +66,7 @@ const SpacesForm = ({ navigation }) => {
         containerStyle={{
           marginHorizontal: 50,
           height: 50,
-          width: 300,
+          width: 350,
           marginVertical: 10,
         }}
         title="Submit"
@@ -78,6 +78,7 @@ const SpacesForm = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FEF1E6',
     flex: 1,
     alignItems: 'center',
   },

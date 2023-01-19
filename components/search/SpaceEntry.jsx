@@ -9,10 +9,10 @@ const SpaceEntry = ({ navigation, space }) => {
     <View>
       <Button
         buttonStyle={{
-          backgroundColor: 'rgba(111, 202, 186, 1)',
+          backgroundColor: '#FFB085',
           borderRadius: 5,
         }}
-        titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+        titleStyle={{ fontWeight: 'bold', fontSize: 23, color: 'rgb(99, 99, 99)' }}
         containerStyle={{
           marginHorizontal: 50,
           height: 50,

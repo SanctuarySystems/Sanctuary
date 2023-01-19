@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: "#9AC4F8",
+    backgroundColor: "#90AACB",
   },
   headerTintColor: "white",
   headerBackTitle: "Back",

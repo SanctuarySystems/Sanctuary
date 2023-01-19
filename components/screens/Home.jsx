@@ -27,13 +27,8 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
       {allConfessions.length !== 0 &&
         <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />}
-      <Button
-        title="Go to Comments Page"
-        onPress={() => navigation.navigate('Comments')}
-      />
     </View>
   );
 };

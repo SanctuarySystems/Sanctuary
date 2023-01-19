@@ -7,7 +7,7 @@ import { UsernameContext } from "../../App.js";
 const windowWidth = Dimensions.get('window').width;
 
 const Rooms = ({navigation}) => {
-  const {username} = React.useContext(UsernameContext);
+  const {username, setUsername } = React.useContext(UsernameContext);
   const [spaces, setSpaces] = React.useState(['space1', 'space2']);
   const [adminSpaces, setAdminSpaces] = React.useState([]);
   React.useEffect(() => {

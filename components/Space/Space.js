@@ -22,6 +22,7 @@ const Space = ({route, navigation}) => {
   const [editSpaceDescription, setEditSpaceDescription] = React.useState('space description');
   const [editSpaceGuidelines, setEditSpaceGuidelines] = React.useState('GUIDELINES');
   const [disableEdit, setDisableEdit] = React.useState(true);
+  const [confessions, setConfessions] = React.useState([]);
   const banUser = (user_name, space_name) => {
     //wrong url for banning
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${user_name}/remove`)
@@ -84,6 +85,8 @@ const Space = ({route, navigation}) => {
           setLeaveJoin(1);
         }
       }).catch((err) => console.log(err))
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
+    .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
 
   }, []);
 
@@ -135,9 +138,9 @@ const Space = ({route, navigation}) => {
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
       {tab === 0 && <View style={{ flex: 7.5 }} >
-        <Comments />
+        <ConfessionList allConfessions={confessions}isRoom={true} nav={navigation} />
       </View>}
-      {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
+      {tab === 1 && <View style={{ flex: 8, padding:4}}><Text style={{fontSize:18}}>{spaceGuidelines}</Text></View>}
       {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%'}} >
         <ScrollView style={{paddingTop:'4%'}}>
         {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
@@ -149,22 +152,22 @@ const Space = ({route, navigation}) => {
         </TouchableOpacity>
       </View>}
 
-      <Modal visible={modalVisible} animationType='slide' style={{flex:1}}>
+      <Modal visible={modalVisible} animationType='slide' style={{flex:1, backgroundColor:'#fef1e6'}}>
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
-          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', backgroundColor:'#fef1e6'}}>
             <TouchableOpacity onPress={() => {setModalVisible(false)}}>
-            <Icon name="md-close" size='35%'/>
+            <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text>Write a confession.</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#90aacb'}}>Write a confession.</Text>
             <TouchableOpacity disabled={disablePost} style={[disablePost ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() => createConfession(route.params.username, writeConfession, route.params.space_name )}>
               <Text style={styles.leavejoinText}>post</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 10}}>
-            <TextInput style={{padding:10, backgroundColor:'pink',
-        borderTopColor: '#000000',
-        borderTopWidth: 1,}} multiline onChangeText={text => {changeWriteConfession(text)}} value={writeConfession} />
+            <TextInput placeholder="Write your confession here." style={{padding:10,
+        borderTopColor: '#90aacb',
+        borderTopWidth: 2, fontSize:20}} multiline onChangeText={text => {changeWriteConfession(text)}} value={writeConfession} />
           </View>
         </SafeAreaView>
       </Modal>
@@ -172,24 +175,24 @@ const Space = ({route, navigation}) => {
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
           <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
             <TouchableOpacity onPress={() => {setEditMode(false)}}>
-            <Icon name="md-close" size='35%'/>
+            <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text>Edit Space Information</Text>
+            <Text style={{fontSize: 18, fontWeight:'bold', color: '#90aacb'}}>Edit Space Information</Text>
             <TouchableOpacity disabled={disableEdit} style={[disableEdit ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() =>  updateSpaceDetails(editSpaceDescription, editSpaceGuidelines.split('\n'))}>
               <Text style={styles.leavejoinText}>update</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 2}}>
-            <Text>Edit Description:</Text>
-            <TextInput style={{padding:10, backgroundColor:'#f0f8ff',
-        borderTopColor: '#000000',
+            <Text style={{fontSize: 20, color: '#90aacb'}}>Edit Description:</Text>
+            <TextInput style={{padding:10, fontSize:16,
+        borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
           </View>
           <View style={{flex:11}}>
-            <Text>Edit Guidelines:</Text>
-            <TextInput style={{padding:10, backgroundColor:'#f0f8ff',
-        borderTopColor: '#000000',
+            <Text style={{fontSize:20, color: '#90aacb'}}>Edit Guidelines:</Text>
+            <TextInput style={{padding:10, fontSize:18,
+        borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceGuidelines(text)} value={editSpaceGuidelines} />
           </View>
         </SafeAreaView>
@@ -202,7 +205,7 @@ const Space = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#fef1e6',
     // alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
   leavejoinContainer:{
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#734f96",
+    borderColor: "#90aacb",
     borderRadius: 10,
     paddingVertical: 7,
     marginTop: 2,
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
   },
   leavejoinText: {
     fontSize: 14,
-    color: "#734f96",
+    color: "#90aacb",
     // fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center'
@@ -237,7 +240,7 @@ const styles = StyleSheet.create({
   leavejoinContainerOpaque:{
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#734f96",
+    borderColor: "#90aacb",
     borderRadius: 10,
     paddingVertical: 7,
     marginTop: 2,

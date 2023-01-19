@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/navigation/HomeScreen.jsx';
 
+export const UsernameContext = React.createContext();
+
 const App = () => {
+  const [username, setUserName] = useState('lookingforcalm');
+
   return (
     <NavigationContainer>
-      <HomeScreen />
+      <UsernameContext.Provider value={username}>
+        <HomeScreen />
+      </UsernameContext.Provider>
     </NavigationContainer>
   );
 };

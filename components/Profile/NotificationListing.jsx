@@ -21,13 +21,13 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const handleBan = () => {
     setIsReported(true);
 
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
-      .then(({ data }) => {
-        setUserData(data);
-        setSpaceData(data.spaces_joined);
-        setCreated(data.spaces_created);
-      })
-      .catch((err) => console.log('axios error in profile', err));
+    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
+    //   .then(({ data }) => {
+    //     setUserData(data);
+    //     setSpaceData(data.spaces_joined);
+    //     setCreated(data.spaces_created);
+    //   })
+    //   .catch((err) => console.log('axios error in profile', err));
 
     let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
     temporaryCookie.push({

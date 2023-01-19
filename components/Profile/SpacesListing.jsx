@@ -27,7 +27,6 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
       </View>
       <View>
         { spaceData.created_by === currentUser &&
-          // <Text>you are an admin!</Text>
           <Button
             title="Admin"
             disabled

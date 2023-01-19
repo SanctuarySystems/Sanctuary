@@ -32,6 +32,7 @@ const MainStackNavigator = ({ setUsername }) => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Test Page" component={TestPage} />
       <Stack.Screen name="Comments" component={Comments} />
+      <Stack.Screen name="Home Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />

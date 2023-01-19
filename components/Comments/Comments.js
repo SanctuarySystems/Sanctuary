@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
 
 const Comments = () => {
-  const [comments, setComments] = useState([
-    { username: 'notMax', body: `I'm a comment1`, pops: 3, id: 1 },
-    { username: 'notChad', body: `I'm a comment2`, pops: 4, id: 2 },
-    { username: 'notKimberly', body: `I'm a comment3`, pops: 6, id: 3 },
-    { username: 'notWarren', body: `I'm a comment4`, pops: 4, id: 4 },
-    { username: 'notSai', body: `I'm a comment5`, pops: 10, id: 5 },
-    { username: 'notJoseph', body: `I'm a comment6`, pops: 7, id: 6 },
-    { username: 'notJustin', body: `I'm a comment7`, pops: 1, id: 7 },
-  ]);
+  const [confession, setConfession] = useState();
+
+  useEffect(() => {
+    axios.get('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions')
+      .then((res) => {
+        setConfession(res.data[0]);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const [showModal, setShowModal] = useState(false);
 
-  const add = (comment) => {
-    const copy = [...comments];
-    const obj = { ...comment };
-    obj.id = copy.length + 1;
-    copy.push(comment);
-    setComments(copy);
+  const add = (inputComment) => {
+    const copy = [...confession.comments];
+    copy.push(inputComment);
+    const obj = { ...confession };
+    obj.comments = copy;
+    setConfession(obj);
   };
 
   return (
     <View style={styles.screen}>
-      <Modal visible={showModal} transparent={true}>
+      <Modal visible={showModal} transparent>
         <View style={styles.modal}>
           <SafeAreaView style={styles.report}>
             <TouchableOpacity style={styles.reportButton} onPress={() => setShowModal(false)}>
@@ -36,15 +37,16 @@ const Comments = () => {
           </SafeAreaView>
         </View>
       </Modal>
+      {typeof confession === 'object' && (
       <FlatList
         nestedScrollEnabled
-        ListHeaderComponent={<DetailedConfession />}
+        ListHeaderComponent={<DetailedConfession setShowModal={setShowModal} />}
         keyExtractor={(comment) => comment.id}
-        data={comments.sort((a, b) => b.pops - a.pops)}
-        renderItem={({ item }) =>
-          <Comment username={item.username} body={item.body} pops={item.pops} setShowModal={setShowModal}/>
-        }
+        data={confession.comments.sort((a, b) => b.pops - a.pops)}
+        // eslint-disable-next-line max-len
+        renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} />}
       />
+      )}
       <AddComment add={add} />
     </View>
   );

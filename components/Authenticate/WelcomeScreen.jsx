@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
+export const UsernameContext = React.createContext();
+
 const WelcomeScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('lookingforpeace');
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -10,12 +14,16 @@ const WelcomeScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Login"
-          onPress={() => navigation.navigate('Login Screen')}
+          onPress={() => navigation.navigate('Login Screen', {
+            setUsername,
+          })}
           style={styles.button}
         />
         <Button
           title="Sign Up"
-          onPress={() => navigation.navigate('Sign Up Screen')}
+          onPress={() => navigation.navigate('Sign Up Screen', {
+            setUsername,
+          })}
           style={styles.button}
         />
         <Button

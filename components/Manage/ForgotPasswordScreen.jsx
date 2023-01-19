@@ -1,32 +1,20 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet } from 'react-native';
-import * as firebase from 'firebase/app';
+import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
 
-const ChangePasswordScreen = ({ navigation }) => {
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const ForgotPasswordScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
-    if (newPassword !== confirmPassword) {
-      setErrorMessage("Passwords do not match, please try again.");
-      return;
-    }
     try {
-      const user = await authentication.currentUser;
-      const credential = firebase.auth.EmailAuthProvider.credential(
-        user.email,
-        oldPassword,
-      );
-      await user.reauthenticateWithCredential(credential);
-
-      await user.updatePassword(newPassword);
-      console.log('Password changed successfully');
-      navigation.navigate('Home Screen');
+      await sendPasswordResetEmail(authentication, email);
+      setErrorMessage("A password reset link has been sent to your email.");
+      navigation.navigate('Login Screen');
     } catch (error) {
-      console.log(error);
+      console.log('error');
+      setErrorMessage(error.message);
     }
   };
 
@@ -34,26 +22,16 @@ const ChangePasswordScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.header}>Sanctuary</Text>
       <View style={styles.inputContainer}>
+        <Text>Enter your email below to reset your password</Text>
         <TextInput
           style={styles.inputBox}
-          placeholder="Old Password"
-          onChangeText={(text) => setOldPassword(text)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="New Password"
-          secureTextEntry
-          onChangeText={(text) => setNewPassword(text)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Confirm New Password"
-          onChangeText={(text) => setConfirmPassword(text)}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
         />
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+        <Button style={styles.button} title="Submit" onPress={handleSubmit} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -101,5 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default ChangePasswordScreen;
+export default ForgotPasswordScreen;

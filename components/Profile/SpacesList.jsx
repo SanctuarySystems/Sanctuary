@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import SpacesListing from './SpacesListing';
 
@@ -21,7 +21,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         showCancel
         cancelButtonTitle="Cancel"
         cancelButtonProps={{}}
-        onCancel={() => console.log('cancelling')}
+        onCancel={() => setSearchTerm('')}
         value={searchTerm}
       />
 
@@ -36,7 +36,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
 
             return (
               <View style={{ padding: 10 }}>
-                <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+                <SpacesListing key={item} currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
               </View>
             );
           })}

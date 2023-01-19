@@ -9,21 +9,34 @@ const Notifications = ({ route, navigation }) => {
 
   React.useEffect(() => {
     const reportArray = [];
+    console.log('spaces', spaces);
 
     spaces.map(async (space) => {
       await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
         .then(({ data }) => {
-          reportArray.push(data[0]);
-          setReports(reportArray);
+          if (data[0]) {
+            reportArray.push(data[0]);
+            setReports(reportArray);
+            console.log('reportArray within notif useeffect', data[0]);
+          }
         })
         .catch((err) => console.log('axios error in notifications', err));
     });
+
+    setUnreadNofits(reports.length);
   }, [route]);
+
+  if (reports.length === 0) return;
 
   return (
     <View style={{ padding: 10 }}>
       {
         reports.map((confession) => {
+
+          if (!confession) return;
+
+          console.log('confession', confession);
+
           if (confession.reported.length > 0) {
             if (reportedCookie._z) {
               for (let i = 0; i < reportedCookie._z.length; i++) {
@@ -39,6 +52,7 @@ const Notifications = ({ route, navigation }) => {
 
             return (
               <NotificationListing
+                key={confession.confession_id}
                 navigation={navigation}
                 reported={confession.created_by}
                 reportedBy={confession.reported[0]}
@@ -65,6 +79,7 @@ const Notifications = ({ route, navigation }) => {
 
               return (
                 <NotificationListing
+                  key={comment.comment_id}
                   navigation={navigation}
                   reported={comment.created_by}
                   reportedBy={comment.reported[0]}

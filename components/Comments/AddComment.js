@@ -45,28 +45,24 @@ const styles = StyleSheet.create({
   input: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%',
-    padding: 5,
+    width: '95%',
+    padding: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '2%',
     marginBottom: '2%',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: '15%',
     backgroundColor: 'white',
   },
   addButton: {
-    backgroundColor: 'white',
-    width: '30%',
     alignItems: 'center',
-    borderWidth: 2,
-    borderRadius: '15%',
     padding: 3,
     flex: 1,
     justifyContent: 'center',
   },
   textInput: {
-    flex: 4,
+    flex: 5,
   },
 });
 

@@ -21,7 +21,8 @@ const Comments = () => {
 
   const add = (inputComment) => {
     const copy = [...confession.comments];
-    copy.push(inputComment);
+    const inputCopy = { ...inputComment, comment_id: confession.comments.length + 1, reported: [] };
+    copy.push(inputCopy);
     const obj = { ...confession };
     obj.comments = copy;
     setConfession(obj);
@@ -29,14 +30,14 @@ const Comments = () => {
 
   return (
     <View style={styles.screen}>
-      <Modal visible={showModal} transparent>
-        <View style={styles.modal}>
-          <SafeAreaView style={styles.report}>
-            <TouchableOpacity style={styles.reportButton} onPress={() => setShowModal(false)}>
+      <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+        <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+          <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+            <TouchableOpacity style={styles.reportButton} onPressOut={() => setShowModal(false)} onPress={() => setShowModal(false)}>
               <Text>Report</Text>
             </TouchableOpacity>
           </SafeAreaView>
-        </View>
+        </TouchableOpacity>
       </Modal>
       {typeof confession === 'object' && (
       <>
@@ -45,7 +46,7 @@ const Comments = () => {
           ListHeaderComponent={<DetailedConfession username={confession.created_by} date={confession.createdAt} space={confession.space_name} body={confession.confession} setShowModal={setShowModal} />}
           keyExtractor={(comment) => comment.id}
           data={confession.comments.sort((a, b) => b.pops - a.pops)}
-          renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} />}
+          renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
         />
         <AddComment add={add} />
       </>
@@ -58,22 +59,30 @@ const styles = StyleSheet.create({
   screen: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#DEF3FD',
+    backgroundColor: 'grey',
   },
   modal: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    width: '100%',
+    backgroundColor: 'red',
+  },
+  viewModal: {
+    marginTop: 'auto',
+    backgroundColor: 'transparent',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   report: {
+    width: '100%',
+    marginTop: 'auto',
+    height: '20%',
     backgroundColor: 'white',
     borderWidth: 2,
-    borderRadius: 3,
   },
   reportButton: {
+    marginTop: 10,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     padding: '7%',
+    borderWidth: 1,
   },
 });
 

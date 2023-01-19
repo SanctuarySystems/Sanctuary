@@ -30,13 +30,9 @@ const styles = StyleSheet.create({
     padding: '15%',
     marginBottom: '3%',
   },
-  username: {
-    position: 'absolute',
-    left: 10,
-  },
   dots: {
     position: 'absolute',
-    top: 10,
+    top: 5,
     right: 15,
   },
   info: {

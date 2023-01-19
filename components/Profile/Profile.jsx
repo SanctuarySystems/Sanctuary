@@ -25,6 +25,7 @@ const Profile = ({ navigation }) => {
   const [created, setCreated] = React.useState([]);
   const [reportedCookie, setReportedCookie] = React.useState([]);
   const [unreadNotifs, setUnreadNofits] = React.useState(0);
+  const [loadedNotifsNum, setLoadedNotifsNum] = React.useState(false);
 
   React.useEffect(() => {
     // grab user data
@@ -68,6 +69,8 @@ const Profile = ({ navigation }) => {
               reportedCookie: reportedCookie,
               unreadNotifs: unreadNotifs,
               setUnreadNofits: setUnreadNofits,
+              loadedNotifsNum: loadedNotifsNum,
+              setLoadedNotifsNum: setLoadedNotifsNum,
             })}
           />
           { unreadNotifs > 0 &&

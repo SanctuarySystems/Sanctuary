@@ -42,7 +42,7 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
             <Text style={styles.leavejoinText}>ban</Text>
           </TouchableOpacity>}
           {isUser &&
-           <TouchableOpacity style={styles.leavejoinContainerAdmin}>
+           <TouchableOpacity disabled={true}style={styles.leavejoinContainerAdmin}>
            <Text style={styles.leavejoinTextAdmin}>admin</Text>
           </TouchableOpacity>}
         </View>

@@ -25,13 +25,16 @@ const Space = ({route, navigation}) => {
   const [confessions, setConfessions] = React.useState([]);
   const banUser = (user_name, space_name) => {
     //wrong url for banning
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${user_name}/remove`)
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${user_name}/ban`)
     .then(() => {
       axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space_name}`)
       .then((data) => {
         setNumMembers(data.data[0].members.length);
         setSpaceMembers(data.data[0].members);
       }).catch((err) => console.log(err));
+      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
+      .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
+
     }).catch((err) => console.log(err));
   }
 
@@ -39,6 +42,7 @@ const Space = ({route, navigation}) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/remove`)
       .then(() => {
         setLeaveJoin(0);
+        setNumMembers(numMembers-1)
       }).catch((err) => console.log(err));
   }
 
@@ -46,6 +50,7 @@ const Space = ({route, navigation}) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/add`)
       .then(() => {
         setLeaveJoin(1);
+        setNumMembers(numMembers+1)
       }).catch((err) => console.log(err));
   }
 
@@ -113,10 +118,10 @@ const Space = ({route, navigation}) => {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
-      <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%'}}>
+      <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%', paddingTop: '2%'}}>
         <View>
-          <Text style={{fontSize: '20%'}}>{route.params.space_name}</Text>
-          <Text>{numMembers} Members</Text>
+          <Text style={{fontSize: '20%', fontWeight:'bold'}}>{route.params.space_name}</Text>
+          <Text style={{color: 'rgba(0,0,0,0.7)'}}>{numMembers} {'Member(s)'}</Text>
         </View>
         {(leavejoin===0 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => joinSpace(route.params.username, route.params.space_name)}>
           <Text style={styles.leavejoinText}>join</Text>
@@ -128,33 +133,36 @@ const Space = ({route, navigation}) => {
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
       </View>
-      <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%'}} >
+      <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
         <Text>{spaceDescription} </Text>
       </View>
       <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>FEED</Text>
-        <Text style={[tab !== 1? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(1)}}>GUIDELINES</Text>
-        {isAdmin && <Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>MEMBERS</Text>}
+        <View style={[tab !== 0? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>Feed</Text></View>
+        <View style={[tab !== 1? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 1? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(1)}}>Guidelines</Text></View>
+        {isAdmin && <View style={[tab !== 2? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>Members</Text></View>}
       </View >
       {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
-      {tab === 0 && <View style={{ flex: 7.5 }} >
-        <ConfessionList allConfessions={confessions}isRoom={true} nav={navigation} />
-      </View>}
-      {tab === 1 && <View style={{ flex: 8, padding:4}}><Text style={{fontSize:18}}>{spaceGuidelines}</Text></View>}
-      {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%'}} >
-        <ScrollView style={{paddingTop:'4%'}}>
-        {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
-        </ScrollView>
+      <View style={{flex: 8, }}>
+
+        {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
+          <ConfessionList allConfessions={confessions}isRoom={true} nav={navigation} />
         </View>}
-      {tab === 0 && <View style={{flex: 0.5, alignItems:'center'}}>
-        <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-          <Icon name="md-create-outline" size='35%'/>
-        </TouchableOpacity>
-      </View>}
+        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4}}>{spaceGuidelines}</Text></View>}
+        {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >
+          <ScrollView style={{paddingTop:'4%'}}>
+          {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
+          </ScrollView>
+          </View>}
+        {tab === 0 && <View style={{flex: 0.5, alignItems:'center'}}>
+          <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+            <Icon name="md-create-outline" size='35%'/>
+          </TouchableOpacity>
+        </View>}
+      </View>
 
       <Modal visible={modalVisible} animationType='slide' style={{flex:1, backgroundColor:'#fef1e6'}}>
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
-          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', backgroundColor:'#fef1e6'}}>
+          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', backgroundColor:'#fef1e6', paddingRight:'2%', paddingLeft: '2%'}}>
             <TouchableOpacity onPress={() => {setModalVisible(false)}}>
             <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
@@ -173,7 +181,7 @@ const Space = ({route, navigation}) => {
       </Modal>
       <Modal visible={editMode} animationType='slide' style={{flex:1}}>
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
-          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginLeft: '2%', marginRight: '2%'}}>
             <TouchableOpacity onPress={() => {setEditMode(false)}}>
             <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
@@ -184,14 +192,14 @@ const Space = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{flex: 2}}>
-            <Text style={{fontSize: 20, color: '#90aacb'}}>Edit Description:</Text>
-            <TextInput style={{padding:10, fontSize:16,
+            <Text style={{fontSize: 20, color: '#90aacb', paddingLeft:'4%'}}>Edit Description:</Text>
+            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%',
         borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
           </View>
           <View style={{flex:11}}>
-            <Text style={{fontSize:20, color: '#90aacb'}}>Edit Guidelines:</Text>
-            <TextInput style={{padding:10, fontSize:18,
+            <Text style={{fontSize:20, color: '#90aacb', paddingLeft:'4%'}}>Edit Guidelines:</Text>
+            <TextInput style={{padding:10, fontSize:18, paddingLeft: '5%',
         borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceGuidelines(text)} value={editSpaceGuidelines} />
           </View>
@@ -215,10 +223,23 @@ const styles = StyleSheet.create({
   },
   selectedTab: {
     fontSize:'18%',
-    textDecorationLine: 'underline'
+    textDecorationThickness: '2%',
+    color: '#90aacb',
+    fontWeight: 'bold',
+  },
+  selectedTabView: {
+    borderBottomWidth: '3px',
+    borderBottomColor: '#90aacb',
+    paddingBottom: 1,
   },
   unselectedTab: {
-    fontSize:'18%'
+    fontSize:'18%',
+    color: 'rgba(0,0,0,0.5)',
+
+  },
+  unselectedTabView: {
+    color: 'rgba(0,0,0,0.5)',
+    paddingBottom: 1,
   },
   leavejoinContainer:{
     // backgroundColor: "#009688",

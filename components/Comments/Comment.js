@@ -1,50 +1,61 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import moment from 'moment';
+import axios from 'axios';
 
-const Comment = ({ username, body, pops, setShowModal, date }) => {
+const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
 
   const handlePop = () => {
+    console.log(commentId);
     if (popped === false) {
-      if (plopped === true) {
-        setPlopped(false);
-        if (pop === 1) {
-          setPop(pop + 1);
-        } else {
-          setPop(pop + 2);
-        }
-      } else {
+      if (plopped === false) {
+        setPopped(true);
         setPop(pop + 1);
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+          .catch((err) => console.error(err));
+      } else {
+        setPopped(true);
+        setPlopped(false);
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+          .catch((err) => console.error(err));
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+          .catch((err) => console.error(err));
+        setPop(pop + 2);
       }
-      setPopped(true);
     } else {
-      setPop(pop - 1);
+      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+        .catch((err) => console.error(err));
       setPopped(false);
+      setPop(pop - 1);
     }
   };
 
   const handlePlop = () => {
-    if (pop > 1 || (popped === true && pop > 2)) {
-      if (plopped === false) {
-        if (popped === true) {
-          if (popped === 2) {
-            setPopped(false);
-            setPop(pop - 1);
-          } else {
-            setPopped(false);
-            setPop(pop - 1);
-          }
-        } else {
-          setPop(pop - 1);
-        }
+    console.log(commentId);
+    if (plopped === false) {
+      if (popped === false) {
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+          .catch((err) => console.error(err));
         setPlopped(true);
+        setPop(pop - 1);
       } else {
-        setPop(pop + 1);
-        setPlopped(false);
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+          .catch((err) => console.error(err));
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+          .catch((err) => console.error(err));
+        setPlopped(true);
+        setPopped(false);
+        setPop(pop - 2);
       }
+    } else {
+      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+        .catch((err) => console.error(err));
+      setPlopped(false);
+      setPop(pop + 1);
     }
   };
 
@@ -54,7 +65,7 @@ const Comment = ({ username, body, pops, setShowModal, date }) => {
       <View style={styles.info}>
         <Text style={styles.username}>{username}</Text>
         <Entypo name="dot-single" size={24} color="black" />
-        <Text>{new Date(date).toLocaleString("en-us", { month: "short", day: "numeric" })}</Text>
+        <Text>{moment(date).fromNow()}</Text>
       </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
         <Entypo name="dots-three-horizontal" size={24} color="black" />
@@ -102,8 +113,8 @@ const styles = StyleSheet.create({
   },
   dots: {
     position: 'absolute',
-    top: 10,
     right: 15,
+    top: 5,
   },
   pop: {
     backgroundColor: 'lightgreen',

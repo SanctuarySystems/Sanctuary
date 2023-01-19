@@ -6,7 +6,7 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
-const MemberInfo = ({ space_name, username }) => {
+const MemberInfo = ({ space_name, username, banUser }) => {
   const [reported, setReported] = React.useState(0);
   const [reports, setReports] = React.useState(0);
   const [confessions, setConfessions] = React.useState(0);
@@ -33,7 +33,7 @@ const MemberInfo = ({ space_name, username }) => {
   }, []);
 
   return (
-    <View>
+    <View style={{paddingBottom:'3%'}}>
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={styles.username}>{username}</Text>
@@ -53,12 +53,13 @@ const MemberInfo = ({ space_name, username }) => {
           <View style={styles.modal}>
             <Text>Ban user </Text>
             <Text style={{fontWeight:"bold"}}>{username}</Text>
-            <Text>, from space "{space_name}"?</Text>
+            <Text>from space </Text>
+            <Text style={{fontWeight:'bold'}}>{space_name}?</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <TouchableOpacity style={styles.leavejoinContainer} onPress={()=>setBanModal(false)}>
                 <Text style={styles.leavejoinText}>No</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.leavejoinContainer}>
+              <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {banUser(username, space_name); setBanModal(false);}}>
                 <Text style={styles.leavejoinText}>Ban</Text>
               </TouchableOpacity>
             </View>
@@ -75,11 +76,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     backgroundColor: 'cornflowerblue',
-    padding: 3,
+    padding: '4%',
     paddingLeft: '4%',
     paddingRight: '4%',
     marginBottom: '4%',
-    borderRadius: 5,
+    borderRadius: 12,
   },
   username: {
     fontSize: 16,

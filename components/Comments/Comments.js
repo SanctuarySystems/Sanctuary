@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Modal, TouchableOpacity } from 'react-native';
@@ -38,16 +39,17 @@ const Comments = () => {
         </View>
       </Modal>
       {typeof confession === 'object' && (
-      <FlatList
-        nestedScrollEnabled
-        ListHeaderComponent={<DetailedConfession setShowModal={setShowModal} />}
-        keyExtractor={(comment) => comment.id}
-        data={confession.comments.sort((a, b) => b.pops - a.pops)}
-        // eslint-disable-next-line max-len
-        renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} />}
-      />
+      <>
+        <FlatList
+          nestedScrollEnabled
+          ListHeaderComponent={<DetailedConfession username={confession.created_by} space={confession.space_name} body={confession.confession} setShowModal={setShowModal} />}
+          keyExtractor={(comment) => comment.id}
+          data={confession.comments.sort((a, b) => b.pops - a.pops)}
+          renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} />}
+        />
+        <AddComment add={add} />
+      </>
       )}
-      <AddComment add={add} />
     </View>
   );
 };

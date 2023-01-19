@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-const DetailedConfession = ({ setShowModal }) => {
+const DetailedConfession = ({ username, space, body, setShowModal }) => {
   return (
     <View style={styles.confession}>
-      <Text style={styles.username}>addicted2code</Text>
-      <Text>I am a Detailed confession.</Text>
+      <Text>{space}</Text>
+      <Text style={styles.username}>{username}</Text>
+      <Text>{body}</Text>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
         <Entypo name="dots-three-horizontal" size={24} color="black" />
       </TouchableOpacity>

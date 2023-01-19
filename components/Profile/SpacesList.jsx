@@ -1,16 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import SpacesListing from './SpacesListing';
-
-// const styles = StyleSheet.create({
-//   input: {
-//     height: 40,
-//     margin: 12,
-//     borderWidth: 1,
-//     padding: 10,
-//   },
-// });
 
 const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -22,8 +13,6 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         containerStyle={{}}
         inputContainerStyle={{}}
         inputStyle={{}}
-        leftIconContainerStyle={{}}
-        rightIconContainerStyle={{}}
         loadingProps={{}}
         onChangeText={(newVal) => setSearchTerm(newVal)}
         onClearText={() => setSearchTerm('')}
@@ -32,14 +21,13 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         showCancel
         cancelButtonTitle="Cancel"
         cancelButtonProps={{}}
-        onCancel={() => console.log('cancelling')}
+        onCancel={() => setSearchTerm('')}
         value={searchTerm}
       />
 
       <View>
         { spaceArray.length === 0 &&
-          <Text>You're not in any spaces!</Text>
-        }
+          <Text style={{ position: 'relative' }}>You're not in any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();
@@ -48,11 +36,10 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
 
             return (
               <View style={{ padding: 10 }}>
-                <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+                <SpacesListing key={item} currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
               </View>
             );
-          })
-        }
+          })}
       </View>
     </View>
   );

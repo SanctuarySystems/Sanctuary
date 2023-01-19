@@ -93,7 +93,7 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
               source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
-              onPress={() => console.log('editing avatar')}
+              onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
             />
           </View>
           {/* USERNAME */}

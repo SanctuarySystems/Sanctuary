@@ -47,6 +47,7 @@ const Notifications = ({ route, navigation }) => {
 
             return (
               <NotificationListing
+                key={confession.confession_id}
                 navigation={navigation}
                 reported={confession.created_by}
                 reportedBy={confession.reported[0]}
@@ -73,6 +74,7 @@ const Notifications = ({ route, navigation }) => {
 
               return (
                 <NotificationListing
+                  key={comment.comment_id}
                   navigation={navigation}
                   reported={comment.created_by}
                   reportedBy={comment.reported[0]}

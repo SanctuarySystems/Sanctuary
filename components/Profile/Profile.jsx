@@ -13,7 +13,6 @@ const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('reported');
     return jsonValue ? JSON.parse(jsonValue) : null;
-    // await AsyncStorage.clear();
   } catch (e) {
     console.log(e);
   }
@@ -36,9 +35,13 @@ const Profile = ({ navigation }) => {
         setCreated(data.spaces_created);
       })
       .catch((err) => console.log('axios error in profile', err));
+
+    AsyncStorage.clear();
+
     // grab localstorage cookies for viewed notifications every 30k seconds
     setInterval(() => {
       setReportedCookie(getData());
+      console.log("reportedCookie", reportedCookie._z);
     }, 30000);
   }, []);
 
@@ -48,93 +51,88 @@ const Profile = ({ navigation }) => {
       // stickyHeaderIndices={[2]}
     >
       <View>
-        <View style={{ height: '100%' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '7%' }}>
-            {/* LOG OUT BUTTON */}
-            <Button
-              title="Log out"
-              type="clear"
-              onPress={() => navigation.navigate('Welcome Screen')}
-            />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '18%' }}>
+          {/* LOG OUT BUTTON */}
+          <Button
+            title="Log out"
+            type="clear"
+            onPress={() => navigation.navigate('Welcome Screen')}
+          />
 
-            {/* NOTIFICATIONS */}
-            <Button
-              title="Notifications"
-              type="clear"
-              onPress={() => navigation.navigate('Notifications', {
-                spaces: created,
-                reportedCookie: reportedCookie,
-                unreadNotifs: unreadNotifs,
-                setUnreadNofits: setUnreadNofits,
-              })}
-            />
-            { unreadNotifs > 0 &&
-              <Badge
-                status="error"
-                value={unreadNotifs}
-                // containerStyle={{ position: 'absolute', top: 6, right: 115 }}
-              /> }
-          </View>
-
-          <View style={{ flexDirection: 'column', height: '25%' }}>
-            <View style={{ flex: 1, alignContent: 'center' }}>
-              {/* AVATAR */}
-              <Avatar
-                size={100}
-                rounded
-                containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
-                source={{ uri: userData.avatar }}
-              />
-              {/* EDIT AVATAR */}
-              <Avatar
-                size={25}
-                rounded
-                containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
-                source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
-                onPress={() => console.log('editing avatar')}
-              />
-            </View>
-            {/* USERNAME */}
-            <Text style={{ flex: 0.2, alignSelf: 'center', top: '1%' }}>
-              {userData.username}
-            </Text>
-          </View>
-
-          {/* TABS */}
-      <View style={{ height: '50%' }}>
-        {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
-        <Tab
-          value={currentTab}
-          dense
-          buttonStyle='View Style'
-          onChange={(e) => {
-            if (!e) {
-              console.log('showing joined');
-              setCurrentTab('joined');
-              setSpaceData(userData.spaces_joined);
-            } else {
-              console.log('showing created');
-              setCurrentTab('created');
-              setSpaceData(userData.spaces_created);
-            }
-          }}
-        >
-          <Tab.Item title='Joined Spaces' />
-          <Tab.Item title='Created Spaces' />
-        </Tab>
-
-        {/* SPACES */}
-        <SpacesList
-          currentTab={currentTab}
-          spaceArray={spaceData}
-          currentUser={userData.username}
-          navigation={navigation}
-        />
-      </View>
-
+          {/* NOTIFICATIONS */}
+          <Button
+            title="Notifications"
+            type="clear"
+            onPress={() => navigation.navigate('Notifications', {
+              spaces: created,
+              reportedCookie: reportedCookie,
+              unreadNotifs: unreadNotifs,
+              setUnreadNofits: setUnreadNofits,
+            })}
+          />
+          { unreadNotifs > 0 &&
+            <Badge
+              status="error"
+              value={unreadNotifs}
+              // containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+            /> }
         </View>
 
+        <View style={{ flexDirection: 'column', height: '70%' }}>
+          <View style={{ flex: 1, alignContent: 'center' }}>
+            {/* AVATAR */}
+            <Avatar
+              size={100}
+              rounded
+              containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
+              source={{ uri: userData.avatar }}
+            />
+            {/* EDIT AVATAR */}
+            <Avatar
+              size={25}
+              rounded
+              containerStyle={{ position: 'absolute', top: '24%', right: '37%' }}
+              source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }}
+              onPress={() => console.log('editing avatar')}
+            />
+          </View>
+          {/* USERNAME */}
+          <Text style={{ flex: 0.2, alignSelf: 'center', top: '1%' }}>
+            {userData.username}
+          </Text>
+        </View>
 
+        {/* TABS */}
+        <View style={{ height: '20%' }}>
+          {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
+          <Tab
+            value={currentTab}
+            dense
+            buttonStyle='View Style'
+            onChange={(e) => {
+              if (!e) {
+                console.log('showing joined');
+                setCurrentTab('joined');
+                setSpaceData(userData.spaces_joined);
+              } else {
+                console.log('showing created');
+                setCurrentTab('created');
+                setSpaceData(userData.spaces_created);
+              }
+            }}
+          >
+            <Tab.Item title='Joined Spaces' />
+            <Tab.Item title='Created Spaces' />
+          </Tab>
+
+          {/* SPACES */}
+          <SpacesList
+            currentTab={currentTab}
+            spaceArray={spaceData}
+            currentUser={userData.username}
+            navigation={navigation}
+          />
+        </View>
       </View>
     </ScrollView>
   );

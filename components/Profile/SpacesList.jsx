@@ -7,7 +7,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   return (
-    <ScrollView>
+    <View>
       <SearchBar
         platform="ios"
         containerStyle={{}}
@@ -21,7 +21,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
         showCancel
         cancelButtonTitle="Cancel"
         cancelButtonProps={{}}
-        onCancel={() => console.log('cancelling')}
+        onCancel={() => setSearchTerm('')}
         value={searchTerm}
       />
 
@@ -36,12 +36,12 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
 
             return (
               <View style={{ padding: 10 }}>
-                <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+                <SpacesListing key={item} currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
               </View>
             );
           })}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

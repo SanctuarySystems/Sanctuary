@@ -20,7 +20,6 @@ const Profile = ({ navigation }) => {
         setUserData(data);
         setSpaceData(data.spaces_joined);
         setCreated(data.spaces_created);
-        console.log('created', created);
       })
       .catch((err) => console.log('axios error in profile', err));
   }, []);
@@ -72,9 +71,7 @@ const Profile = ({ navigation }) => {
               />
             </View>
             {/* USERNAME */}
-            <Text
-              style={{ flex: 0.2, alignSelf: 'center', top: '10%' }}
-            >
+            <Text style={{ flex: 0.2, alignSelf: 'center', top: '10%' }}>
               {userData.username}
             </Text>
           </View>

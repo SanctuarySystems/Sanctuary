@@ -27,8 +27,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
 
       <View>
         { spaceArray.length === 0 &&
-          <Text>You're not in any spaces!</Text>
-        }
+          <Text style={{ position: 'relative' }}>You're not in any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();
@@ -40,8 +39,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
                 <SpacesListing currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
               </View>
             );
-          })
-        }
+          })}
       </View>
     </View>
   );

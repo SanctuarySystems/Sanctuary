@@ -5,9 +5,8 @@ import { Button } from '@rneui/themed';
 const NotificationListing = ({ reported, reportedBy, spaceName, commentId, confessionId, navigation }) => {
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
-      <Text>
-        {reported}'s comment in {spaceName} has been reported by {reportedBy}.
-      </Text>
+        <Text>{reported}'s comment in {spaceName} has been reported by {reportedBy}.</Text>
+
       <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'space-evenly' }}>
         <Button
           buttonStyle={{ borderRadius: 30 }}

@@ -13,7 +13,7 @@ const Notifications = ({ route, navigation }) => {
     spaces.map(async (space) => {
       await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
         .then(({ data }) => {
-          console.log('notifs', data[0]) || reports.push(data[0])
+          reports.push(data[0]);
           setReported(reports);
         })
         .catch((err) => console.log('axios error in notifications', err));
@@ -27,6 +27,7 @@ const Notifications = ({ route, navigation }) => {
           if (confession.reported.length > 0) {
             return (
               <NotificationListing
+                key={confession.confession_id}
                 navigation={navigation}
                 reported={confession.created_by}
                 reportedBy={confession.reported[0]}
@@ -39,6 +40,7 @@ const Notifications = ({ route, navigation }) => {
             confession.comments.map((comment) => {
               return (
                 <NotificationListing
+                  key={confession.confession_id}
                   navigation={navigation}
                   reported={comment.created_by}
                   reportedBy={comment.reported[0]}

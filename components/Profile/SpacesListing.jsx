@@ -6,9 +6,11 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
   const [spaceData, setSpaceData] = React.useState({});
 
   React.useEffect(() => {
+    console.log('space being called via endpoint', space);
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}`)
       .then(({ data }) => {
         setSpaceData(data[0]);
+        console.log(spaceData);
       })
       .catch((err) => console.log('err from spaceslisting', err));
   }, [space]);
@@ -23,7 +25,7 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
       </View>
       <View>
         { spaceData.created_by === currentUser &&
-          <Text>you're an admin!</Text> }
+          <Text>you are an admin!</Text> }
       </View>
       <View>
         <Button
@@ -31,9 +33,8 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
           onPress={() => console.log('lead to space') ||
             navigation.navigate('Space', {
               space_name: spaceData.space_name,
-              isAdmin: spaceData.created_by === currentUser
-            })
-          }
+              isAdmin: spaceData.created_by === currentUser,
+            })}
         />
       </View>
     </View>

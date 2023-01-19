@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, SafeAreaView, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firebase.js";
+import { UsernameContext } from '../../App.js';
 
-const LoginScreen = ({ navigation, setUsername }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { username, setUsername } = useContext(UsernameContext);
 
   const handleSubmit = async () => {
     try {
       await signInWithEmailAndPassword(authentication, email, password);
       // setUsername(authentication.currentUser.username);
       console.log('user', authentication.currentUser.displayName);
+      setUsername('TEST');
       navigation.navigate('Home Screen');
     } catch (error) {
       setErrorMessage("Incorrect email or password, please try again");

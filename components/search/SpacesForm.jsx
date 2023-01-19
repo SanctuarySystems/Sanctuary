@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
-import { Button } from '@rneui/themed';
+import { View, StyleSheet, Text } from "react-native";
+import { Button, Input } from '@rneui/themed';
 import axios from "axios";
 import { UsernameContext } from "../../App.js";
 
@@ -45,15 +45,15 @@ const SpacesForm = ({ navigation }) => {
         Create New Space
         {"\n"}
       </Text>
-      <TextInput style={styles.labels}
+      <Input style={styles.labels}
         placeholder="Space Name..."
         onChangeText={setSpaceName}
       />
-      <TextInput style={styles.labels}
+      <Input style={styles.labels}
         placeholder="Description..."
         onChangeText={setDescription}
       />
-      <TextInput style={styles.labels}
+      <Input style={styles.labels}
         placeholder="Guidelines..."
         onChangeText={setGuidelines}
       />
@@ -66,7 +66,7 @@ const SpacesForm = ({ navigation }) => {
         containerStyle={{
           marginHorizontal: 50,
           height: 50,
-          width: 300,
+          width: 350,
           marginVertical: 10,
         }}
         title="Submit"
@@ -78,13 +78,17 @@ const SpacesForm = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FEF1E6',
     flex: 1,
     alignItems: 'center',
   },
   title: {
-    fontSize: 40,
+    paddingTop: 20,
+    paddingBottom: 0,
+    fontSize: 35,
   },
   labels: {
+    padding: 10,
     fontSize: 30,
   },
 });

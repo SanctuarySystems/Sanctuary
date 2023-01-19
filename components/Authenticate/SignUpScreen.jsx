@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { View, SafeAreaView, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet  } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { authentication } from "./firebase.js";
 import GlobalStyles from '../GlobalStyles.js';
+import { UsernameContext } from '../../App.js';
 
 const auth = getAuth();
 
-const SignUpScreen = ({ navigation, setUsername }) => {
+const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { username, setUsername } = useContext(UsernameContext);
 
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
@@ -24,9 +26,9 @@ const SignUpScreen = ({ navigation, setUsername }) => {
       console.log('user', user);
       await updateProfile(user, { displayName: newUsername });
       await sendEmailVerification(user);
-      // setUsername(newUsername);
+      setUsername(newUsername);
       console.log(newUsername);
-      navigation.navigate('Home Screen');
+      navigation.navigate('Select Icon Screen');
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +46,6 @@ const SignUpScreen = ({ navigation, setUsername }) => {
         <TextInput
           style={styles.inputBox}
           placeholder="Username"
-          secureTextEntry
           onChangeText={(text) => setNewUsername(text)}
         />
         <TextInput

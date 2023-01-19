@@ -32,6 +32,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Test Page" component={TestPage} />
       <Stack.Screen name="Comments" component={Comments} />
+      <Stack.Screen name="Home Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
       <Stack.Screen name="Login Screen" component={LoginScreen} />
       <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />

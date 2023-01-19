@@ -1,8 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Image } from 'react-native';
 
-export default function ConfessionList() {
+export default function ConfessionList({ allConfessions, nav, isRoom}) {
+
+  const images = [
+    require(`../../assets/avatars/001.png`),
+    require(`../../assets/avatars/002.png`),
+    require(`../../assets/avatars/003.png`),
+    require(`../../assets/avatars/004.png`),
+    require(`../../assets/avatars/005.png`),
+    require(`../../assets/avatars/006.png`),
+    require(`../../assets/avatars/007.png`),
+    require(`../../assets/avatars/008.png`),
+    require(`../../assets/avatars/009.png`),
+    require(`../../assets/avatars/010.png`),
+
+  ];
 
   const mockData = [
     {
@@ -99,34 +112,15 @@ export default function ConfessionList() {
 
   ];
 
+  const spaceNav = () => {
+
+    if (isRoom) {
+      nav.navigate('Home Space', {username: 'lookingforpeace', admin: true, space_name: 'tranquility'});
+    }
+  }
+
   return (
       <View style={styles.container}>
-      {/* <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-
-        <View style={styles.containerConfess}>
-          <View style={styles.containerPost}>
-            <Text>I love Beans!</Text>
-            <Text>It has a high source of protein</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Like"
-                color="red"
-                accessibilityLabel="Learn more about this purple button"/>
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Comment"
-                color="red"
-                accessibilityLabel="Learn more about this purple button"/>
-            </View>
-          </View>
-        </View>
-      </ScrollView> */}
-
       <FlatList
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
@@ -137,28 +131,34 @@ export default function ConfessionList() {
           <View style={styles.containerPost}>
             <View style={styles.roomDateContainer}>
               <View style={{width:'90%', flexDirection: 'row'}}>
-                <Text style={styles.roomNameStyle}>{item.roomName + ' '}</Text>
+                <Text style={styles.roomNameStyle}
+                onPress={() => spaceNav()}
+                >{item.roomName + ' '}</Text>
                 <Text style={styles.dateStyle}>{item.date}</Text>
               </View>
               <View style={{width: '10%'}}>
                 <Text style={styles.threeDots}>...</Text>
               </View>
             </View>
-            <Text style={styles.textStyle}>{item.username}</Text>
-            <Text>{item.text}</Text>
+            <View style={styles.imgUserContainer}>
+            <Image source={images[1]} style={styles.image}/>
+            <Text style={styles.textStyle}>{'  ' + item.username}</Text>
+            </View>
+            <Text style={styles.bodyText}>{item.text}</Text>
           </View>
           <View style={styles.buttonContainer}>
             <View style={styles.buttonStyleHug}>
               <Button
                 title={'Hug ' + item.hugs}
-                color="blue"
+                color="rgba(27, 52, 83, 1)"
                 accessibilityLabel="Learn more about this purple button"/>
             </View>
             <View style={styles.buttonStyleComment}>
               <Button
                 title={"Comment " + item.comments}
-                color="blue"
-                accessibilityLabel="Learn more about this purple button"/>
+                color="rgba(27, 52, 83, 1)"
+                accessibilityLabel="Learn more about this purple button"
+                onPress={() => nav.navigate('Comments')}/>
             </View>
           </View>
         </View>
@@ -172,7 +172,7 @@ export default function ConfessionList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f8ff',
+    backgroundColor: 'rgba(254, 241 , 230, 1)',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0
@@ -180,8 +180,9 @@ const styles = StyleSheet.create({
 
   containerConfess: {
     borderWidth: 0,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(144, 170 , 203, .2)',
     borderColor: 'black',
+    borderRadius: 10,
     marginTop: '1.5%',
     marginBottom: '1.5%',
     marginLeft: 'auto',
@@ -203,7 +204,14 @@ const styles = StyleSheet.create({
   roomDateContainer: {
     flexDirection: 'row',
   },
-
+  imgUserContainer: {
+    flexDirection: 'row',
+    borderWidth: 0
+  },
+  image: {
+    width: 20,
+    height: 20
+  },
   buttonStyleHug: {
     borderWidth: 0,
     width: '50%'
@@ -216,18 +224,24 @@ const styles = StyleSheet.create({
 
   roomNameStyle: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'rgba(27, 52, 83, 1)'
   },
 
   textStyle: {
     fontSize: 16,
-    paddingBottom: 8
+    paddingBottom: 8,
+    color: 'rgba(27, 52, 83, 1)'
   },
 
   dateStyle: {
     fontStyle: 'italic',
     fontSize: 12,
-    paddingTop: '.5%'
+    paddingTop: '.5%',
+    color: 'rgba(49, 94, 153, 1)'
+  },
+  bodyText: {
+    color: 'rgba(49, 94, 153, 1)'
   },
 
   threeDots: {

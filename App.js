@@ -1,12 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/navigation/HomeScreen.jsx';
-import Space from './components/Space/Space.js';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Space />
+      <HomeScreen />
     </NavigationContainer>
   );
 };

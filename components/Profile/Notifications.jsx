@@ -9,21 +9,21 @@ const Notifications = ({ route, navigation }) => {
 
   React.useEffect(() => {
     const reportArray = [];
-    let unreadCounter = 0;
-    // console.log('spaces', spaces);
+    console.log('spaces', spaces);
 
     spaces.map(async (space) => {
       await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
         .then(({ data }) => {
-          reportArray.push(data[0]);
-          setReports(reportArray);
-          console.log('reportArray within notif useeffect', data[0]);
-          unreadCounter++;
+          if (data[0]) {
+            reportArray.push(data[0]);
+            setReports(reportArray);
+            console.log('reportArray within notif useeffect', data[0]);
+          }
         })
         .catch((err) => console.log('axios error in notifications', err));
     });
 
-    setUnreadNofits(unreadCounter);
+    setUnreadNofits(reports.length);
   }, [route]);
 
   if (reports.length === 0) return;

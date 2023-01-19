@@ -85,6 +85,11 @@ const SelectIconScreen = ({ onSubmit }) => {
     //setSelected(id);
   }
 
+  const submitAvatar = () => {
+
+    console.log('current selection: ', currentSelect);
+  }
+
   return (
 
     <View style={styles.container}>
@@ -113,11 +118,7 @@ const SelectIconScreen = ({ onSubmit }) => {
           <Button
             title="Save Changes"
             color="rgba(77, 131, 203, 0.8)"
-            onPress={() => {
-              if (selected !== null) {
-                onSubmit(images[selected]);
-              }
-            }}
+            onPress={submitAvatar}
         />
         </View>
       </View>

@@ -28,6 +28,7 @@ const Profile = ({ navigation }) => {
   const [unreadNotifs, setUnreadNofits] = React.useState(0);
 
   React.useEffect(() => {
+    // grab user data
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${mockData.username}`)
       .then(({ data }) => {
         setUserData(data);
@@ -35,7 +36,7 @@ const Profile = ({ navigation }) => {
         setCreated(data.spaces_created);
       })
       .catch((err) => console.log('axios error in profile', err));
-
+    // grab localstorage cookies for viewed notifications every 30k seconds
     setInterval(() => {
       setReportedCookie(getData());
     }, 30000);
@@ -43,12 +44,12 @@ const Profile = ({ navigation }) => {
 
   return (
     <ScrollView
-      style={{ position: 1 }}
-      stickyHeaderIndices={[1]}
+      // style={{ position: 1 }}
+      // stickyHeaderIndices={[2]}
     >
       <View>
-        <View style={{ height: '120%' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '20%' }}>
+        <View style={{ height: '100%' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, height: '7%' }}>
             {/* LOG OUT BUTTON */}
             <Button
               title="Log out"
@@ -71,11 +72,11 @@ const Profile = ({ navigation }) => {
               <Badge
                 status="error"
                 value={unreadNotifs}
-                containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+                // containerStyle={{ position: 'absolute', top: 6, right: 115 }}
               /> }
           </View>
 
-          <View style={{ flexDirection: 'column', height: '60%' }}>
+          <View style={{ flexDirection: 'column', height: '25%' }}>
             <View style={{ flex: 1, alignContent: 'center' }}>
               {/* AVATAR */}
               <Avatar
@@ -94,15 +95,13 @@ const Profile = ({ navigation }) => {
               />
             </View>
             {/* USERNAME */}
-            <Text style={{ flex: 0.2, alignSelf: 'center', top: '10%' }}>
+            <Text style={{ flex: 0.2, alignSelf: 'center', top: '1%' }}>
               {userData.username}
             </Text>
           </View>
-        </View>
-      </View>
 
-      {/* TABS */}
-      <View>
+          {/* TABS */}
+      <View style={{ height: '50%' }}>
         {/* style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}> */}
         <Tab
           value={currentTab}
@@ -131,6 +130,11 @@ const Profile = ({ navigation }) => {
           currentUser={userData.username}
           navigation={navigation}
         />
+      </View>
+
+        </View>
+
+
       </View>
     </ScrollView>
   );

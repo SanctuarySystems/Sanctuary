@@ -15,15 +15,23 @@ const Notifications = ({ route, navigation }) => {
         .then(({ data }) => {
           reportArray.push(data[0]);
           setReports(reportArray);
+          console.log(data[0]);
         })
         .catch((err) => console.log('axios error in notifications', err));
     });
   }, [route]);
 
+  if (reports.length === 0) return;
+
   return (
     <View style={{ padding: 10 }}>
       {
         reports.map((confession) => {
+
+          if (!confession) return;
+
+          console.log('confession', confession);
+
           if (confession.reported.length > 0) {
             if (reportedCookie._z) {
               for (let i = 0; i < reportedCookie._z.length; i++) {

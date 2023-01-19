@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import SpacesListing from './SpacesListing';
 
@@ -7,7 +7,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   return (
-    <View>
+    <ScrollView>
       <SearchBar
         platform="ios"
         containerStyle={{}}
@@ -41,7 +41,7 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
             );
           })}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation, setUsername }) => {
       await signInWithEmailAndPassword(authentication, email, password);
       // setUsername(authentication.currentUser.username);
       console.log('user', authentication.currentUser.displayName);
-      navigation.navigate('Welcome Screen');
+      navigation.navigate('Home Screen');
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
@@ -9,7 +9,7 @@ const Search = ({ navigation }) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=20`)
       .then((data) => {
         setAllSpaces(data.data);
       })
@@ -23,11 +23,11 @@ const Search = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
       <SearchBar
         platform="ios"
-        containerStyle={{}}
-        inputContainerStyle={{}}
+        containerStyle={{ backgroundColor: '#FEF1E6' }}
+        inputContainerStyle={{ backgroundColor: '#F9D5A7' }}
         inputStyle={{}}
         leftIconContainerStyle={{}}
         rightIconContainerStyle={{}}
@@ -59,14 +59,17 @@ const Search = ({ navigation }) => {
         title="CREATE ROOM +"
         onPress={() => navigation.navigate('Spaces Form')}
       />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#FEF1E6',
     alignItems: 'center',
+  },
+  scrollView: {
+    paddingBottom: 300,
   },
 });
 

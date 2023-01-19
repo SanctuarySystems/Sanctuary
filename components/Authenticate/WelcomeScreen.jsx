@@ -1,39 +1,61 @@
 import React from 'react';
-import { Button, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <SafeAreaView>
-      <Text>
-        Welcome to Sanctuary!
+    <View style={styles.container}>
+      <Text style={styles.header}>
+        Sanctuary
       </Text>
-      <Text>Login Screen</Text>
-      <Button
-        title="Go to Login Screen"
-        onPress={() => navigation.navigate('Login Screen')}
-      />
-      <Text>Sign Up Screen</Text>
-      <Button
-        title="Go to Sign Up Screen"
-        onPress={() => navigation.navigate('Sign Up Screen')}
-      />
-      <Text>Select Icon Screen</Text>
-      <Button
-        title="Go to Select Icon Screen"
-        onPress={() => navigation.navigate('Select Icon Screen')}
-      />
-      <Text>Change Password Screen</Text>
-      <Button
-        title="Go to Change Password Screen"
-        onPress={() => navigation.navigate('Change Password Screen')}
-      />
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Home Screen"
-        onPress={() => navigation.navigate('Home Screen')}
-      />
-    </SafeAreaView>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Login"
+          onPress={() => navigation.navigate('Login Screen')}
+          style={styles.button}
+        />
+        <Button
+          title="Sign Up"
+          onPress={() => navigation.navigate('Sign Up Screen')}
+          style={styles.button}
+        />
+        <Button
+          title="Select Icon"
+          onPress={() => navigation.navigate('Select Icon Screen')}
+          style={styles.button}
+        />
+        <Button
+          title="Change Password"
+          onPress={() => navigation.navigate('Change Password Screen')}
+          style={styles.button}
+        />
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FEF1E6',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    fontFamily: 'Times New Roman',
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#90AACB',
+    marginBottom: 150,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  button: {
+    fontFamily: 'Times New Roman',
+    backgroundColor: '#FFB085',
+    fontSize: 60,
+    marginHorizontal: 10,
+  },
+});
 export default WelcomeScreen;

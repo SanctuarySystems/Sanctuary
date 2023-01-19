@@ -1,52 +1,39 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, TextInput, Button, Text, StyleSheet } from 'react-native';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "./firebase.js";
+import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { sendPasswordResetEmail } from "firebase/auth";
+import { authentication } from "../Authenticate/firebase.js";
 
-const LoginScreen = ({ navigation, setUsername }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async () => {
     try {
-      await signInWithEmailAndPassword(authentication, email, password);
-      // setUsername(authentication.currentUser.username);
-      console.log('user', authentication.currentUser.displayName);
-      navigation.navigate('Home Screen');
+      await sendPasswordResetEmail(authentication, email);
+      setErrorMessage("A password reset link has been sent to your email.");
+      navigation.navigate('Login Screen');
     } catch (error) {
-      setErrorMessage("Incorrect email or password, please try again");
-      console.log(error);
+      console.log('error');
+      setErrorMessage(error.message);
     }
-    // navigation.navigate('Home Screen');
-  };
-
-  const handleForgotPassword = async () => {
-    navigation.navigate('Forgot Password Screen');
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.header}>Sanctuary</Text>
       <View style={styles.inputContainer}>
+        <Text>Enter your email below to reset your password</Text>
         <TextInput
           style={styles.inputBox}
           placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={text => setEmail(text)}
         />
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Log In" onPress={handleSubmit} />
-        <Button style={styles.button} title="Forgot password" onPress={handleForgotPassword} />
+        <Button style={styles.button} title="Submit" onPress={handleSubmit} />
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -92,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;

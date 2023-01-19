@@ -34,19 +34,23 @@ const SignUpScreen = ({ navigation, setUsername }) => {
 
   return (
     <SafeAreaView>
+      <Text>Username</Text>
       <TextInput
         placeholder="Username"
         onChangeText={(text) => setNewUsername(text)}
       />
+      <Text>Email</Text>
       <TextInput
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
       />
+      <Text>Password</Text>
       <TextInput
         placeholder="Password"
         secureTextEntry
         onChangeText={(text) => setPassword(text)}
       />
+      <Text>Confirm Password</Text>
       <TextInput
         placeholder="Confirm Password"
         secureTextEntry

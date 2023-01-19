@@ -6,7 +6,7 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
-const MemberInfo = ({ space_name, username, banUser }) => {
+const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   const [reported, setReported] = React.useState(0);
   const [reports, setReports] = React.useState(0);
   const [confessions, setConfessions] = React.useState(0);
@@ -37,9 +37,14 @@ const MemberInfo = ({ space_name, username, banUser }) => {
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={styles.username}>{username}</Text>
+          {!isUser &&
           <TouchableOpacity style={styles.leavejoinContainer} onPress={() => setBanModal(true)}>
             <Text style={styles.leavejoinText}>ban</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
+          {isUser &&
+           <TouchableOpacity style={styles.leavejoinContainerAdmin}>
+           <Text style={styles.leavejoinTextAdmin}>admin</Text>
+          </TouchableOpacity>}
         </View>
         <View style={{ justifyContent: 'center' }}>
           <Text style={{fontSize:15}}>{confessions} confessions,
@@ -98,6 +103,22 @@ const styles = StyleSheet.create({
   leavejoinText: {
     fontSize: 12,
     color: "#734f96",
+    fontWeight: "bold",
+    alignSelf: "center",
+    alignItems:'center',
+  },
+  leavejoinContainerAdmin: {
+    // backgroundColor: "#009688",
+    borderWidth:'1px',
+    borderColor: "white",
+    borderRadius: 10,
+    paddingVertical: 9,
+    // paddingHorizontal: 11,
+    width:'20%'
+  },
+  leavejoinTextAdmin: {
+    fontSize: 12,
+    color: "white",
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',

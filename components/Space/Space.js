@@ -139,7 +139,7 @@ const Space = ({route, navigation}) => {
       {tab === 1 && <View style={{ flex: 8, backgroundColor: 'pink'}}><Text>{spaceGuidelines}</Text></View>}
       {tab === 2 && <View style={{ flex: 8, flexDirection:'column', alignItems: 'center', width:'100%'}} >
         <ScrollView style={{paddingTop:'4%'}}>
-        {spaceMembers.map((member) => <MemberInfo banUser={banUser} space_name={route.params.space_name} username={member}/>)}
+        {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
         </ScrollView>
         </View>}
       {tab === 0 && <View style={{flex: 0.5, alignItems:'center'}}>

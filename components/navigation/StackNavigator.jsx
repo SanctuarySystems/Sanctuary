@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Home from "../screens/Home.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
@@ -77,7 +77,7 @@ const SearchStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
-      <Stack.Screen name="Space1" component={Space} />
+      <Stack.Screen name="My Space" component={Space} />
     </Stack.Navigator>
   );
 };

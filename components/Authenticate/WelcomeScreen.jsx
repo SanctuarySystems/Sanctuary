@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 const WelcomeScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -32,14 +33,6 @@ const WelcomeScreen = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Change Password"
-          onPress={() => navigation.navigate('Change Password Screen')}
-          style={styles.button}
-          color='#90AACB'
-        />
       </View>
     </View>
   );
@@ -71,7 +64,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    fontFamily: "Times New Roman",
+    fontFamily: "FuzzyBubbles",
     fontSize: 15,
     fontWeight: 'bold',
     color: 'white',
@@ -79,3 +72,12 @@ const styles = StyleSheet.create({
 });
 
 export default WelcomeScreen;
+
+/* <View style={styles.buttonContainer}>
+  <Button
+    title="Change Password"
+    onPress={() => navigation.navigate('Change Password Screen')}
+    style={styles.button}
+    color='#90AACB'
+  />
+</View>; */

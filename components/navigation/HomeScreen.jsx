@@ -29,9 +29,18 @@ const HomeScreen = () => {
       initialRouteName="My Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
+        tabBarInactiveTintColor: 'rgba(49, 94, 153, 1)',
         headerShown: false,
         tabBarInactiveBackgroundColor: '#F9D5A7',
         tabBarActiveBackgroundColor: '#F9D5A7',
+      }}
+      tabBarOptions={{
+        safeAreaInsets: {
+          bottom: 0,
+        },
+        style: {
+          backgroundColor: 'orange',
+        },
       }}
     >
       <Tab.Screen

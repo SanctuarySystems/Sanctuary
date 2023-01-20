@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, RefreshControl } from "react-native";
+import { StyleSheet, ScrollView, RefreshControl } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
@@ -60,7 +60,7 @@ const Search = ({ navigation }) => {
       }
       <Button
         buttonStyle={{
-          borderRadius: 5,
+          borderRadius: 30,
         }}
         titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
         containerStyle={{

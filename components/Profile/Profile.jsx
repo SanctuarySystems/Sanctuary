@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { Button, Avatar, Tab, Badge, SearchBar } from '@rneui/themed';
+import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
@@ -8,17 +8,15 @@ import { UsernameContext } from '../../App';
 
 const Profile = ({ navigation }) => {
   const { username } = React.useContext(UsernameContext); // username for get user call
-  // const username = 'lookingforpeace'; // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
-  // notification states
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
-  const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
+  const [notifsCount, setNotifsCount] = React.useState(null); // # of unread notifications
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
-  const [viewedCookieCount, setViewedCookieCount] = React.useState(0); // viewedCookieCount stored via async storage
+  const [viewedCookieCount, setViewedCookieCount] = React.useState(null); // viewedCookieCount stored via async storage
 
   let refreshNotifications;
 
@@ -30,23 +28,21 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
+    console.log(userData);
+
     getConfessions(username, (data) => {
       setReportedPosts(data);
       setNotifsCount(data.length);
     });
 
     // initialize and set cookies for notifications every 30k seconds
-    // initializeCookies();
-
+    initializeCookies();
     refreshCookies();
   }, []);
 
   React.useEffect(() => {
     clearInterval(refreshNotifications);
     refreshCookies();
-
-    console.log("notifsCount after refreshing", notifsCount);
-    console.log("viewedCookieCount after refreshing", viewedCookieCount);
   }, [viewedCookieCount]);
 
   // grab viewedCookies for viewed notifications every 30k seconds
@@ -56,6 +52,8 @@ const Profile = ({ navigation }) => {
       getCookieCount(setViewedCookieCount);
     }, 30000);
   };
+
+  if (!userData) return;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -112,19 +110,20 @@ const Profile = ({ navigation }) => {
               size={100}
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
-              source={{ uri: userData.avatar }}
+              // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
+              source={require(`../../assets/avatar/002.png`)}
             >
               {/* EDIT AVATAR */}
-              <Avatar.Accessory
+              {/* <Avatar.Accessory
                 size={24}
-                containerStyle={{ boxShadow: 'none' }}
+                overlayContainerStyle	={{ boxShadow: 'none', backgroundColor: 'blue' }}
                 onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
-              />
+              /> */}
             </Avatar>
           </View>
 
           {/* USERNAME */}
-          <Text style={{ flex: 0.3, alignSelf: 'center', fontSize: 20, fontWeight: 'bold', top: 15 }}>
+          <Text style={{ flex: 0.3, alignSelf: 'center', fontSize: 20, fontWeight: 'bold', top: 2 }}>
             {userData.username}
           </Text>
         </View>
@@ -246,10 +245,10 @@ const styles = StyleSheet.create({
     fontSize: '18%',
     textDecorationThickness: '2%',
     color: '#90aacb',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   selectedTabView: {
-    borderBottomWidth: '3px',
+    borderBottomWidth: '2px',
     borderBottomColor: '#90aacb',
     paddingBottom: 1,
   },

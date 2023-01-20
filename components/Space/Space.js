@@ -147,7 +147,7 @@ const Space = ({route, navigation}) => {
       <View style={{flex: 8, }}>
 
         {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
-          <ConfessionList allConfessions={confessions}isRoom={true} nav={navigation} />
+          <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
         </View>}
         {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4}}>{spaceGuidelines}</Text></View>}
         {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >

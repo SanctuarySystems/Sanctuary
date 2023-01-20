@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />
+      <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
     </View>
   );
 };

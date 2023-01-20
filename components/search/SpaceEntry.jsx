@@ -12,7 +12,7 @@ const SpaceEntry = ({ navigation, space }) => {
         titleStyle={styles.title}
         containerStyle={styles.container}
         title={space.space_name}
-        onPress={() => navigation.navigate('Space1', {
+        onPress={() => navigation.navigate('My Space', {
           space_name: space.space_name,
           admin: true,
           username,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 23,
-    color: 'rgb(99, 99, 99)',
+    color: 'black',
   },
 });
 

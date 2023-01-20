@@ -216,7 +216,7 @@ const refreshNotifications = (cb1, cb2) => {
     cb1(viewedCookies);
     cb2(viewedCount);
 
-    // console.log('viewedCount', viewedCount);
+    console.log('viewedCount', viewedCount);
     // console.log("viewedCookies", viewedCookies);
   }, 30000);
 };

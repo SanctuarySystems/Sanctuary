@@ -1,41 +1,18 @@
 import React from 'react';
 import { View, SafeAreaView, Text } from 'react-native';
-import axios from 'axios';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
   const { username, spaces, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
     viewedCookieCount, setViewedCookieCount } = route.params;
 
-  if (reportedPosts.length === 0) {
-    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
-  }
-
   React.useEffect(() => {
     updateCookies();
   }, []);
 
-  // const [reports, setReports] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   let reportArray = reports.slice();
-  //   console.log('spaces', spaces);
-
-  //   spaces.map(async (space) => {
-  //     await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
-  //       .then(({ data }) => {
-  //         if (data[0]) {
-  //           reportArray = reports.slice();
-  //           reportArray.push(data[0]);
-
-  //           setReports(reportArray);
-  //           setUnreadNofits(reportArray.length);
-  //           console.log('reportArray within notif useeffect', data[0]);
-  //         }
-  //       })
-  //       .catch((err) => console.log('axios error in notifications', err));
-  //   });
-  // }, [route]);
+  if (reportedPosts.length === 0) {
+    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
+  }
 
   return (
     <SafeAreaView>

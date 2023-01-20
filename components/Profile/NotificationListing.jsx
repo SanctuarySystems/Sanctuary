@@ -54,7 +54,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           <Button
           // style={{ position: 'absolute', right: 5 }}
           size="sm"
-          buttonStyle={{ borderRadius: 30 }}
+          buttonStyle={{ borderRadius: 30, backgroundColor: '#FFB085' }}
           title={isReported ? "User Banned" : "Ban Reported"}
           type="outline"
           onPress={() => console.log('Banning reported') || handleBan()}

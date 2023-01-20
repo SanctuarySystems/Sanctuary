@@ -76,7 +76,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Log out"
             type="clear"
-            color={`${colorTheme.blue}`}
+            titleStyle={{ color: `${colorTheme.blue}` }}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -84,7 +84,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
-            color={`${colorTheme.blue}`}
+            titleStyle={{ color: `${colorTheme.blue}` }}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               spaces: created,
@@ -159,7 +159,7 @@ const Profile = ({ navigation }) => {
             <SearchBar
               platform="ios"
               containerStyle={{ backgroundColor: 'white' }}
-              inputContainerStyle={{ backgroundColor: `${colorTheme.beige}` }}
+              inputContainerStyle={{}}
               inputStyle={{}}
               loadingProps={{}}
               onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -168,7 +168,7 @@ const Profile = ({ navigation }) => {
               placeholderTextColor="#888"
               showCancel
               cancelButtonTitle="Cancel"
-              cancelButtonProps={{}}
+              cancelButtonProps={{ color: `${colorTheme.blue}` }}
               onCancel={() => setSearchTerm('')}
               value={searchTerm}
             />

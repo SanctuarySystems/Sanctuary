@@ -12,11 +12,29 @@ const Rooms = ({navigation}) => {
   const [adminSpaces, setAdminSpaces] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
+  // const onLeaveJoin = (leavejoin, spacename) => {
+  //   if (leavejoin === 1) {
+  //     const clone = spaces.slice();
+  //     clone.push(spacename);
+  //     setSpaces(clone);
+  //   } else {
+  //     const clone = spaces.slice();
+  //     clone.pop();
+  //     setSpaces(clone);
+  //   }
+  // };
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
+  }, []);
+
+  React.useEffect(() => {
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+      .catch((err) => console.log(err));
   }, []);
 
   React.useEffect(() => {
@@ -32,10 +50,20 @@ const Rooms = ({navigation}) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef1e6', paddingTop: '4%', width: '100%' }}>
       {/* <Text onPress={() => navigation.navigate('Space')}>Rooms</Text> */}
+      {(!spaces || spaces.length === 0)
+      && (
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-        {spaces.map((space) => <View style={styles.spaceContainer}><Text style={styles.spaceText} onPress={() => navigation.navigate('Space', {space_name: space, isAdmin: adminSpaces.includes(space), username: username})} >{space}</Text></View>)}
+        <Text>You have not joined any spaces. Pull down to refresh.</Text>
       </ScrollView>
+      )}
+      {(spaces && spaces.length > 0)
+      && (
+      <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        { spaces.map((space) => <View style={styles.spaceContainer}><Text style={styles.spaceText} onPress={() => navigation.navigate('Space', {space_name: space, isAdmin: adminSpaces.includes(space), username: username})} >{space}</Text></View>)}
+      </ScrollView>
+      )}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, Modal, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, Modal, RefreshControl, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 import Comments from './../Comments/Comments.js';
 import ConfessionList from './../Confession/ConfessionList.js';
 import GlobalStyles from './../GlobalStyles.js';
@@ -52,7 +52,8 @@ const Space = ({route, navigation}) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/remove`)
       .then(() => {
         setLeaveJoin(0);
-        setNumMembers(numMembers-1)
+        setNumMembers(numMembers-1);
+        // route.params.onLeaveJoin(-1, space_name);
       }).catch((err) => console.log('leaveSPACE', err));
   }
 
@@ -60,7 +61,8 @@ const Space = ({route, navigation}) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/add`)
       .then(() => {
         setLeaveJoin(1);
-        setNumMembers(numMembers+1)
+        setNumMembers(numMembers+1);
+        // route.params.onLeaveJoin(1, space_name);
       }).catch((err) => console.log(err));
   }
 

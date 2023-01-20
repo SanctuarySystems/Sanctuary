@@ -1,10 +1,46 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item } from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
+
+const images = [
+  { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
+  { id: 2, img: require(`../../assets/avatars/002.png`), animate: new Animated.Value(0) },
+  { id: 3, img: require(`../../assets/avatars/003.png`), animate: new Animated.Value(0) },
+  { id: 4, img: require(`../../assets/avatars/004.png`), animate: new Animated.Value(0) },
+  { id: 5, img: require(`../../assets/avatars/005.png`), animate: new Animated.Value(0) },
+  { id: 6, img: require(`../../assets/avatars/006.png`), animate: new Animated.Value(0) },
+  { id: 7, img: require(`../../assets/avatars/007.png`), animate: new Animated.Value(0) },
+  { id: 8, img: require(`../../assets/avatars/008.png`), animate: new Animated.Value(0) },
+  { id: 9, img: require(`../../assets/avatars/009.png`), animate: new Animated.Value(0) },
+  { id: 10, img: require(`../../assets/avatars/010.png`), animate: new Animated.Value(0) },
+  { id: 11, img: require(`../../assets/avatars/011.png`), animate: new Animated.Value(0) },
+  { id: 12, img: require(`../../assets/avatars/012.png`), animate: new Animated.Value(0) },
+  { id: 13, img: require(`../../assets/avatars/013.png`), animate: new Animated.Value(0) },
+  { id: 14, img: require(`../../assets/avatars/014.png`), animate: new Animated.Value(0) },
+  { id: 15, img: require(`../../assets/avatars/015.png`), animate: new Animated.Value(0) },
+  { id: 16, img: require(`../../assets/avatars/016.png`), animate: new Animated.Value(0) },
+  { id: 17, img: require(`../../assets/avatars/017.png`), animate: new Animated.Value(0) },
+  { id: 18, img: require(`../../assets/avatars/018.png`), animate: new Animated.Value(0) },
+  { id: 19, img: require(`../../assets/avatars/019.png`), animate: new Animated.Value(0) },
+  { id: 20, img: require(`../../assets/avatars/020.png`), animate: new Animated.Value(0) },
+  { id: 21, img: require(`../../assets/avatars/021.png`), animate: new Animated.Value(0) },
+  { id: 22, img: require(`../../assets/avatars/022.png`), animate: new Animated.Value(0) },
+  { id: 23, img: require(`../../assets/avatars/023.png`), animate: new Animated.Value(0) },
+  { id: 24, img: require(`../../assets/avatars/024.png`), animate: new Animated.Value(0) },
+  { id: 25, img: require(`../../assets/avatars/025.png`), animate: new Animated.Value(0) },
+  { id: 26, img: require(`../../assets/avatars/026.png`), animate: new Animated.Value(0) },
+  { id: 27, img: require(`../../assets/avatars/027.png`), animate: new Animated.Value(0) },
+  { id: 28, img: require(`../../assets/avatars/028.png`), animate: new Animated.Value(0) },
+  { id: 29, img: require(`../../assets/avatars/029.png`), animate: new Animated.Value(0) },
+  { id: 30, img: require(`../../assets/avatars/030.png`), animate: new Animated.Value(0) },
+  { id: 31, img: require(`../../assets/avatars/031.png`), animate: new Animated.Value(0) },
+  { id: 32, img: require(`../../assets/avatars/032.png`), animate: new Animated.Value(0) },
+  { id: 33, img: require(`../../assets/avatars/033.png`), animate: new Animated.Value(0) },
+];
 
 const Profile = ({ navigation }) => {
   const { username } = React.useContext(UsernameContext); // username for get user call
@@ -19,6 +55,9 @@ const Profile = ({ navigation }) => {
   const [viewedCookieCount, setViewedCookieCount] = React.useState(null); // viewedCookieCount stored via async storage
 
   let refreshNotifications;
+  // let avatarId;
+
+  if (!username) return;
 
   React.useEffect(() => {
     // grab user data
@@ -26,17 +65,20 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
+      // avatarId = data.avatar < 10 ? Number(data.avatar.slice(1)) : data.avatar;
+      // console.log('i am avatar id', avatarId);
+      // console.log('image at id', images[avatarId]);
+      // console.log('image at 1', images[1]);
     });
-
-    console.log(userData);
 
     getConfessions(username, (data) => {
       setReportedPosts(data);
       setNotifsCount(data.length);
+      console.log('found reported');
     });
 
     // initialize and set cookies for notifications every 30k seconds
-    initializeCookies();
+    // initializeCookies();
     refreshCookies();
   }, []);
 
@@ -67,14 +109,14 @@ const Profile = ({ navigation }) => {
             justifyContent: 'space-between',
             padding: 5,
             height: 50,
-            backgroundColor: 'white',
+            backgroundColor: `${colorTheme.beige}`,
           }}
         >
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}` }}
+            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -82,7 +124,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}` }}
+            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               viewedCookies,
@@ -98,12 +140,12 @@ const Profile = ({ navigation }) => {
               <Badge
                 status="error"
                 value={notifsCount}
-                containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+                containerStyle={{ position: 'absolute', top: 6, right: 122 }}
               />
             )}
         </View>
 
-        <View style={{ flexDirection: 'column', height: 220, backgroundColor: 'white' }}>
+        <View style={{ flexDirection: 'column', height: 220, backgroundColor: `${colorTheme.beige}` }}>
           <View style={{ flex: 0.7 }}>
             {/* AVATAR */}
             <Avatar
@@ -111,7 +153,9 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
               // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
-              source={require(`../../assets/avatars/002.png`)}
+              // source={require(`../../assets/avatars/002.png`)}
+              source={require(`../../assets/avatars/012.png`)}
+              // source={require(`../../assets/avatars/0${userData.avatar}.png`)}
             >
               {/* EDIT AVATAR */}
               {/* <Avatar.Accessory
@@ -121,17 +165,25 @@ const Profile = ({ navigation }) => {
               /> */}
             </Avatar>
           </View>
-
-          {/* USERNAME */}
-          <Text style={{ flex: 0.3, alignSelf: 'center', fontSize: 20, fontWeight: 'bold', top: 2 }}>
-            {userData.username}
-          </Text>
+          <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', top: 2 }}>
+            {/* USERNAME */}
+            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
+              {userData.username}
+            </Text>
+            {/* <Icon
+              style={{ paddingLeft: 8, top: 5 }}
+              size={15}
+              name='pencil'
+              type='font-awesome'
+              color={colorTheme.blue}
+              onPress={() => console.log('hello')} /> */}
+            </View>
         </View>
 
         {/* TABS */}
-        <View style={{ height: 40, backgroundColor: 'white' }}>
+        <View style={{ height: 40, backgroundColor: `${colorTheme.beige}` }}>
 
-          <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+          <View style={{ height: 40, backgroundColor: `${colorTheme.beige}`, flexDirection: 'row', justifyContent: 'space-evenly' }}>
             <View style={[currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
@@ -162,8 +214,8 @@ const Profile = ({ navigation }) => {
         <View>
           <SearchBar
             platform="ios"
-            containerStyle={{ backgroundColor: 'white' }}
-            inputContainerStyle={{}}
+            containerStyle={{ backgroundColor: `${colorTheme.beige}` }}
+            inputContainerStyle={{ backgroundColor: `${colorTheme.yellow}` }}
             inputStyle={{}}
             loadingProps={{}}
             onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -245,21 +297,23 @@ const styles = StyleSheet.create({
     fontSize: '18%',
     textDecorationThickness: '2%',
     color: '#90aacb',
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
   selectedTabView: {
-    borderBottomWidth: '2px',
+    borderBottomWidth: '3px',
     borderBottomColor: '#90aacb',
     paddingBottom: 1,
+    fontWeight: 'bold',
   },
   unselectedTab: {
     fontSize: '18%',
     color: 'rgba(0,0,0,0.5)',
-
+    fontWeight: 'bold',
   },
   unselectedTabView: {
     color: 'rgba(0,0,0,0.5)',
     paddingBottom: 1,
+    fontWeight: 'bold',
   },
 });
 

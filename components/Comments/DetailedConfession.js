@@ -25,9 +25,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'yellow',
     padding: '15%',
     marginBottom: '3%',
+    backgroundColor: 'rgba(255, 255, 255, .85)',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(27, 52, 83, .08)',
   },
   dots: {
     position: 'absolute',

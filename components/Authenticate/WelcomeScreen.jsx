@@ -1,23 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import { Platform } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const WelcomeScreen = ({ navigation }) => {
-
   const [fontsLoaded] = useFonts({
-    'Virgil': require('../../assets/fonts/Virgil.ttf'),
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
   });
 
   if (!fontsLoaded) {
-
     return (
       <View>
         <Text>Still loading font</Text>
       </View>
     );
-  } else {
-
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -26,24 +22,18 @@ const WelcomeScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Login Screen')}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
           onPress={() => navigation.navigate('Sign Up Screen')}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Login Screen')}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Select Icon"
-          onPress={() => navigation.navigate('Select Icon Screen')}
-          style={styles.button}
-          color='#90AACB'
-        />
         <Button
           title="Change Password"
           onPress={() => navigation.navigate('Change Password Screen')}
@@ -53,7 +43,6 @@ const WelcomeScreen = ({ navigation }) => {
       </View>
     </View>
   );
-  }
 };
 
 const styles = StyleSheet.create({

@@ -1,11 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { UsernameContext } from "../../App.js";
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import axios from "axios";
 import moment from 'moment';
 
-export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
+
+const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
+  const [idList, setIdList] = useState({});
+
+  const saveData = async (data) => {
+    try {
+      await AsyncStorage.setItem(
+        'idList',
+        JSON.stringify(data),
+      );
+    } catch (error) {
+      // Error saving data
+      console.log('Failed to save data in confessionsList line 22');
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('idList');
+      if (value !== null) {
+        // We have data!!
+        console.log('Here is value', value);
+        setIdList(JSON.parse(value));
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log('Failed to save data in confessionsList line 35');
+    }
+  };
+
+  useEffect(() => {
+
+    getData();
+  },[])
+
 
   const [fontsLoaded] = useFonts({
     'Virgil': require('../../assets/fonts/Virgil.ttf'),
@@ -66,6 +101,21 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
     }
   }
 
+  function addHug(id) {
+
+
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${id}/hug`)
+    .then(() => {
+      var newObj = {...idList}
+      newObj[id] = id;
+      saveData(newObj);
+      setIdList(newObj);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
 
   if (!fontsLoaded) {
 
@@ -108,11 +158,15 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
               <Text style={styles.bodyText}>{item.confession}</Text>
             <View style={styles.buttonContainer}>
               <View style={styles.buttonStyleHug}>
-                <TouchableOpacity
-                  onPress={() => console.log('yay')}>
+                {idList[item.confession_id] === undefined && <TouchableOpacity
+                  onPress={() => addHug(item.confession_id)}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.hugs}</Text>
                   <Text style={{fontFamily: 'Virgil'}}>Hugs</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>}
+                {idList[item.confession_id] !== undefined && <View>
+                  <Text style={{textAlign: 'center', color: 'red'}}><FontAwesome5 name="hands-helping" size={20} color="red" />{' ' + (item.hugs + 1)}</Text>
+                  <Text style={{fontFamily: 'Virgil', color: 'red'}}>Hugs</Text>
+                  </View>}
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
@@ -123,7 +177,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
                 {isRoom && <TouchableOpacity
                 onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                <Text>Comments</Text>
+                <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity>}
               </View>
               </View>
@@ -135,7 +189,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
     </View>
   );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -165,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: '1.5%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '100%'
+    width: '100%',
   },
 
   containerPost: {
@@ -259,3 +313,6 @@ const styles = StyleSheet.create({
 
 
 });
+
+
+export default ConfessionList;

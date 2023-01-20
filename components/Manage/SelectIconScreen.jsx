@@ -2,11 +2,16 @@ import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity, Button, StyleSheet, FlatList, Animated, Text } from 'react-native';
 import axios from 'axios';
 import { UsernameContext } from "../../App.js";
+import { useFonts } from 'expo-font';
 
 const SelectIconScreen = ({ navigation }) => {
   const [selected, setSelected] = useState(null);
   const { username, setUsername } = useContext(UsernameContext);
   let currentSelect = 1;
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   const images = [
     { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
@@ -107,10 +112,18 @@ const SelectIconScreen = ({ navigation }) => {
   //   console.log('current selection: ', currentSelect);
   // }
 
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
+
   return (
 
     <View style={styles.container}>
-      <Text style={styles.header}>Select an avatars</Text>
+      <Text style={styles.header}>Select An Avatar</Text>
       <View style={styles.grid}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -176,7 +189,7 @@ const styles = StyleSheet.create({
     marginBottom: 'auto',
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 40,
     fontWeight: 'bold',
     color: '#90AACB',

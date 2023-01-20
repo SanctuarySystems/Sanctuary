@@ -21,6 +21,20 @@ const WelcomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Select Icon"
+          onPress={() => navigation.navigate('Select Icon Screen')}
+          style={styles.button}
+          color='#90AACB'
+        />
+        <Button
+          title="Change Password"
+          onPress={() => navigation.navigate('Change Password Screen')}
+          style={styles.button}
+          color='#90AACB'
+        />
+      </View>
     </View>
   );
 };
@@ -57,19 +71,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-export default WelcomeScreen;
 
-// <View style={styles.buttonContainer}>
-//   <Button
-//     title="Select Icon"
-//     onPress={() => navigation.navigate('Select Icon Screen')}
-//     style={styles.button}
-//     color='#90AACB'
-//   />
-//   <Button
-//     title="Change Password"
-//     onPress={() => navigation.navigate('Change Password Screen')}
-//     style={styles.button}
-//     color='#90AACB'
-//   />
-// </View>;
+export default WelcomeScreen;

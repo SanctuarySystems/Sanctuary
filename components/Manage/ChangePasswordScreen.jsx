@@ -58,7 +58,7 @@ const ChangePasswordScreen = ({ navigation }) => {
           style={styles.button}
           onPress={handleSubmit}
         >
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -100,10 +100,17 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

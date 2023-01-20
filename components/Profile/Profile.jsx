@@ -211,13 +211,15 @@ const getCookieCount = async () => {
 const refreshNotifications = (cb1, cb2) => {
   setInterval(() => {
     const viewedCookies = getCookies()._z;
-    const count = getCookieCount();
-    const viewedCount = count._z || count;
-    cb1(viewedCookies);
-    cb2(viewedCount);
 
-    console.log('viewedCount', viewedCount);
-    // console.log("viewedCookies", viewedCookies);
+    const count = getCookieCount();
+    if (count._z === null) {
+      cb2(0);
+    } else {
+      cb2(count._z);
+    }
+
+    cb1(viewedCookies);
   }, 30000);
 };
 

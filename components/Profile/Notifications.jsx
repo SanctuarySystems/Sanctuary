@@ -16,7 +16,7 @@ const Notifications = ({ route, navigation }) => {
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 15 }}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;

@@ -1,33 +1,14 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { SearchBar } from '@rneui/themed';
+import { View, Text } from 'react-native';
 import SpacesListing from './SpacesListing';
 
-const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
-  const [searchTerm, setSearchTerm] = React.useState('');
-
+const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
+  if (!spaceArray) return;
   return (
-    <View>
-      <SearchBar
-        platform="ios"
-        containerStyle={{}}
-        inputContainerStyle={{}}
-        inputStyle={{}}
-        loadingProps={{}}
-        onChangeText={(newVal) => setSearchTerm(newVal)}
-        onClearText={() => setSearchTerm('')}
-        placeholder="Search..."
-        placeholderTextColor="#888"
-        showCancel
-        cancelButtonTitle="Cancel"
-        cancelButtonProps={{}}
-        onCancel={() => setSearchTerm('')}
-        value={searchTerm}
-      />
-
+    <View style={{ backgroundColor: 'white' }}>
       <View>
         { spaceArray.length === 0 &&
-          <Text style={{ position: 'relative' }}>You're not in any spaces!</Text> }
+          <Text style={{ alignSelf: 'center', padding: 50 }}>You are not in any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();
@@ -36,7 +17,14 @@ const SpacesList = ({ currentTab, spaceArray, currentUser, navigation }) => {
 
             return (
               <View style={{ padding: 10 }}>
-                <SpacesListing key={item} currentTab={currentTab} space={item} currentUser={currentUser} navigation={navigation} />
+                <SpacesListing
+                  key={item}
+                  colorTheme={colorTheme}
+                  currentTab={currentTab}
+                  space={item}
+                  currentUser={currentUser}
+                  navigation={navigation}
+                />
               </View>
             );
           })}

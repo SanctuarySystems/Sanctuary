@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Button, Text, View } from "react-native";
+import { Button, Text, View, StyleSheet } from "react-native";
 import ConfessionList from "../Confession/ConfessionList.js";
 import { UsernameContext } from "../../App.js";
 
@@ -26,10 +26,9 @@ const Home = ({ navigation }) => {
   }, [username]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
+    <View style={styles.container}>
       {allConfessions.length !== 0 &&
-        <ConfessionList allConfessions={allConfessions} navigation={navigation} />}
+        <ConfessionList allConfessions={allConfessions} nav={navigation} />}
 
       <Button
         title="Go to Test Page"
@@ -47,5 +46,13 @@ const Home = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default Home;

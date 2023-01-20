@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: "#9AC4F8",
+    backgroundColor: "#90AACB",
   },
   headerTintColor: "white",
   headerBackTitle: "Back",
@@ -54,6 +54,7 @@ const SearchStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
+      <Stack.Screen name="Space1" component={Space} />
     </Stack.Navigator>
   );
 };
@@ -65,6 +66,7 @@ const ProfileStackNavigator = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Space" component={Space} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

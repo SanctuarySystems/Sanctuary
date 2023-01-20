@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
+import { useFonts } from 'expo-font';
 
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   const handleSubmit = async () => {
     try {
@@ -17,6 +22,14 @@ const ForgotPasswordScreen = ({ navigation }) => {
       setErrorMessage('Please enter your email address');
     }
   };
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',

@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export const UsernameContext = React.createContext();
-
 const WelcomeScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('lookingforpeace');
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -14,27 +10,29 @@ const WelcomeScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Login"
-          onPress={() => navigation.navigate('Login Screen', {
-            setUsername,
-          })}
+          onPress={() => navigation.navigate('Login Screen')}
           style={styles.button}
+          color='#90AACB'
         />
         <Button
           title="Sign Up"
-          onPress={() => navigation.navigate('Sign Up Screen', {
-            setUsername,
-          })}
+          onPress={() => navigation.navigate('Sign Up Screen')}
           style={styles.button}
+          color='#90AACB'
         />
+      </View>
+      <View style={styles.buttonContainer}>
         <Button
           title="Select Icon"
           onPress={() => navigation.navigate('Select Icon Screen')}
           style={styles.button}
+          color='#90AACB'
         />
         <Button
           title="Change Password"
           onPress={() => navigation.navigate('Change Password Screen')}
           style={styles.button}
+          color='#90AACB'
         />
       </View>
     </View>
@@ -49,21 +47,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: 'Times New Roman',
-    fontSize: 60,
+    fontFamily: "Times New Roman",
+    fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 135,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
+    fontFamily: "Times New Roman",
+    color: '#FFB085',
     fontSize: 60,
     marginHorizontal: 10,
+    fontWeight: 'bold',
   },
 });
 export default WelcomeScreen;

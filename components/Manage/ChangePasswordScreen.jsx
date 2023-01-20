@@ -27,6 +27,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       navigation.navigate('Home Screen');
     } catch (error) {
       console.log(error);
+      setErrorMessage("Incorrect new or old password, please try again.");
     }
   };
 
@@ -53,7 +54,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+        <Button style={styles.button} title="Sign Up" color='#90AACB' onPress={handleSubmit} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 50,
   },
   inputContainer: {
     alignItems: 'center',
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 50,
   },
   button: {
     fontFamily: 'Times New Roman',
@@ -100,6 +101,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-
 
 export default ChangePasswordScreen;

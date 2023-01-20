@@ -23,13 +23,12 @@ const SignUpScreen = ({ navigation }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log('user', user);
       await updateProfile(user, { displayName: newUsername });
       await sendEmailVerification(user);
-      setUsername(newUsername);
-      console.log(newUsername);
+      await setUsername(newUsername);
       navigation.navigate('Select Icon Screen');
     } catch (error) {
+      setErrorMessage("All fields are required");
       console.log(error);
     }
   };
@@ -51,6 +50,7 @@ const SignUpScreen = ({ navigation }) => {
         <TextInput
           style={styles.inputBox}
           placeholder="Password"
+          secureTextEntry
           onChangeText={(text) => setPassword(text)}
         />
         <TextInput
@@ -62,7 +62,7 @@ const SignUpScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+        <Button style={styles.button} color='#90AACB' title="Sign Up" onPress={handleSubmit} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 50,
   },
   inputContainer: {
     alignItems: 'center',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 50,
   },
   button: {
     fontFamily: 'Times New Roman',

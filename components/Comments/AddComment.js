@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity, Text, Keyboard } from 'react-native';
+import { StyleSheet, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 
 const AddComment = ({ add }) => {
@@ -22,16 +22,18 @@ const AddComment = ({ add }) => {
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={100}>
-      <TextInput
-        multiline
-        value={comment.comment}
-        onChangeText={(text) => setComment({ ...comment, comment: text })}
-        style={styles.input}
-        placeholder='Add a comment...'
-      />
-      <TouchableOpacity onPress={handlePress} style={styles.addButton}>
-        <Text>Add comment</Text>
-      </TouchableOpacity>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          multiline
+          value={comment.comment}
+          onChangeText={(text) => setComment({ ...comment, comment: text })}
+          placeholder='Add a comment...'
+        />
+        <TouchableOpacity onPress={handlePress} style={styles.addButton}>
+          <Text>POST</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -41,26 +43,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#2b90f5',
   },
   input: {
-    width: '90%',
-    padding: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '95%',
+    padding: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '2%',
-    borderWidth: 2,
+    marginBottom: '2%',
+    borderWidth: 1,
     borderRadius: '15%',
     backgroundColor: 'white',
   },
   addButton: {
-    backgroundColor: 'white',
-    marginTop: '2%',
-    marginBottom: '2%',
-    width: '30%',
     alignItems: 'center',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderWidth: 2,
-    borderRadius: '15%',
     padding: 3,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  textInput: {
+    flex: 5,
   },
 });
 

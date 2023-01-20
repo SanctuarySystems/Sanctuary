@@ -190,7 +190,7 @@ const Space = ({route, navigation}) => {
           </View>}
         {tab === 0 && <View style={{flex: 0.5, alignItems:'center'}}>
           <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-            <Icon name="md-create-outline" size='35%'/>
+            <Icon name="md-create-outline" size='35%' color='rgba(49, 94, 153, 1)'/>
           </TouchableOpacity>
         </View>}
       </View>
@@ -199,17 +199,17 @@ const Space = ({route, navigation}) => {
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
           <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', backgroundColor:'#fef1e6', paddingRight:'2%', paddingLeft: '2%'}}>
             <TouchableOpacity onPress={() => {setModalVisible(false)}}>
-            <Icon name="md-close" size='35%' color='#90aacb'/>
+            <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontFamily: 'FuzzyBubblesBold', color: '#90aacb'}}>Write a confession.</Text>
+            <Text style={{fontSize: 18, fontFamily: 'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)'}}>Write a confession.</Text>
             <TouchableOpacity disabled={disablePost} style={[disablePost ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() => createConfession(route.params.username, writeConfession, route.params.space_name )}>
               <Text style={styles.leavejoinText}>post</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 10}}>
             <TextInput placeholder="Write your confession here." style={{padding:10,
-        borderTopColor: '#90aacb',
+        borderTopColor: 'rgba(49, 94, 153, 1)',
         fontFamily: 'FuzzyBubblesRegular',
         borderTopWidth: 2, fontSize:20}} multiline onChangeText={text => {changeWriteConfession(text)}} value={writeConfession} />
           </View>
@@ -219,24 +219,24 @@ const Space = ({route, navigation}) => {
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
           <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginLeft: '2%', marginRight: '2%'}}>
             <TouchableOpacity onPress={() => {setEditMode(false)}}>
-            <Icon name="md-close" size='35%' color='#90aacb'/>
+            <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontFamily:'FuzzyBubblesBold', color: '#90aacb'}}>Edit Space Information</Text>
+            <Text style={{fontSize: 18, fontFamily:'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)'}}>Edit Space Information</Text>
             <TouchableOpacity disabled={disableEdit} style={[disableEdit ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() =>  updateSpaceDetails(editSpaceDescription, editSpaceGuidelines.split('\n'))}>
               <Text style={styles.leavejoinText}>update</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 2}}>
-            <Text style={{fontSize: 20, color: '#90aacb', paddingLeft:'4%'}}>Edit Description:</Text>
+            <Text style={{fontSize: 20, color: 'rgba(49, 94, 153, 1)', paddingLeft:'4%'}}>Edit Description:</Text>
             <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
-        borderTopColor: '#90aacb',
+        borderTopColor: 'rgba(49, 94, 153, 1)',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
           </View>
           <View style={{flex:11}}>
-            <Text style={{fontSize:20, color: '#90aacb', paddingLeft:'4%'}}>Edit Guidelines:</Text>
+            <Text style={{fontSize:20, color: 'rgba(49, 94, 153, 1)', paddingLeft:'4%'}}>Edit Guidelines:</Text>
             <TextInput style={{padding:10, fontSize:18, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
-        borderTopColor: '#90aacb',
+        borderTopColor: 'rgba(49, 94, 153, 1)',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceGuidelines(text)} value={editSpaceGuidelines} />
           </View>
         </SafeAreaView>
@@ -260,12 +260,12 @@ const styles = StyleSheet.create({
   selectedTab: {
     fontSize:'18%',
     textDecorationThickness: '2%',
-    color: '#90aacb',
+    color: 'rgba(49, 94, 153, 1)',
     fontWeight: 'bold',
   },
   selectedTabView: {
     borderBottomWidth: '3px',
-    borderBottomColor: '#90aacb',
+    borderBottomColor: 'rgba(49, 94, 153, 1)',
     paddingBottom: 1,
   },
   unselectedTab: {
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   leavejoinContainer:{
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#90aacb",
+    borderColor: "rgba(49, 94, 153, 1)",
     borderRadius: 10,
     paddingVertical: 7,
     marginTop: 2,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   leavejoinText: {
     fontSize: 14,
-    color: "#90aacb",
+    color: "rgba(49, 94, 153, 1)",
     // fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center'
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   leavejoinContainerOpaque:{
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#90aacb",
+    borderColor: "rgba(49, 94, 153, 1)",
     borderRadius: 10,
     paddingVertical: 7,
     marginTop: 2,

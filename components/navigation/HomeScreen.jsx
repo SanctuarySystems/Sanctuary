@@ -4,19 +4,19 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator, ProfileStackNavigator, SearchStackNavigator, SpaceStackNavigator } from './StackNavigator.jsx';
 
 const renderHome = () => {
-  return <MaterialCommunityIcons name="home" size={30} color="#90AACB" />;
+  return <MaterialCommunityIcons name="home" size={30} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderSpaces = () => {
-  return <MaterialCommunityIcons name="google-classroom" size={25} color="#90AACB" />;
+  return <MaterialCommunityIcons name="google-classroom" size={25} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderSearch = () => {
-  return <Ionicons name="search" size={25} color="#90AACB" />;
+  return <Ionicons name="search" size={25} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderProfile = () => {
-  return <MaterialCommunityIcons name="account" size={30} color="#90AACB" />;
+  return <MaterialCommunityIcons name="account" size={30} color="rgba(49, 94, 153, 1)" />;
 };
 
 // const Stack = createNativeStackNavigator();

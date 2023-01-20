@@ -13,28 +13,42 @@ import LoginScreen from "../Authenticate/LoginScreen.jsx";
 import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
+import { useFonts } from 'expo-font';
+import { StyleSheet, Text, View } from 'react-native';
 import Space from '../Space/Space.js';
 
 const Stack = createNativeStackNavigator();
 
-const screenOptionStyle = {
-  headerStyle: {
-    backgroundColor: '#F9D5A7',
-    fontWeight: 'bold',
-    fontSize: 65,
-  },
-  headerTitleStyle: {
-    color: "#90AACB",
-    fontSize: 40,
-    fontWeight: 'bold',
 
-  },
-  headerTintColor: "white",
-  headerBackTitle: "Back",
+// const screenOptionStyle = {
+//   headerStyle: {
+//     backgroundColor: '#F9D5A7',
+//     fontWeight: 'bold',
+//     fontSize: 65,
+//     fontFamily: 'Virgil'
+//   },
+//   headerTitleStyle: {
+//     color: "#90AACB",
+//     fontSize: 40,
+//     fontWeight: 'bold',
 
-};
+//   },
+//   headerTintColor: "white",
+//   headerBackTitle: "Back",
+
+// };
 
 const MainStackNavigator = ({ setUsername }) => {
+
+  const [fontsLoaded] = useFonts({
+    'Virgil': require('../../assets/fonts/Virgil.ttf'),
+    'FuzzyReg': require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    'FuzzyBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return (<View><Text>Fonts Loading</Text></View>)
+  } else {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
@@ -45,6 +59,7 @@ const MainStackNavigator = ({ setUsername }) => {
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
     </Stack.Navigator>
   );
+  }
 };
 
 const SpaceStackNavigator = () => {
@@ -78,6 +93,22 @@ const ProfileStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+const screenOptionStyle = StyleSheet.create({
+
+  headerStyle: {
+    backgroundColor: '#F9D5A7',
+    fontWeight: 'bold',
+    fontSize: 65,
+  },
+  headerTitleStyle: {
+    color: "rgba(49, 94, 153, 1)",
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Virgil'
+  },
+
+});
 
 export {
   MainStackNavigator,

@@ -7,7 +7,7 @@ const TestPage = ({ navigation }) => {
   return (
 
     //<SelectIconScreen />
-     <ConfessionList nav={navigation}/>
+     <ConfessionList nav={navigation} allConfessions={[]}/>
 
     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
     //   <Text>This is a test page</Text>

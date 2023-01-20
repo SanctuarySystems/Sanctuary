@@ -25,14 +25,14 @@ const SignUpScreen = ({ navigation }) => {
         if (data.length === 0) {
           console.log(true);
           setGoodUsername(true);
-          return;
+        } else {
+          setErrorMessage("Username is taken, please try again.");
         }
-        setErrorMessage("Username is taken, please try again.");
       });
   };
 
   const handleSubmit = async () => {
-    if (password !== confirmPassword && goodUsername) {
+    if (password && confirmPassword && goodUsername) {
       setErrorMessage("Passwords do not match, please try again.");
       return;
     }

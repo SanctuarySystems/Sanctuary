@@ -6,13 +6,6 @@ import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
 
-const colorTheme = {
-  beige: '#FEF1E6',
-  yellow: '#F9D5A7',
-  orange: '#FFB085',
-  blue: '#90AACB',
-};
-
 const Profile = ({ navigation }) => {
   // const username = React.useContext(UsernameContext); // username for get user call
   const username = 'lookingforpeace'; // username for get user call
@@ -21,7 +14,7 @@ const Profile = ({ navigation }) => {
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
-  // revisit after notifs
+  // notification states
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
   const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
@@ -239,6 +232,13 @@ const getCookieCount = async (cb) => {
   } catch (e) {
     console.log('get cookie count error', e);
   }
+};
+
+const colorTheme = {
+  beige: '#FEF1E6',
+  yellow: '#F9D5A7',
+  orange: '#FFB085',
+  blue: '#90AACB',
 };
 
 const styles = StyleSheet.create({

@@ -76,7 +76,7 @@ const Space = ({route, navigation}) => {
   const createConfession = (username, text, space_name) => {
     axios.post(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions`, {created_by: username, confession: text, space_name: space_name })
       .then(() => {
-        axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}`)
+        axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}&count=200`)
         .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
         setModalVisible(false);
       })
@@ -115,7 +115,7 @@ const Space = ({route, navigation}) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200`)
     .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
   }, [refreshing]);
 

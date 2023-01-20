@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
       await signInWithEmailAndPassword(authentication, email, password);
       // setUsername(authentication.currentUser.username);
       console.log('user', authentication.currentUser.displayName);
-      setUsername('TEST');
+      setUsername('lookingforpeace');
       navigation.navigate('Home Screen');
     } catch (error) {
       setErrorMessage("Incorrect email or password, please try again");

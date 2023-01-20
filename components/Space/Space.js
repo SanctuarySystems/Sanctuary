@@ -166,7 +166,7 @@ const Space = ({route, navigation}) => {
         </TouchableOpacity>}
       </View>
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
-        <Text style={{fontFamily:'FuzzyBubblesRegular'}}>{spaceDescription} </Text>
+        <Text style={{}}>{spaceDescription} </Text>
       </View>
       <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <View style={[tab !== 0? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>Feed</Text></View>
@@ -182,13 +182,13 @@ const Space = ({route, navigation}) => {
             <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
           </ScrollView>
         </View>}
-        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4, fontFamily:'FuzzyBubblesRegular'}}>{spaceGuidelines}</Text></View>}
+        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4, opacity: 0.7, fontFamily: 'FuzzyBubblesRegular'}}>{spaceGuidelines}</Text></View>}
         {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >
           <ScrollView style={{paddingTop:'4%'}}>
           {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
           </ScrollView>
           </View>}
-        {tab === 0 && <View style={{flex: 0.5, alignItems:'center'}}>
+        {tab === 0 && <View style={{flex: 0.5, alignSelf:'flex-end', marginBottom:'2%', paddingRight: '3%', marginTop: '1%'}}>
           <TouchableOpacity onPress={() => {setModalVisible(true)}}>
             <Icon name="md-create-outline" size='35%' color='rgba(49, 94, 153, 1)'/>
           </TouchableOpacity>
@@ -202,7 +202,7 @@ const Space = ({route, navigation}) => {
             <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontFamily: 'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)'}}>Write a confession.</Text>
+            <Text style={{fontSize: 18, fontWeight:'bold', color: 'rgba(49, 94, 153, 1)'}}>Write a confession.</Text>
             <TouchableOpacity disabled={disablePost} style={[disablePost ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() => createConfession(route.params.username, writeConfession, route.params.space_name )}>
               <Text style={styles.leavejoinText}>post</Text>
             </TouchableOpacity>
@@ -222,14 +222,14 @@ const Space = ({route, navigation}) => {
             <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontFamily:'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)'}}>Edit Space Information</Text>
+            <Text style={{fontSize: 18, fontWeight:'bold', color: 'rgba(49, 94, 153, 1)'}}>Edit Space Information</Text>
             <TouchableOpacity disabled={disableEdit} style={[disableEdit ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() =>  updateSpaceDetails(editSpaceDescription, editSpaceGuidelines.split('\n'))}>
               <Text style={styles.leavejoinText}>update</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 2}}>
             <Text style={{fontSize: 20, color: 'rgba(49, 94, 153, 1)', paddingLeft:'4%'}}>Edit Description:</Text>
-            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
+            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%',
         borderTopColor: 'rgba(49, 94, 153, 1)',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
           </View>

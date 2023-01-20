@@ -3,20 +3,20 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator, ProfileStackNavigator, SearchStackNavigator, SpaceStackNavigator } from './StackNavigator.jsx';
 
-const renderHome = () => {
-  return <MaterialCommunityIcons name="home" size={30} color="rgba(49, 94, 153, 1)" />;
+const renderHome = ({ focused }) => {
+  return focused ? <MaterialCommunityIcons name="home" size={30} color="#90AACB" /> : <MaterialCommunityIcons name="home" size={30} color="rgba(49, 94, 153, 1)" />;
 };
 
-const renderSpaces = () => {
-  return <MaterialCommunityIcons name="google-classroom" size={25} color="rgba(49, 94, 153, 1)" />;
+const renderSpaces = ({ focused }) => {
+  return focused ? <MaterialCommunityIcons name="google-classroom" size={25} color="#90AACB" /> : <MaterialCommunityIcons name="google-classroom" size={25} color="rgba(49, 94, 153, 1)" />;
 };
 
-const renderSearch = () => {
-  return <Ionicons name="search" size={25} color="rgba(49, 94, 153, 1)" />;
+const renderSearch = ({ focused }) => {
+  return focused ? <Ionicons name="search" size={25} color="#90AACB" /> : <Ionicons name="search" size={25} color="rgba(49, 94, 153, 1)" />;
 };
 
-const renderProfile = () => {
-  return <MaterialCommunityIcons name="account" size={30} color="rgba(49, 94, 153, 1)" />;
+const renderProfile = ({ focused }) => {
+  return focused ? <MaterialCommunityIcons name="account" size={30} color="#90AACB" /> : <MaterialCommunityIcons name="account" size={30} color="rgba(49, 94, 153, 1)" />;
 };
 
 // const Stack = createNativeStackNavigator();
@@ -28,7 +28,7 @@ const HomeScreen = () => {
     <Tab.Navigator
       initialRouteName="My Home"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: '#90AACB',
         tabBarInactiveTintColor: 'rgba(49, 94, 153, 1)',
         headerShown: false,
         tabBarInactiveBackgroundColor: '#F9D5A7',

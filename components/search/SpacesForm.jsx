@@ -60,7 +60,7 @@ const SpacesForm = ({ navigation }) => {
       <Button
         buttonStyle={{
           backgroundColor: 'rgba(111, 202, 186, 1)',
-          borderRadius: 5,
+          borderRadius: 30,
         }}
         titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
         containerStyle={{

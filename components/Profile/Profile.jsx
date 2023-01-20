@@ -110,8 +110,8 @@ const Profile = ({ navigation }) => {
               size={100}
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
-              // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
-              source={require(`../../assets/avatar/002.png`)}
+              // source={require(`../../assets/avatars/00${userData.avatar}.png`)}
+              source={require(`../../assets/avatars/002.png`)}
             >
               {/* EDIT AVATAR */}
               {/* <Avatar.Accessory

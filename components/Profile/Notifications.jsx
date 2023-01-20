@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Text } from 'react-native';
 import axios from 'axios';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, spaces, reportedCookie, unreadNotifs, setUnreadNofits, reportedPosts } = route.params;
+  const { username, spaces, reportedCookie, notifsCount, setNotifsCount, reportedPosts, viewedCookieCount, setViewedCookieCount } = route.params;
   // const [reports, setReports] = React.useState([]);
 
   // React.useEffect(() => {
@@ -28,7 +28,7 @@ const Notifications = ({ route, navigation }) => {
   // }, [route]);
 
   if (reportedPosts.length === 0) {
-    return;
+    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
   }
 
   return (
@@ -63,8 +63,8 @@ const Notifications = ({ route, navigation }) => {
                   spaceName={confession.space_name}
                   confessionId={confession.confession_id}
                   reportedCookie={reportedCookie}
-                  unreadNotifs={unreadNotifs}
-                  setUnreadNofits={setUnreadNofits}
+                  notifsCount={notifsCount}
+                  setNotifsCount={setNotifsCount}
                 />
               );
             }
@@ -92,8 +92,8 @@ const Notifications = ({ route, navigation }) => {
                     commentId={comment.comment_id}
                     confessionId={confession.confession_id}
                     reportedCookie={reportedCookie}
-                    unreadNotifs={unreadNotifs}
-                    setUnreadNofits={setUnreadNofits}
+                    notifsCount={notifsCount}
+                    setNotifsCount={setNotifsCount}
                   />
                 );
               });

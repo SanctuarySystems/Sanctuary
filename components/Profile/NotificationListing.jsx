@@ -13,7 +13,7 @@ const storeData = async (value) => {
   }
 };
 
-const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, unreadNotifs, setUnreadNofits }) => {
+const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, notifsCount, setNotifsCount }) => {
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
@@ -22,7 +22,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
     setIsReported(true);
 
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${spaceName}/${reported}/ban`)
-      .then(({ data }) => {
+      .then(() => {
         let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
         temporaryCookie.push({
           reportedUser: reported,
@@ -31,12 +31,12 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         });
         storeData(temporaryCookie);
 
-        setUnreadNofits(unreadNotifs - 1);
+        setUnreadNofits(notifsCount - 1);
       })
       .catch((err) => console.log('axios error in profile', err));
   };
 
-  if (!unreadNotifs) return;
+  if (!notifsCount) return;
 
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>

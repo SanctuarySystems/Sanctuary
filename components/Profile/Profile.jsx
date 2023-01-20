@@ -21,9 +21,10 @@ const Profile = ({ navigation }) => {
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
-
+  // revisit after notifs
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
-  const [unreadNotifs, setUnreadNofits] = React.useState(0); // # of unread notifications
+  const [viewedCookieCount, setViewedCookieCount] = React.useState(0); // viewedCookieCount stored via async storage
+  const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
   const [reportedPosts, setReportedPosts] = React.useState([]);
 
   const getUser = (name, cb) => {
@@ -40,20 +41,20 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
-    //   .then(({ data }) => {
-    //     if (data.length > 1) {
-    //       setReportedPosts(data);
-    //       setUnreadNofits(data.length);
-    //       console.log('reportedPosts within notif useeffect', data);
-    //     }
-    //   })
-    //   .catch((err) => console.log('axios error in notifications', err));
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
+      .then(({ data }) => {
+        if (data.length > 1) {
+          setReportedPosts(data);
+          setNotifsCount(data.length);
+          console.log('reportedPosts within notif useeffect', data);
+        }
+      })
+      .catch((err) => console.log('axios error in profile for confessions', err));
 
-    AsyncStorage.clear();
+    // AsyncStorage.clear();
 
     // grab localstorage viewedCookies for viewed notifications every 30k seconds
-    refreshNotifications(setViewedCookies);
+    refreshNotifications(setViewedCookies, setViewedCookieCount);
   }, []);
 
   return (
@@ -89,16 +90,18 @@ const Profile = ({ navigation }) => {
               username: userData.username,
               spaces: created,
               viewedCookies,
-              unreadNotifs,
-              setUnreadNofits,
+              notifsCount,
+              setNotifsCount,
               reportedPosts,
+              viewedCookieCount,
+              setViewedCookieCount,
             })}
           />
           { reportedPosts > viewedCookies &&
             (
               <Badge
                 status="error"
-                value={unreadNotifs}
+                value={notifsCount}
                 containerStyle={{ position: 'absolute', top: 6, right: 115 }}
               />
             )}
@@ -155,7 +158,6 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View>
-          {/* { spaceData.length > 0 && */}
             <SearchBar
               platform="ios"
               containerStyle={{ backgroundColor: 'white' }}
@@ -172,7 +174,6 @@ const Profile = ({ navigation }) => {
               onCancel={() => setSearchTerm('')}
               value={searchTerm}
             />
-            {/* } */}
         </View>
 
         <View>
@@ -200,11 +201,25 @@ const getCookies = async () => {
   }
 };
 
+const getCookieCount = async () => {
+  try {
+    const count = await AsyncStorage.getItem('viewedCount');
+    return count ? JSON.parse(count) : null;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // grab viewedCookies for viewed notifications every 30k seconds
-const refreshNotifications = (cb) => {
+const refreshNotifications = (cb1, cb2) => {
   setInterval(() => {
     const viewedCookies = getCookies()._z;
-    cb(viewedCookies);
+    const count = getCookieCount();
+    const viewedCount = count._z || count;
+    cb1(viewedCookies);
+    cb2(viewedCount);
+
+    console.log('viewedCount', viewedCount);
     console.log("viewedCookies", viewedCookies);
   }, 30000);
 };

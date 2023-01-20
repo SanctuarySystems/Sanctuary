@@ -2,6 +2,7 @@ import React from "react";
 import { Button, StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl } from "react-native";
 import axios from 'axios';
 import { UsernameContext } from "../../App.js";
+import { useFonts } from 'expo-font';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -11,6 +12,11 @@ const Rooms = ({navigation}) => {
   const [spaces, setSpaces] = React.useState(['space1', 'space2']);
   const [adminSpaces, setAdminSpaces] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf')
+  });
 
   // const onLeaveJoin = (leavejoin, spacename) => {
   //   if (leavejoin === 1) {
@@ -47,8 +53,17 @@ const Rooms = ({navigation}) => {
       .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
       .catch((err) => console.log(err));
   }, [username]);
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef1e6', paddingTop: '4%', width: '100%' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef1e6', fontFamily:'FuzzyBubblesRegular', paddingTop: '4%', width: '100%' }}>
       {/* <Text onPress={() => navigation.navigate('Space')}>Rooms</Text> */}
       {(!spaces || spaces.length === 0)
       && (
@@ -70,7 +85,7 @@ const Rooms = ({navigation}) => {
 
 const styles = StyleSheet.create({
   spaceContainer: {
-    backgroundColor: '#90aacb',
+    backgroundColor: '#ffb085',
     width: windowWidth-10,
     alignItems: 'center',
     padding: 14,
@@ -81,8 +96,8 @@ const styles = StyleSheet.create({
   },
   spaceText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
+    color: 'rgba(0,0,0,0.6)',
+    fontFamily: 'FuzzyBubblesRegular',
   }
 })
 

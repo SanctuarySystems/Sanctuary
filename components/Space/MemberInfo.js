@@ -5,6 +5,7 @@ import ConfessionList from './../Confession/ConfessionList.js';
 import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
+import { useFonts } from 'expo-font';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -13,6 +14,12 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   const [reports, setReports] = React.useState(0);
   const [confessions, setConfessions] = React.useState(0);
   const [banModal, setBanModal] = React.useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf')
+  });
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}&username=${username}`)
@@ -33,6 +40,14 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{paddingBottom:'2%'}}>
@@ -103,7 +118,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'FuzzyBubblesBold',
   },
   leavejoinContainer: {
     // backgroundColor: "#009688",

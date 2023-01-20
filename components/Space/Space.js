@@ -6,6 +6,7 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import MemberInfo from './MemberInfo.js';
+import { useFonts } from 'expo-font';
 
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
@@ -24,6 +25,12 @@ const Space = ({route, navigation}) => {
   const [disableEdit, setDisableEdit] = React.useState(true);
   const [confessions, setConfessions] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf')
+  });
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -132,12 +139,20 @@ const Space = ({route, navigation}) => {
 
   }, [editSpaceDescription, editSpaceGuidelines])
 
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
       <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%', paddingTop: '2%'}}>
         <View>
-          <Text style={{fontSize: '20%', fontWeight:'bold'}}>{route.params.space_name}</Text>
+          <Text style={{fontSize: '20%', fontFamily:'FuzzyBubblesBold'}}>{route.params.space_name}</Text>
           <Text style={{color: 'rgba(0,0,0,0.7)'}}>{numMembers} {'Member(s)'}</Text>
         </View>
         {(leavejoin===0 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => joinSpace(route.params.username, route.params.space_name)}>
@@ -151,7 +166,7 @@ const Space = ({route, navigation}) => {
         </TouchableOpacity>}
       </View>
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
-        <Text>{spaceDescription} </Text>
+        <Text style={{fontFamily:'FuzzyBubblesRegular'}}>{spaceDescription} </Text>
       </View>
       <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <View style={[tab !== 0? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>Feed</Text></View>
@@ -167,7 +182,7 @@ const Space = ({route, navigation}) => {
             <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
           </ScrollView>
         </View>}
-        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4}}>{spaceGuidelines}</Text></View>}
+        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4, fontFamily:'FuzzyBubblesRegular'}}>{spaceGuidelines}</Text></View>}
         {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >
           <ScrollView style={{paddingTop:'4%'}}>
           {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
@@ -187,7 +202,7 @@ const Space = ({route, navigation}) => {
             <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#90aacb'}}>Write a confession.</Text>
+            <Text style={{fontSize: 18, fontFamily: 'FuzzyBubblesBold', color: '#90aacb'}}>Write a confession.</Text>
             <TouchableOpacity disabled={disablePost} style={[disablePost ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() => createConfession(route.params.username, writeConfession, route.params.space_name )}>
               <Text style={styles.leavejoinText}>post</Text>
             </TouchableOpacity>
@@ -195,6 +210,7 @@ const Space = ({route, navigation}) => {
           <View style={{flex: 10}}>
             <TextInput placeholder="Write your confession here." style={{padding:10,
         borderTopColor: '#90aacb',
+        fontFamily: 'FuzzyBubblesRegular',
         borderTopWidth: 2, fontSize:20}} multiline onChangeText={text => {changeWriteConfession(text)}} value={writeConfession} />
           </View>
         </SafeAreaView>
@@ -206,20 +222,20 @@ const Space = ({route, navigation}) => {
             <Icon name="md-close" size='35%' color='#90aacb'/>
             </TouchableOpacity>
             {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontWeight:'bold', color: '#90aacb'}}>Edit Space Information</Text>
+            <Text style={{fontSize: 18, fontFamily:'FuzzyBubblesBold', color: '#90aacb'}}>Edit Space Information</Text>
             <TouchableOpacity disabled={disableEdit} style={[disableEdit ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() =>  updateSpaceDetails(editSpaceDescription, editSpaceGuidelines.split('\n'))}>
               <Text style={styles.leavejoinText}>update</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 2}}>
             <Text style={{fontSize: 20, color: '#90aacb', paddingLeft:'4%'}}>Edit Description:</Text>
-            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%',
+            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
         borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
           </View>
           <View style={{flex:11}}>
             <Text style={{fontSize:20, color: '#90aacb', paddingLeft:'4%'}}>Edit Guidelines:</Text>
-            <TextInput style={{padding:10, fontSize:18, paddingLeft: '5%',
+            <TextInput style={{padding:10, fontSize:18, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
         borderTopColor: '#90aacb',
         borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceGuidelines(text)} value={editSpaceGuidelines} />
           </View>

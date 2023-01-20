@@ -43,7 +43,7 @@ const Space = ({route, navigation}) => {
       .then(() => {
         setLeaveJoin(0);
         setNumMembers(numMembers-1)
-      }).catch((err) => console.log(err));
+      }).catch((err) => console.log('leaveSPACE', err));
   }
 
   const joinSpace = (username, space_name) => {
@@ -57,6 +57,8 @@ const Space = ({route, navigation}) => {
   const createConfession = (username, text, space_name) => {
     axios.post(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions`, {created_by: username, confession: text, space_name: space_name })
       .then(() => {
+        axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}`)
+        .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
         setModalVisible(false);
       })
       .catch((err) => console.log(err));
@@ -145,7 +147,7 @@ const Space = ({route, navigation}) => {
       <View style={{flex: 8, }}>
 
         {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
-          <ConfessionList allConfessions={confessions}isRoom={true} nav={navigation} />
+          <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
         </View>}
         {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4}}>{spaceGuidelines}</Text></View>}
         {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >

@@ -1,39 +1,37 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
-import axios from 'axios';
+import { View, SafeAreaView, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, spaces, reportedCookie, unreadNotifs, setUnreadNofits, reportedPosts } = route.params;
-  // const [reports, setReports] = React.useState([]);
+  const { username, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
+    viewedCookieCount, setViewedCookieCount } = route.params;
 
-  // React.useEffect(() => {
-  //   let reportArray = reports.slice();
-  //   console.log('spaces', spaces);
+  React.useEffect(() => {
+    updateCookies(reportedPosts);
+    console.log('set cookies for viewed notif count');
 
-  //   spaces.map(async (space) => {
-  //     await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}&reported=true`)
-  //       .then(({ data }) => {
-  //         if (data[0]) {
-  //           reportArray = reports.slice();
-  //           reportArray.push(data[0]);
+    const getCookieCount = async () => {
+      try {
+        const count = await AsyncStorage.getItem('viewedCount');
+        console.log('getting cookie count in notifs', count);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-  //           setReports(reportArray);
-  //           setUnreadNofits(reportArray.length);
-  //           console.log('reportArray within notif useeffect', data[0]);
-  //         }
-  //       })
-  //       .catch((err) => console.log('axios error in notifications', err));
-  //   });
-  // }, [route]);
+    setViewedCookieCount(reportedPosts.length);
+
+    getCookieCount();
+  }, []);
 
   if (reportedPosts.length === 0) {
-    return;
+    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
   }
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 15 }}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
@@ -63,8 +61,10 @@ const Notifications = ({ route, navigation }) => {
                   spaceName={confession.space_name}
                   confessionId={confession.confession_id}
                   reportedCookie={reportedCookie}
-                  unreadNotifs={unreadNotifs}
-                  setUnreadNofits={setUnreadNofits}
+                  notifsCount={notifsCount}
+                  setNotifsCount={setNotifsCount}
+                  viewedCookieCount={viewedCookieCount}
+                  setViewedCookieCount={setViewedCookieCount}
                 />
               );
             }
@@ -92,8 +92,10 @@ const Notifications = ({ route, navigation }) => {
                     commentId={comment.comment_id}
                     confessionId={confession.confession_id}
                     reportedCookie={reportedCookie}
-                    unreadNotifs={unreadNotifs}
-                    setUnreadNofits={setUnreadNofits}
+                    notifsCount={notifsCount}
+                    setNotifsCount={setNotifsCount}
+                    viewedCookieCount={viewedCookieCount}
+                    setViewedCookieCount={setViewedCookieCount}
                   />
                 );
               });
@@ -106,3 +108,12 @@ const Notifications = ({ route, navigation }) => {
 };
 
 export default Notifications;
+
+const updateCookies = async (reportedPosts) => {
+  try {
+    await AsyncStorage.setItem('viewedCount', reportedPosts.length.toString());
+    console.log('set cookie to reportedPosts.length.toString()', reportedPosts.length.toString());
+  } catch (e) {
+    console.log(e);
+  }
+};

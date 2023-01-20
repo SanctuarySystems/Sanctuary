@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TouchableOpacity, Image, Button, StyleSheet, FlatList, Animated, Text } from 'react-native';
-import { VscCircleLargeOutline } from "react-icons/vsc";
-import { MdCheckCircle } from "react-icons/md";
+import { View, TouchableOpacity, Button, StyleSheet, FlatList, Animated, Text } from 'react-native';
 import axios from 'axios';
 import { UsernameContext } from "../../App.js";
 
@@ -9,8 +7,6 @@ const SelectIconScreen = ({ navigation }) => {
   const [selected, setSelected] = useState(null);
   const {username, setUsername} = useContext(UsernameContext);
   let currentSelect = 1;
-
-  console.log('!!!username ', username);
 
   const images = [
     { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },

@@ -5,7 +5,7 @@ import axios from "axios";
 import { UsernameContext } from "../../App.js";
 
 const SpacesForm = ({ navigation }) => {
-  const username = useContext(UsernameContext);
+  const { username } = useContext(UsernameContext);
   const [spaceName, setSpaceName] = useState('');
   const [description, setDescription] = useState('');
   const [guidelines, setGuidelines] = useState('');

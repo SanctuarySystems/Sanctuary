@@ -1,40 +1,38 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-
-export const UsernameContext = React.createContext();
+import React from 'react';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('lookingforpeace');
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
         Sanctuary
       </Text>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate('Login Screen', {
-            setUsername,
-          })}
+        <TouchableOpacity
           style={styles.button}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => navigation.navigate('Sign Up Screen', {
-            setUsername,
-          })}
+          onPress={() => navigation.navigate('Login Screen')}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.button}
-        />
+          onPress={() => navigation.navigate('Sign Up Screen')}
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
         <Button
           title="Select Icon"
           onPress={() => navigation.navigate('Select Icon Screen')}
           style={styles.button}
+          color='#90AACB'
         />
         <Button
           title="Change Password"
           onPress={() => navigation.navigate('Change Password Screen')}
           style={styles.button}
+          color='#90AACB'
         />
       </View>
     </View>
@@ -49,21 +47,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: 'Times New Roman',
-    fontSize: 60,
+    fontFamily: "Times New Roman",
+    fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 135,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
   },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });
+
 export default WelcomeScreen;

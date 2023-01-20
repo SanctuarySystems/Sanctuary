@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { UsernameContext } from "../../App.js";
-import { StyleSheet, Text, View, Button, FlatList, Image } from 'react-native';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
-export default function ConfessionList({ allConfessions, nav, isRoom }) {
-  const username = useContext(UsernameContext);
+export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
+  const { username } = useContext(UsernameContext);
   console.log('Here is the data', allConfessions);
   const images = [
     require(`../../assets/avatars/001.png`),
@@ -45,17 +47,25 @@ export default function ConfessionList({ allConfessions, nav, isRoom }) {
     allConfessions = 'none';
   }
 
-  const spaceNav = (spaceName) => {
+  const spaceNav = (spaceName, owner) => {
 
-    if (isRoom) {
-      nav.navigate('Home Space', { username: username, isAdmin: true, space_name: spaceName });
+    var isAdmin;
+    if (isHome) {
+
+      if (owner === username) {
+        isAdmin = true;
+      } else {
+        isAdmin = false;
+      }
+      nav.navigate('Home Space', {username: username, admin: isAdmin, space_name: spaceName});
     }
   }
 
   return (
     <View style={styles.container}>
       {allConfessions === 'none' && <Text style={styles.errorText}>My confessionList Never got data pushed in. Please fix that.</Text>}
-      {allConfessions.length === 0 && <Text style={styles.errorText}>You're not apart of a Space! Join a Space</Text>}
+      {allConfessions.length === 0 && isRoom === false && <Text style={styles.errorText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
+      {allConfessions.length === 0 && isRoom === true && <Text style={styles.errorText}>There are no confessions in this room. Be the first to post!</Text>}
       {allConfessions !== 'none' && allConfessions.length !== 0 && <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -67,33 +77,39 @@ export default function ConfessionList({ allConfessions, nav, isRoom }) {
               <View style={styles.roomDateContainer}>
                 <View style={{ width: '90%', flexDirection: 'row' }}>
                   <Text style={styles.roomNameStyle}
-                    onPress={() => spaceNav(item.space_name)}
+                    onPress={() => spaceNav(item.space_name, item.space_creator)}
                   >{item.space_name + ' '}</Text>
-                  <Text style={styles.dateStyle}>{item.createdAt}</Text>
+                  <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                 </View>
                 <View style={{ width: '10%' }}>
-                  <Text style={styles.threeDots}>...</Text>
+                  <Entypo name="dots-three-horizontal" size={24} color="black" />
                 </View>
               </View>
-              <View style={styles.imgUserContainer}>
-                <Image source={images[1]} style={styles.image} />
-                <Text style={styles.textStyle}>{'  ' + item.space_creator}</Text>
-              </View>
-              <Text style={styles.bodyText}>{item.confession}</Text>
+
+            <View style={styles.imgUserContainer}>
+            <Image source={images[1]} style={styles.image}/>
+            <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
             </View>
+            <Text style={styles.bodyText}>{item.confession}</Text>
             <View style={styles.buttonContainer}>
               <View style={styles.buttonStyleHug}>
-                <Button
-                  title={'Hug ' + item.hugs}
-                  color="rgba(27, 52, 83, 1)"
-                  accessibilityLabel="Learn more about this purple button" />
+                <TouchableOpacity
+                  onPress={() => console.log('yay')}>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.hugs}</Text>
+                  <Text>Hugs</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.buttonStyleComment}>
-                <Button
-                  title={"Comments " + item.comments.length}
-                  color="rgba(27, 52, 83, 1)"
-                  accessibilityLabel="Learn more about this purple button"
-                  onPress={() => nav.navigate('Comments', { confession_id: item.confession_id })} />
+                {(!isRoom) && <TouchableOpacity
+                  onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
+                  <Text>Comments</Text>
+                </TouchableOpacity> }
+                {isRoom && <TouchableOpacity
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
+                <Text><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
+                </TouchableOpacity>}
+              </View>
               </View>
             </View>
           </View>
@@ -114,13 +130,9 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    width: '80%',
 
   },
   containerConfess: {
@@ -145,6 +157,7 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     flexDirection: 'row',
+    paddingTop: '2%'
   },
 
   roomDateContainer: {
@@ -160,12 +173,23 @@ const styles = StyleSheet.create({
   },
   buttonStyleHug: {
     borderWidth: 0,
-    width: '50%'
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    borderRightWidth: 1,
+    borderTopWidth: 1,
+    borderColor: 'rgba(27, 52, 83, .1)',
+    paddingTop: '1%'
   },
 
   buttonStyleComment: {
     borderWidth: 0,
-    width: '50%'
+    width: '50%',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderColor: 'rgba(27, 52, 83, .1)',
+    paddingTop: '1%'
   },
 
   roomNameStyle: {

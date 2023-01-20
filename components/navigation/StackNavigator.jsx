@@ -1,11 +1,9 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from "../screens/Home.jsx";
-import TestPage from "../screens/TestPage.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
 import SpacesForm from "../search/SpacesForm.jsx";
-import ProfileTest from "../screens/ProfileTest.jsx";
 import Comments from "../Comments/Comments";
 import Profile from "../Profile/Profile";
 import Notifications from "../Profile/Notifications";
@@ -30,7 +28,6 @@ const MainStackNavigator = ({ setUsername }) => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Test Page" component={TestPage} />
       <Stack.Screen name="Comments" component={Comments} />
       <Stack.Screen name="Home Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
@@ -45,6 +42,7 @@ const SpaceStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} options={{ username: 'lookingforpeace' }} />
       <Stack.Screen name="Space" component={Space} />
+      <Stack.Screen name="Confession Comments" component={Comments} />
     </Stack.Navigator>
   );
 };
@@ -70,18 +68,6 @@ const ProfileStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-// { setUsername }
-// const AuthenticateStackNavigator = () => {
-//   return (
-//     <Stack.Navigator screenOptions={screenOptionStyle}>
-//       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
-//       <Stack.Screen name="Login Screen" component={LoginScreen} />
-//       <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
-//       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
-//       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
-//     </Stack.Navigator>
-//   );
-// };
 
 export {
   MainStackNavigator,

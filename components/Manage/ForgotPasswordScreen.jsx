@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -14,42 +14,50 @@ const ForgotPasswordScreen = ({ navigation }) => {
       navigation.navigate('Login Screen');
     } catch (error) {
       console.log('error');
-      setErrorMessage(error.message);
+      setErrorMessage('Please enter your email address');
     }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.header}>Sanctuary</Text>
-      <View style={styles.inputContainer}>
-        <Text>Enter your email below to reset your password</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Email"
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
-      {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Submit" onPress={handleSubmit} />
-      </View>
-    </KeyboardAvoidingView>
+    <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.inputContainer} behavior='padding' keyboardVerticalOffset={150}>
+          <Text style={styles.header}>Sanctuary</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Email"
+            onChangeText={(text) => setEmail(text)}
+          />
+          {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#FEF1E6',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FEF1E6',
+    width: '100%',
+    height: '100%',
+    borderWidth: 2,
   },
   header: {
     fontFamily: 'Times New Roman',
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 80,
   },
   inputContainer: {
     alignItems: 'center',
@@ -69,13 +77,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 80,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

@@ -7,8 +7,8 @@ import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
 
 const Profile = ({ navigation }) => {
-  // const username = React.useContext(UsernameContext); // username for get user call
-  const username = 'lookingforpeace'; // username for get user call
+  const { username } = React.useContext(UsernameContext); // username for get user call
+  // const username = 'lookingforpeace'; // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs

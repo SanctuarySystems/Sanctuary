@@ -5,7 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
 
-const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId }) => {
+const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId, currentUser }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
@@ -20,19 +20,19 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
       if (plopped === false) {
         setPopped(true);
         setPop(pop + 1);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
           .catch((err) => console.error(err));
       } else {
         setPopped(true);
         setPlopped(false);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
           .catch((err) => console.error(err));
         setPop(pop + 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
         .catch((err) => console.error(err));
       setPopped(false);
       setPop(pop - 1);
@@ -42,21 +42,21 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const handlePlop = () => {
     if (plopped === false) {
       if (popped === false) {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
           .catch((err) => console.error(err));
         setPlopped(true);
         setPop(pop - 1);
       } else {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
           .catch((err) => console.error(err));
         setPlopped(true);
         setPopped(false);
         setPop(pop - 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)
+      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
         .catch((err) => console.error(err));
       setPlopped(false);
       setPop(pop + 1);
@@ -68,11 +68,11 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   } else {
     return (
       <View style={styles.comment}>
-        <Text style={{fontFamily: 'BubbleRegular'}}>{body}</Text>
+        <Text style={{fontFamily: 'BubbleRegular', fontSize: 20}}>{body}</Text>
         <View style={styles.info}>
           <Text style={styles.username}>{username}</Text>
           <Entypo name="dot-single" size={24} color="black" />
-          <Text style={{fontFamily: 'BubbleRegular'}}>{moment(date).fromNow()}</Text>
+          <Text style={{fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)'}}>{moment(date).fromNow()}</Text>
         </View>
         <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
           <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
   },
   info: {
     position: 'absolute',
-    top: 0,
-    left: 10,
+    top: 10,
+    left: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -129,15 +129,17 @@ const styles = StyleSheet.create({
     top: 5,
   },
   pop: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#83C5BE',
     borderRadius: '50%',
   },
   plop: {
-    backgroundColor: 'red',
+    backgroundColor: '#E29578',
     borderRadius: '55%',
   },
   username: {
     fontFamily: 'BubbleBold',
+    color: 'rgba(49, 94, 153, 1)',
+    fontSize: 16,
   },
   popCount: {
     fontFamily: 'BubbleRegular',

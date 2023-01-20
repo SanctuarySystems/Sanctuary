@@ -17,6 +17,8 @@ const Comments = ({ route }) => {
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
+    BubbleBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    BubbleRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
   });
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const Comments = ({ route }) => {
           <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
             <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
               <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
-                <Text>Report</Text>
+                <Text style={styles.reportText}>Report</Text>
               </TouchableOpacity>
             </SafeAreaView>
           </TouchableOpacity>
@@ -90,13 +92,13 @@ const Comments = ({ route }) => {
                   <View style={styles.buttonStyleHug}>
                     {<View>
                       <Text style={{textAlign: 'center', color: '#90AACB'}}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
-                      <Text style={{fontFamily: 'Virgil', color: '#90AACB'}}>Hugs</Text>
+                      <Text style={{fontFamily: 'BubbleRegular', color: '#90AACB'}}>Hugs</Text>
                       </View>}
                   </View>
                   <View style={styles.buttonStyleComment}>
                     {<TouchableOpacity>
                     <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                    <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
+                    <Text style={{fontFamily: 'BubbleRegular'}}>Comments</Text>
                     </TouchableOpacity>}
                   </View>
                   </View>
@@ -105,7 +107,7 @@ const Comments = ({ route }) => {
             )}
             keyExtractor={(comment) => comment.id}
             data={confession.comments.sort((a, b) => b.pops - a.pops)}
-            renderItem={({ item }) => <Comment handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
+            renderItem={({ item }) => <Comment currentUser={username} handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
           />
           <AddComment add={add} username={username} confessionId={confession_id} />
         </>
@@ -122,17 +124,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#FEF1E6',
-    fontFamily: 'Virgil',
+    fontFamily: 'BubbleRegular',
   },
   modal: {
     backgroundColor: 'red',
-    fontFamily: 'Virgil',
+    fontFamily: 'BubbleRegular',
   },
   viewModal: {
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
-    fontFamily: 'Virgil',
+    fontFamily: 'BubbleRegular',
   },
   report: {
     width: '100%',
@@ -141,18 +143,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
-    fontFamily: 'Virgil',
+    fontFamily: 'BubbleRegular',
   },
   reportButton: {
     marginTop: 10,
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '7%',
-    backgroundColor: '#FFCCCB',
+    padding: '4%',
+    backgroundColor: '#C44536',
     borderRadius: 10,
     alignItems: 'center',
-    fontFamily: 'Virgil',
+    fontFamily: 'BubbleRegular',
   },
   container: {
     flex: 1,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   errorText: {
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     paddingTop: '2%',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   roomDateContainer: {
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular',
 
   },
   imgUserContainer: {
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
   //  backgroundColor: 'rgba(27, 52, 83, .08)',
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
   image: {
     width: 20,
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
     paddingTop: '1%',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   buttonStyleComment: {
@@ -237,21 +239,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
     paddingTop: '1%',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   roomNameStyle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
     color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
 
   dateStyle: {
@@ -259,13 +261,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingTop: '1%',
     color: 'rgba(49, 94, 153, 1)',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
   },
   bodyText: {
     color: 'rgba(49, 94, 153, 1)',
     fontSize: 18,
     padding: '3%',
-    fontFamily: 'Virgil'
+    fontFamily: 'BubbleRegular'
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 

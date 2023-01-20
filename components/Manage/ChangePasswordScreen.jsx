@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase/app';
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -54,7 +54,12 @@ const ChangePasswordScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" color='#90AACB' onPress={handleSubmit} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );

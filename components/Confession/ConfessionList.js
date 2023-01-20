@@ -38,7 +38,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   useEffect(() => {
 
-    getData();
+    ///Add line below to reset local storage
+    //saveData({});
+     getData();
   },[])
 
 
@@ -164,8 +166,8 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
                   <Text style={{fontFamily: 'Virgil'}}>Hugs</Text>
                 </TouchableOpacity>}
                 {idList[item.confession_id] !== undefined && <View>
-                  <Text style={{textAlign: 'center', color: 'red'}}><FontAwesome5 name="hands-helping" size={20} color="red" />{' ' + (item.hugs + 1)}</Text>
-                  <Text style={{fontFamily: 'Virgil', color: 'red'}}>Hugs</Text>
+                  <Text style={{textAlign: 'center', color: '#90AACB'}}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
+                  <Text style={{fontFamily: 'Virgil', color: '#90AACB'}}>Hugs</Text>
                   </View>}
               </View>
               <View style={styles.buttonStyleComment}>

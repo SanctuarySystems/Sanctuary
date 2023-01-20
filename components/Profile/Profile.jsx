@@ -153,9 +153,7 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
               // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
-              // source={require(`../../assets/avatars/002.png`)}
               source={require(`../../assets/avatars/012.png`)}
-              // source={require(`../../assets/avatars/0${userData.avatar}.png`)}
             >
               {/* EDIT AVATAR */}
               {/* <Avatar.Accessory
@@ -167,7 +165,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', top: 2 }}>
             {/* USERNAME */}
-            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: `${colorTheme.darkblue}` }}>
               {userData.username}
             </Text>
             {/* <Icon
@@ -290,6 +288,7 @@ const colorTheme = {
   yellow: '#F9D5A7',
   orange: '#FFB085',
   blue: '#90AACB',
+  darkblue: 'rgba(49, 94, 153, 1)',
 };
 
 const styles = StyleSheet.create({

@@ -40,7 +40,9 @@ const Home = ({ navigation }) => {
             )
               .then(() => {
                 console.log('I am concatArray: ', concatArray.flat());
-                setAllConfessions(concatArray.flat());
+                setAllConfessions(concatArray.flat().sort((a, b) => {
+                  return (a.createdAt < b.createdAt) ? 1 : ((a.createdAt > b.createdAt) ? -1 : 0);
+                }));
               })
               .catch((err) => {
                 console.log(err);

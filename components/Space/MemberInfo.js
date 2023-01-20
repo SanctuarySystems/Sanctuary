@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   leavejoinContainerNo: {
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#90aacb",
+    borderColor: "rgba(49, 94, 153, 1)",
     borderRadius: 10,
     paddingVertical: 10,
     // paddingHorizontal: 11,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   leavejoinTextNo: {
     fontSize: 12,
-    color: "#90aacb",
+    color: "rgba(49, 94, 153, 1)",
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
   leavejoinContainerBan: {
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#90aacb",
-    backgroundColor: '#90aacb',
+    borderColor: "rgba(49, 94, 153, 1)",
+    backgroundColor: 'rgba(49, 94, 153, 1)',
     borderRadius: 10,
     paddingVertical: 9,
     // paddingHorizontal: 11,

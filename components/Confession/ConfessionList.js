@@ -170,12 +170,12 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
-                  onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}>
+                  onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, images: images})}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
                   <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id, item: item, images: images })}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
                 <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity>}
@@ -310,8 +310,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'right'
   }
-
-
 });
 
 

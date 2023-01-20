@@ -11,8 +11,8 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const [plopped, setPlopped] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    Virgil: require('../../assets/fonts/Virgil.ttf'),
-    Solitreo: require('../../assets/fonts/Solitreo-Regular.ttf'),
+    BubbleBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    BubbleRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
   });
 
   const handlePop = () => {
@@ -65,30 +65,30 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
 
   if (!fontsLoaded) {
     return (<View><Text>still loading font</Text></View>);
+  } else {
+    return (
+      <View style={styles.comment}>
+        <Text style={{fontFamily: 'BubbleRegular'}}>{body}</Text>
+        <View style={styles.info}>
+          <Text style={styles.username}>{username}</Text>
+          <Entypo name="dot-single" size={24} color="black" />
+          <Text style={{fontFamily: 'BubbleRegular'}}>{moment(date).fromNow()}</Text>
+        </View>
+        <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
+          <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
+        </TouchableOpacity>
+        <View style={styles.vote}>
+          <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
+            <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.popCount}>{pop}</Text>
+          <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
+            <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
-
-  return (
-    <View style={styles.comment}>
-      <Text>{body}</Text>
-      <View style={styles.info}>
-        <Text style={styles.username}>{username}</Text>
-        <Entypo name="dot-single" size={24} color="black" />
-        <Text>{moment(date).fromNow()}</Text>
-      </View>
-      <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
-        <Entypo name="dots-three-horizontal" size={24} color="black" onPress={() => setShowModal(true)} />
-      </TouchableOpacity>
-      <View style={styles.vote}>
-        <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
-          <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.popCount}>{pop}</Text>
-        <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
-          <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
 };
 
 const styles = StyleSheet.create({
@@ -135,6 +135,12 @@ const styles = StyleSheet.create({
   plop: {
     backgroundColor: 'red',
     borderRadius: '55%',
+  },
+  username: {
+    fontFamily: 'BubbleBold',
+  },
+  popCount: {
+    fontFamily: 'BubbleRegular',
   },
 });
 

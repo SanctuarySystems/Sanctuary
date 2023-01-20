@@ -46,15 +46,15 @@ const LoginScreen = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={handleSubmit}
-            >
-              <Text style={styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
               onPress={handleForgotPassword}
             >
               <Text style={styles.buttonText}>Forgot Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>

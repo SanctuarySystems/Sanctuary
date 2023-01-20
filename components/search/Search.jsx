@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, RefreshControl } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
@@ -7,6 +7,14 @@ import SpacesList from "./SpacesList.jsx";
 const Search = ({ navigation }) => {
   const [allSpaces, setAllSpaces] = useState([]);
   const [query, setQuery] = useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=20`)
@@ -16,14 +24,19 @@ const Search = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshing]);
 
   const filteredSpaces = allSpaces.filter((space) => {
     return space.space_name.toLowerCase().includes(query.toLowerCase());
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.container}
+      style={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <SearchBar
         platform="ios"
         containerStyle={{ backgroundColor: '#FEF1E6' }}

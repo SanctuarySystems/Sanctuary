@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import moment from 'moment';
 
 const DetailedConfession = ({ username, space, date, body, setShowModal }) => {
   return (
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: 'yellow',
     padding: '15%',
     marginBottom: '3%',
   },

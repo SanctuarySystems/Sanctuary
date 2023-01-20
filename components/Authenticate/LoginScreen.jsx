@@ -3,12 +3,17 @@ import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Text, Styl
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firebase.js";
 import { UsernameContext } from '../../App.js';
+import { useFonts } from 'expo-font';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { username, setUsername } = useContext(UsernameContext);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   const handleSubmit = async () => {
     try {
@@ -25,6 +30,14 @@ const LoginScreen = ({ navigation }) => {
   const handleForgotPassword = async () => {
     navigation.navigate('Forgot Password Screen');
   };
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
@@ -60,7 +73,6 @@ const LoginScreen = ({ navigation }) => {
         </KeyboardAvoidingView>
       </SafeAreaView>
     </TouchableOpacity>
-
   );
 };
 
@@ -74,7 +86,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',

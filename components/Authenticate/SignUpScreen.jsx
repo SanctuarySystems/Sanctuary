@@ -5,6 +5,7 @@ import axios from 'axios';
 import { authentication } from "./firebase.js";
 import GlobalStyles from '../GlobalStyles.js';
 import { UsernameContext } from '../../App.js';
+import { useFonts } from 'expo-font';
 
 const auth = getAuth();
 
@@ -16,6 +17,10 @@ const SignUpScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [goodUsername, setGoodUsername] = useState(false);
   const { username, setUsername } = useContext(UsernameContext);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   const handleUsername = () => {
     console.log('in handle username');
@@ -47,6 +52,13 @@ const SignUpScreen = ({ navigation }) => {
     }
   };
 
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',

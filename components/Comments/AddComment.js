@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 
-const AddComment = ({ add }) => {
-  const [comment, setComment] = useState({ created_by: 'lookingforpeace', pops: 1, comment: '' });
+const AddComment = ({ add, username, confessionId }) => {
+  const [comment, setComment] = useState({ created_by: username, pops: 1, comment: '' });
 
   const handlePress = () => {
     if (comment.comment.length !== 0) {
@@ -14,8 +14,8 @@ const AddComment = ({ add }) => {
     }
 
     axios.post('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/comments', {
-      confession_id: 1,
-      created_by: 'lookingforcalm',
+      confession_id: confessionId,
+      created_by: username,
       comment: comment.comment,
     });
   };

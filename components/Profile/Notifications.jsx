@@ -4,7 +4,17 @@ import axios from 'axios';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, spaces, reportedCookie, notifsCount, setNotifsCount, reportedPosts, viewedCookieCount, setViewedCookieCount } = route.params;
+  const { username, spaces, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
+    viewedCookieCount, setViewedCookieCount } = route.params;
+
+  if (reportedPosts.length === 0) {
+    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
+  }
+
+  React.useEffect(() => {
+    updateCookies();
+  }, []);
+
   // const [reports, setReports] = React.useState([]);
 
   // React.useEffect(() => {
@@ -26,10 +36,6 @@ const Notifications = ({ route, navigation }) => {
   //       .catch((err) => console.log('axios error in notifications', err));
   //   });
   // }, [route]);
-
-  if (reportedPosts.length === 0) {
-    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
-  }
 
   return (
     <SafeAreaView>
@@ -65,6 +71,8 @@ const Notifications = ({ route, navigation }) => {
                   reportedCookie={reportedCookie}
                   notifsCount={notifsCount}
                   setNotifsCount={setNotifsCount}
+                  viewedCookieCount={viewedCookieCount}
+                  setViewedCookieCount={setViewedCookieCount}
                 />
               );
             }
@@ -94,6 +102,8 @@ const Notifications = ({ route, navigation }) => {
                     reportedCookie={reportedCookie}
                     notifsCount={notifsCount}
                     setNotifsCount={setNotifsCount}
+                    viewedCookieCount={viewedCookieCount}
+                    setViewedCookieCount={setViewedCookieCount}
                   />
                 );
               });
@@ -106,3 +116,12 @@ const Notifications = ({ route, navigation }) => {
 };
 
 export default Notifications;
+
+const updateCookies = async () => {
+  setViewedCookieCount(reportedPosts.length);
+  try {
+    await AsyncStorage.setItem('viewedCount', reportedPosts.length)
+  } catch (e) {
+    console.log(e);
+  }
+};

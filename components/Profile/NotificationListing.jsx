@@ -13,10 +13,13 @@ const storeData = async (value) => {
   }
 };
 
-const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, notifsCount, setNotifsCount }) => {
+const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId,
+  navigation, reportedCookie, notifsCount, setNotifsCount, viewedCookieCount, setViewedCookieCount }) => {
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
+
+  setViewedCookieCount()
 
   const handleBan = () => {
     setIsReported(true);

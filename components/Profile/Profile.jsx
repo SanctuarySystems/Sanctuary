@@ -43,11 +43,8 @@ const Profile = ({ navigation }) => {
 
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
       .then(({ data }) => {
-        if (data.length > 1) {
-          setReportedPosts(data);
-          setNotifsCount(data.length);
-          console.log('reportedPosts within notif useeffect', data);
-        }
+        setReportedPosts(data);
+        setNotifsCount(data.length);
       })
       .catch((err) => console.log('axios error in profile for confessions', err));
 
@@ -97,7 +94,7 @@ const Profile = ({ navigation }) => {
               setViewedCookieCount,
             })}
           />
-          { reportedPosts > viewedCookies &&
+          { notifsCount > viewedCookieCount &&
             (
               <Badge
                 status="error"
@@ -219,8 +216,8 @@ const refreshNotifications = (cb1, cb2) => {
     cb1(viewedCookies);
     cb2(viewedCount);
 
-    console.log('viewedCount', viewedCount);
-    console.log("viewedCookies", viewedCookies);
+    // console.log('viewedCount', viewedCount);
+    // console.log("viewedCookies", viewedCookies);
   }, 30000);
 };
 

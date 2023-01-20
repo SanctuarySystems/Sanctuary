@@ -88,21 +88,21 @@ const SelectIconScreen = ({ navigation }) => {
     // setSelected(id);
   };
 
-  const handleSubmit = (image) => {
-    console.log('hello', image);
+  const handleSubmit = () => {
+    console.log('hello', currentSelect);
     axios.post('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users', {
       username,
-      avater: image,
+      avatar: currentSelect,
     })
       .then(() => {
         navigation.navigate('Home Screen');
       });
   };
 
-  const submitAvatar = () => {
+  // const submitAvatar = () => {
 
-    console.log('current selection: ', currentSelect);
-  }
+  //   console.log('current selection: ', currentSelect);
+  // }
 
   return (
 
@@ -140,7 +140,7 @@ const SelectIconScreen = ({ navigation }) => {
           <Button
             title="Save Changes"
             color="rgba(77, 131, 203, 0.8)"
-            onPress={submitAvatar}
+            onPress={handleSubmit}
         />
         </View>
       </View>

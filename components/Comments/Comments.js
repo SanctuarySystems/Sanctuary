@@ -6,13 +6,14 @@ import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
 
-const Comments = () => {
+const Comments = ({ route }) => {
+  const { confession_id } = route.params;
   const [confession, setConfession] = useState();
 
   useEffect(() => {
-    axios.get('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions')
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confession_id}`)
       .then((res) => {
-        setConfession(res.data[0]);
+        setConfession(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   screen: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'grey',
+    backgroundColor: '#FEF1E6',
   },
   modal: {
     backgroundColor: 'red',

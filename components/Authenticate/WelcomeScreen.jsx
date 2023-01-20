@@ -1,8 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import { Platform } from 'react-native'
+import { Platform } from 'react-native';
+import { useFonts } from 'expo-font';
 
 const WelcomeScreen = ({ navigation }) => {
+
+  const [fontsLoaded] = useFonts({
+    'Virgil': require('../../assets/fonts/Virgil.ttf'),
+  });
+
+  if (!fontsLoaded) {
+
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  } else {
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -38,6 +53,7 @@ const WelcomeScreen = ({ navigation }) => {
       </View>
     </View>
   );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -48,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',

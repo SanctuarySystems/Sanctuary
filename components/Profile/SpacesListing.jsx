@@ -6,11 +6,9 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
   const [spaceData, setSpaceData] = React.useState({});
 
   React.useEffect(() => {
-    // console.log('space being called via endpoint', space);
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}`)
       .then(({ data }) => {
         setSpaceData(data[0]);
-        // console.log(spaceData);
       })
       .catch((err) => console.log('err from spaceslisting', err));
   }, []);
@@ -28,14 +26,14 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
       }}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column' }}>
-          <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
           <Text>
             {spaceData.members.length} members
           </Text>
         </View>
         <View>
           { spaceData.created_by === currentUser &&
-            <Text style={{ left: 5, color: `${colorTheme.orange}` }}>(admin)</Text>
+            <Text style={{ left: 7, top: 2, color: `${colorTheme.orange}` }}>admin</Text>
             }
         </View>
       </View>
@@ -48,6 +46,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
             navigation.navigate('Space', {
               space_name: spaceData.space_name,
               isAdmin: spaceData.created_by === currentUser,
+              username: currentUser
             })}
         />
       </View>

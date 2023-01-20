@@ -8,7 +8,7 @@ import AddComment from './AddComment';
 import { UsernameContext } from '../../App.js';
 
 const Comments = ({ route }) => {
-  const { confession_id } = route.params;
+  const { confession_id, } = route.params;
   const { username } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
 
@@ -31,12 +31,16 @@ const Comments = ({ route }) => {
     setConfession(obj);
   };
 
+  const handleReport = (id) => {
+    setShowModal(false);
+  };
+
   return (
     <View style={styles.screen}>
       <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
         <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
           <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-            <TouchableOpacity style={styles.reportButton} onPressOut={() => setShowModal(false)} onPress={() => setShowModal(false)}>
+            <TouchableOpacity style={styles.reportButton} onPressOut={() => setShowModal(false)}>
               <Text>Report</Text>
             </TouchableOpacity>
           </SafeAreaView>
@@ -49,7 +53,7 @@ const Comments = ({ route }) => {
           ListHeaderComponent={<DetailedConfession username={confession.created_by} date={confession.createdAt} space={confession.space_name} body={confession.confession} setShowModal={setShowModal} />}
           keyExtractor={(comment) => comment.id}
           data={confession.comments.sort((a, b) => b.pops - a.pops)}
-          renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
+          renderItem={({ item }) => <Comment handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
         />
         <AddComment add={add} username={username} confessionId={confession_id} />
       </>

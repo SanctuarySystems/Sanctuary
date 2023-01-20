@@ -8,17 +8,9 @@ const SpaceEntry = ({ navigation, space }) => {
   return (
     <View>
       <Button
-        buttonStyle={{
-          backgroundColor: '#FFB085',
-          borderRadius: 5,
-        }}
-        titleStyle={{ fontWeight: 'bold', fontSize: 23, color: 'rgb(99, 99, 99)' }}
-        containerStyle={{
-          marginHorizontal: 50,
-          height: 50,
-          width: 300,
-          marginVertical: 10,
-        }}
+        buttonStyle={styles.button}
+        titleStyle={styles.title}
+        containerStyle={styles.container}
         title={space.space_name}
         onPress={() => navigation.navigate('Space1', {
           space_name: space.space_name,
@@ -32,7 +24,19 @@ const SpaceEntry = ({ navigation, space }) => {
 
 const styles = StyleSheet.create({
   container: {
-    fontSize: 30,
+    marginHorizontal: 50,
+    height: 50,
+    width: 300,
+    marginVertical: 10,
+  },
+  button: {
+    backgroundColor: '#FFB085',
+    borderRadius: 5,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 23,
+    color: 'rgb(99, 99, 99)',
   },
 });
 

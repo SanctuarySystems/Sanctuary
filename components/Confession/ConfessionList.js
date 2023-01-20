@@ -48,38 +48,38 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   const { username } = useContext(UsernameContext);
   const images = [
-    require(`../../assets/avatar/001.png`),
-    require(`../../assets/avatar/002.png`),
-    require(`../../assets/avatar/003.png`),
-    require(`../../assets/avatar/004.png`),
-    require(`../../assets/avatar/005.png`),
-    require(`../../assets/avatar/006.png`),
-    require(`../../assets/avatar/007.png`),
-    require(`../../assets/avatar/008.png`),
-    require(`../../assets/avatar/009.png`),
-    require(`../../assets/avatar/011.png`),
-    require(`../../assets/avatar/012.png`),
-    require(`../../assets/avatar/013.png`),
-    require(`../../assets/avatar/014.png`),
-    require(`../../assets/avatar/015.png`),
-    require(`../../assets/avatar/016.png`),
-    require(`../../assets/avatar/017.png`),
-    require(`../../assets/avatar/018.png`),
-    require(`../../assets/avatar/019.png`),
-    require(`../../assets/avatar/020.png`),
-    require(`../../assets/avatar/021.png`),
-    require(`../../assets/avatar/022.png`),
-    require(`../../assets/avatar/023.png`),
-    require(`../../assets/avatar/024.png`),
-    require(`../../assets/avatar/025.png`),
-    require(`../../assets/avatar/026.png`),
-    require(`../../assets/avatar/027.png`),
-    require(`../../assets/avatar/028.png`),
-    require(`../../assets/avatar/029.png`),
-    require(`../../assets/avatar/030.png`),
-    require(`../../assets/avatar/031.png`),
-    require(`../../assets/avatar/032.png`),
-    require(`../../assets/avatar/033.png`),
+    require(`../../assets/avatars/001.png`),
+    require(`../../assets/avatars/002.png`),
+    require(`../../assets/avatars/003.png`),
+    require(`../../assets/avatars/004.png`),
+    require(`../../assets/avatars/005.png`),
+    require(`../../assets/avatars/006.png`),
+    require(`../../assets/avatars/007.png`),
+    require(`../../assets/avatars/008.png`),
+    require(`../../assets/avatars/009.png`),
+    require(`../../assets/avatars/011.png`),
+    require(`../../assets/avatars/012.png`),
+    require(`../../assets/avatars/013.png`),
+    require(`../../assets/avatars/014.png`),
+    require(`../../assets/avatars/015.png`),
+    require(`../../assets/avatars/016.png`),
+    require(`../../assets/avatars/017.png`),
+    require(`../../assets/avatars/018.png`),
+    require(`../../assets/avatars/019.png`),
+    require(`../../assets/avatars/020.png`),
+    require(`../../assets/avatars/021.png`),
+    require(`../../assets/avatars/022.png`),
+    require(`../../assets/avatars/023.png`),
+    require(`../../assets/avatars/024.png`),
+    require(`../../assets/avatars/025.png`),
+    require(`../../assets/avatars/026.png`),
+    require(`../../assets/avatars/027.png`),
+    require(`../../assets/avatars/028.png`),
+    require(`../../assets/avatars/029.png`),
+    require(`../../assets/avatars/030.png`),
+    require(`../../assets/avatars/031.png`),
+    require(`../../assets/avatars/032.png`),
+    require(`../../assets/avatars/033.png`),
 
   ];
 
@@ -175,7 +175,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
                   <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}>
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
                 <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity>}

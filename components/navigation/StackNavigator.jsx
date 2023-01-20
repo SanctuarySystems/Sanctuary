@@ -18,10 +18,13 @@ const Stack = createNativeStackNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: "#90AACB",
+    backgroundColor: '#772E25',
+    fontWeight: 'bold',
+    fontSize: 65,
   },
   headerTintColor: "white",
   headerBackTitle: "Back",
+
 };
 
 const MainStackNavigator = ({ setUsername }) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, Image } from 'react-native';
 
-export default function ConfessionList({ allConfessions, nav, isRoom}) {
+export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
 
   console.log('Here is the data', allConfessions);
   const images = [
@@ -140,7 +140,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom}) {
 
   const spaceNav = () => {
 
-    if (isRoom) {
+    if (isHome) {
       nav.navigate('Home Space', {username: 'lookingforpeace', admin: true, space_name: 'tranquility'});
     }
   }
@@ -182,11 +182,16 @@ export default function ConfessionList({ allConfessions, nav, isRoom}) {
                 accessibilityLabel="Learn more about this purple button"/>
             </View>
             <View style={styles.buttonStyleComment}>
-              <Button
+              {(!isRoom) && <Button
                 title={"Comments " + item.comments.length}
                 color="rgba(27, 52, 83, 1)"
                 accessibilityLabel="Learn more about this purple button"
-                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}/>
+                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}/>}
+              {isRoom && <Button
+                title={"Comments " + item.comments.length}
+                color="rgba(27, 52, 83, 1)"
+                accessibilityLabel="Learn more about this purple button"
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}/>}
             </View>
           </View>
         </View>

@@ -42,6 +42,7 @@ const SpaceStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} options={{ username: 'lookingforpeace' }} />
       <Stack.Screen name="Space" component={Space} />
+      <Stack.Screen name="Confession Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

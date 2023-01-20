@@ -54,7 +54,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
             size="sm"
             buttonStyle={{ borderRadius: 10, backgroundColor: `${colorTheme.blue}`, padding: 8 }}
             title={isReported ? "User banned" : "Ban reported"}
-            titleStyle={{ fontWeight: 'bold' }}
+            titleStyle={{ fontWeight: 'bold', fontSize: 15 }}
             onPress={() => console.log('Banning reported') || handleBan()}
             />
           }
@@ -64,7 +64,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
             size="sm"
             buttonStyle={{ borderRadius: 10, backgroundColor: `${colorTheme.blue}`, padding: 8 }}
             title={`View ${post}`}
-            titleStyle={{ fontWeight: 'bold' }}
+            titleStyle={{ fontWeight: 'bold', fontSize: 15 }}
             onPress={() => navigation.navigate('Comments', {
               confession_id: confessionId,
               comment_id: commentId,

@@ -5,10 +5,10 @@ import SpacesListing from './SpacesListing';
 const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
   if (!spaceArray) return;
   return (
-    <View style={{ backgroundColor: 'white' }}>
-      <View>
+    <View style={{ backgroundColor: `${colorTheme.beige}` }}>
+      <View style={{ height: '100%' }}>
         { spaceArray.length === 0 &&
-          <Text style={{ alignSelf: 'center', padding: 50 }}>You have not ${currentTab} any spaces!</Text> }
+          <Text style={{ alignSelf: 'center', padding: 50 }}>You have not {currentTab} any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();

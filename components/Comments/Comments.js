@@ -31,8 +31,10 @@ const Comments = ({ route }) => {
     setConfession(obj);
   };
 
-  const handleReport = (id) => {
+  const handleReport = () => {
     setShowModal(false);
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/1/2/report/${username}`)
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -40,7 +42,7 @@ const Comments = ({ route }) => {
       <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
         <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
           <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-            <TouchableOpacity style={styles.reportButton} onPressOut={() => setShowModal(false)}>
+            <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
               <Text>Report</Text>
             </TouchableOpacity>
           </SafeAreaView>
@@ -80,8 +82,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 'auto',
     height: '20%',
-    backgroundColor: 'white',
-    borderWidth: 2,
+    backgroundColor: '#EDF6F9',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
   },
   reportButton: {
     marginTop: 10,
@@ -89,7 +92,9 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '7%',
-    borderWidth: 1,
+    backgroundColor: '#FFCCCB',
+    borderRadius: 10,
+    alignItems: 'center',
   },
 });
 

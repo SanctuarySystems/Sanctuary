@@ -10,13 +10,13 @@ const Home = ({ navigation }) => {
 
   const getConfessions = () => {
     if (username) {
-      console.log('I am userame at Home.jsx:', username);
       axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
         .then((data) => {
           const allSpaces = data.data.spaces_joined;
           // console.log('i am allSpace: ', allSpaces);
           if (allSpaces.length === 0) {
-            setAllConfessions(...allConfessions);
+            // setAllConfessions(...allConfessions);
+            console.log('i am called here!!!!');
           } else {
             const concatArray = [];
             return Promise.all(
@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
               }),
             )
               .then(() => {
-                // console.log('I am concatArray: ', concatArray.flat());
+                console.log('I am concatArray: ', concatArray.flat());
                 setAllConfessions(concatArray.flat());
               })
               .catch((err) => {
@@ -47,11 +47,13 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     getConfessions();
-  }, [username]);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
+      {allConfessions &&
+        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />
+      }
     </View>
   );
 };

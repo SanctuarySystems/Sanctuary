@@ -6,11 +6,16 @@ import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
 import { UsernameContext } from '../../App.js';
+import { useFonts } from 'expo-font';
 
 const Comments = ({ route }) => {
   const { confession_id, } = route.params;
   const { username } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confession_id}`)
@@ -36,6 +41,14 @@ const Comments = ({ route }) => {
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/1/2/report/${username}`)
       .catch((error) => console.log(error));
   };
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.screen}>
@@ -69,6 +82,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#FEF1E6',
+    fontFamily: 'Virgil',
   },
   modal: {
     backgroundColor: 'red',
@@ -77,6 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
+    fontFamily: 'Virgil',
   },
   report: {
     width: '100%',
@@ -85,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
+    fontFamily: 'Virgil',
   },
   reportButton: {
     marginTop: 10,
@@ -95,6 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCCCB',
     borderRadius: 10,
     alignItems: 'center',
+    fontFamily: 'Virgil',
   },
 });
 

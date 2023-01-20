@@ -3,11 +3,17 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import moment from 'moment';
 import axios from 'axios';
+import { useFonts } from 'expo-font';
 
 const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+    Solitreo: require('../../assets/fonts/Solitreo-Regular.ttf'),
+  });
 
   const handlePop = () => {
     if (popped === false) {
@@ -57,6 +63,10 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
     }
   };
 
+  if (!fontsLoaded) {
+    return (<View><Text>still loading font</Text></View>);
+  }
+
   return (
     <View style={styles.comment}>
       <Text>{body}</Text>
@@ -83,6 +93,7 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
 
 const styles = StyleSheet.create({
   comment: {
+    fontFamily: 'Virgil',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '15%',

@@ -1,10 +1,24 @@
 import React, { useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Button } from '@rneui/themed';
 import { UsernameContext } from "../../App";
+import { useFonts } from 'expo-font';
 
 const SpaceEntry = ({ navigation, space }) => {
   const { username } = useContext(UsernameContext);
+
+  const [fontsLoaded] = useFonts({
+    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <Button
@@ -34,6 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   title: {
+    fontFamily: 'FuzzyBubbles',
     fontWeight: 'bold',
     fontSize: 23,
     color: 'black',

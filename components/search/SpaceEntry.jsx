@@ -4,7 +4,7 @@ import { Button } from '@rneui/themed';
 import { UsernameContext } from "../../App";
 
 const SpaceEntry = ({ navigation, space }) => {
-  const username = useContext(UsernameContext);
+  const { username } = useContext(UsernameContext);
   return (
     <View>
       <Button

@@ -136,13 +136,13 @@ const SelectIconScreen = ({ navigation }) => {
             </Animated.View>
           )}
         />
+      </View>
         <View style={styles.submitContainer}>
           <Button
             title="Save Changes"
             color="rgba(77, 131, 203, 0.8)"
             onPress={handleSubmit}
         />
-        </View>
       </View>
     </View>
   );
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   grid: {
     width: '90%',
-    height: '90%',
+    height: '40%',
   },
   imageContainer: {
     width: '33%',
@@ -172,9 +172,10 @@ const styles = StyleSheet.create({
     marginBottom: 'auto',
   },
   submitContainer: {
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
     padding: 10,
+    marginTop: '20%',
     backgroundColor: 'rgba(255, 176, 133, 1)',
     borderRadius: '10',
   },
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: 'bold',
-    paddingTop: 5,
+    paddingBottom: '25%',
   },
 });
 

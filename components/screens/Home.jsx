@@ -27,8 +27,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {allConfessions.length !== 0 &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} />}
+        <ConfessionList allConfessions={allConfessions} nav={navigation} />
 
       <Button
         title="Go to Test Page"

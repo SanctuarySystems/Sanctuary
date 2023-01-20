@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firebase.js";
 import { UsernameContext } from '../../App.js';
@@ -27,46 +27,51 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Sanctuary</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
-        />
-      </View>
-      {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit}
-        >
-          <Text style={styles.buttonText}>Log In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleForgotPassword}
-        >
-          <Text style={styles.buttonText}>Forgot Password</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.inputContainer} behavior='padding' keyboardVerticalOffset={150}>
+          <Text style={styles.header}>Sanctuary</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Email"
+            onChangeText={(text) => setEmail(text)}
+          />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Password"
+            secureTextEntry
+            onChangeText={(text) => setPassword(text)}
+          />
+          {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleForgotPassword}
+            >
+              <Text style={styles.buttonText}>Forgot Password</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableOpacity>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#FEF1E6',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FEF1E6',
+    width: '100%',
+    height: '100%',
+    borderWidth: 2,
   },
   header: {
     fontFamily: 'Times New Roman',

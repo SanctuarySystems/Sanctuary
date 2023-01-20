@@ -4,7 +4,7 @@ import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import moment from 'moment';
 import axios from 'axios';
 
-const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId, handleReport }) => {
+const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);

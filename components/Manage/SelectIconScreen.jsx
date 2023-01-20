@@ -91,7 +91,11 @@ const SelectIconScreen = ({ navigation }) => {
       avatar: currentSelect,
     })
       .then(() => {
+        console.log('success');
         navigation.navigate('Home Screen');
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 

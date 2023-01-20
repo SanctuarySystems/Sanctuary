@@ -91,8 +91,6 @@ const Profile = ({ navigation }) => {
     refreshCookies();
   }, [viewedCookieCount]);
 
-  if (!username) return;
-
   // grab viewedCookies for viewed notifications every 30k seconds
   const refreshCookies = () => {
     refreshNotifications = setInterval(() => {
@@ -101,7 +99,7 @@ const Profile = ({ navigation }) => {
     }, 30000);
   };
 
-  if (!userData) return;
+  if (!fontsLoaded || !username || !userData) return;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

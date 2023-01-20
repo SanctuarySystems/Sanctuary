@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     marginBottom: '1.5%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '100%'
+    width: '100%',
   },
 
   containerPost: {

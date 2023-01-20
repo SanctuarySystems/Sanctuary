@@ -66,7 +66,7 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
         <Text>{moment(date).fromNow()}</Text>
       </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
-        <Entypo name="dots-three-horizontal" size={24} color="black" onPress={() => handleReport(commentId, username)} />
+        <Entypo name="dots-three-horizontal" size={24} color="black" onPress={() => setShowModal(true)} />
       </TouchableOpacity>
       <View style={styles.vote}>
         <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
@@ -84,13 +84,16 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
 const styles = StyleSheet.create({
   comment: {
     justifyContent: 'center',
-    backgroundColor: '#fff',
     alignItems: 'center',
-    padding: '20%',
+    padding: '15%',
     width: '100%',
     marginBottom: '3%',
     marginLeft: 'auto',
     marginRight: 'auto',
+    backgroundColor: 'rgba(255, 255, 255, .85)',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(27, 52, 83, .08)',
   },
   info: {
     position: 'absolute',

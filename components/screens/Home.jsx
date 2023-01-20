@@ -8,42 +8,50 @@ const Home = ({ navigation }) => {
   const { username } = useContext(UsernameContext);
   const [allConfessions, setAllConfessions] = useState([]);
 
-  useEffect(() => {
+  const getConfessions = () => {
     if (username) {
-      console.log('I am userame at Home.jsx: ', username);
+      console.log('I am userame at Home.jsx:', username);
       axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-        .then(async (data) => {
+        .then((data) => {
           const allSpaces = data.data.spaces_joined;
-          const promises = [];
-          for (let i = 0; i < allSpaces.length; i++) {
-            promises.push(axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${allSpaces[i]}`));
+          // console.log('i am allSpace: ', allSpaces);
+          if (allSpaces.length === 0) {
+            setAllConfessions(...allConfessions);
+          } else {
+            const concatArray = [];
+            return Promise.all(
+              allSpaces.map(async (space) => {
+                await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}`)
+                  .then((result) => {
+                    concatArray.push(result.data);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }),
+            )
+              .then(() => {
+                // console.log('I am concatArray: ', concatArray.flat());
+                setAllConfessions(concatArray.flat());
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
-          Promise.allSettled(promises)
-            .then((responses) => {
-              setAllConfessions([...allConfessions, responses.flat()]);
-            });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
+  };
+
+  useEffect(() => {
+    getConfessions();
   }, [username]);
 
   return (
     <View style={styles.container}>
-      {allConfessions.length !== 0 &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} />}
-
-      <Button
-        title="Go to Test Page"
-        onPress={() => navigation.navigate('Test Page')}
-      />
-      <Button
-        title="Go to Comments Page"
-        onPress={() => navigation.navigate('Comments')}
-      />
-      <Text>Welcome Page</Text>
-      <Button
-        title="Go to Welcome Screen"
-        onPress={() => navigation.navigate('Welcome Screen')}
-      />
+      <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />
     </View>
   );
 };

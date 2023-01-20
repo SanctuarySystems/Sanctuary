@@ -21,15 +21,19 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const handleBan = () => {
     setIsReported(true);
 
-    let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
-    temporaryCookie.push({
-      reportedUser: reported,
-      confessionId: confessionId,
-      commentId: commentId,
-    });
-    storeData(temporaryCookie);
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${spaceName}/${reported}/ban`)
+      .then(({ data }) => {
+        let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
+        temporaryCookie.push({
+          reportedUser: reported,
+          confessionId: confessionId,
+          commentId: commentId,
+        });
+        storeData(temporaryCookie);
 
-    setUnreadNofits(unreadNotifs - 1);
+        setUnreadNofits(unreadNotifs - 1);
+      })
+      .catch((err) => console.log('axios error in profile', err));
   };
 
   if (!unreadNotifs) return;

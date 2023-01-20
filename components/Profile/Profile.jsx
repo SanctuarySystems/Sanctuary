@@ -14,14 +14,15 @@ const colorTheme = {
 };
 
 const Profile = ({ navigation }) => {
-  const username = React.useContext(UsernameContext); // username for get user call
+  // const username = React.useContext(UsernameContext); // username for get user call
+  const username = 'lookingforpeace'; // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
 
-  const [cookies, setCookies] = React.useState([]); // cookies stored via async storage
+  const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
   const [unreadNotifs, setUnreadNofits] = React.useState(0); // # of unread notifications
   const [reportedPosts, setReportedPosts] = React.useState([]);
 
@@ -44,15 +45,15 @@ const Profile = ({ navigation }) => {
     //     if (data.length > 1) {
     //       setReportedPosts(data);
     //       setUnreadNofits(data.length);
-    //       console.log('reportArray within notif useeffect', data);
+    //       console.log('reportedPosts within notif useeffect', data);
     //     }
     //   })
     //   .catch((err) => console.log('axios error in notifications', err));
 
     AsyncStorage.clear();
 
-    // grab localstorage cookies for viewed notifications every 30k seconds
-    refreshNotifications(setCookies);
+    // grab localstorage viewedCookies for viewed notifications every 30k seconds
+    refreshNotifications(setViewedCookies);
   }, []);
 
   return (
@@ -87,13 +88,13 @@ const Profile = ({ navigation }) => {
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               spaces: created,
-              cookies,
+              viewedCookies,
               unreadNotifs,
               setUnreadNofits,
               reportedPosts,
             })}
           />
-          { reportedPosts > cookies &&
+          { reportedPosts > viewedCookies &&
             (
               <Badge
                 status="error"
@@ -132,7 +133,9 @@ const Profile = ({ navigation }) => {
           <Tab
             value={currentTab}
             dense
-            buttonStyle='View Style'
+            titleStyle={{ color: `${colorTheme.blue}` }}
+            buttonStyle={{ active: true }}
+            // buttonStyle='View Style'
             style={{ backgroundColor: 'white', color: `${colorTheme.blue}` }}
             onChange={(e) => {
               if (!e) {
@@ -152,22 +155,24 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View>
-          <SearchBar
-            platform="ios"
-            containerStyle={{ backgroundColor: 'white' }}
-            inputContainerStyle={{ backgroundColor: `${colorTheme.beige}` }}
-            inputStyle={{}}
-            loadingProps={{}}
-            onChangeText={(newVal) => setSearchTerm(newVal)}
-            onClearText={() => setSearchTerm('')}
-            placeholder="Search..."
-            placeholderTextColor="#888"
-            showCancel
-            cancelButtonTitle="Cancel"
-            cancelButtonProps={{}}
-            onCancel={() => setSearchTerm('')}
-            value={searchTerm}
-          />
+          {/* { spaceData.length > 0 && */}
+            <SearchBar
+              platform="ios"
+              containerStyle={{ backgroundColor: 'white' }}
+              inputContainerStyle={{ backgroundColor: `${colorTheme.beige}` }}
+              inputStyle={{}}
+              loadingProps={{}}
+              onChangeText={(newVal) => setSearchTerm(newVal)}
+              onClearText={() => setSearchTerm('')}
+              placeholder="Search..."
+              placeholderTextColor="#888"
+              showCancel
+              cancelButtonTitle="Cancel"
+              cancelButtonProps={{}}
+              onCancel={() => setSearchTerm('')}
+              value={searchTerm}
+            />
+            {/* } */}
         </View>
 
         <View>
@@ -195,12 +200,12 @@ const getCookies = async () => {
   }
 };
 
-// grab cookies for viewed notifications every 30k seconds
+// grab viewedCookies for viewed notifications every 30k seconds
 const refreshNotifications = (cb) => {
   setInterval(() => {
-    const cookies = getCookies()._z;
-    cb(cookies);
-    console.log("cookies", cookies);
+    const viewedCookies = getCookies()._z;
+    cb(viewedCookies);
+    console.log("viewedCookies", viewedCookies);
   }, 30000);
 };
 

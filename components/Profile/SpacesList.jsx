@@ -3,11 +3,12 @@ import { View, Text } from 'react-native';
 import SpacesListing from './SpacesListing';
 
 const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
+  if (!spaceArray) return;
   return (
     <View style={{ backgroundColor: 'white' }}>
       <View>
         { spaceArray.length === 0 &&
-          <Text style={{ position: 'relative' }}>You are not in any spaces!</Text> }
+          <Text style={{ alignSelf: 'center', padding: 50 }}>You are not in any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();

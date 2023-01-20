@@ -28,6 +28,8 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
+    console.log(userData);
+
     getConfessions(username, (data) => {
       setReportedPosts(data);
       setNotifsCount(data.length);
@@ -50,6 +52,8 @@ const Profile = ({ navigation }) => {
       getCookieCount(setViewedCookieCount);
     }, 30000);
   };
+
+  if (!userData) return;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -106,7 +110,8 @@ const Profile = ({ navigation }) => {
               size={100}
               rounded
               containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
-              source={require(`../../assets/avatars/00${userData.avatar}.png`)}
+              // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
+              source={require(`../../assets/avatar/002.png`)}
             >
               {/* EDIT AVATAR */}
               {/* <Avatar.Accessory

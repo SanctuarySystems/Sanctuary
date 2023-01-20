@@ -66,6 +66,7 @@ const ProfileStackNavigator = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Space" component={Space} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

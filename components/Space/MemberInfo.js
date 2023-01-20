@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, Modal, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, Modal, Dimensions, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 import Comments from './../Comments/Comments.js';
 import ConfessionList from './../Confession/ConfessionList.js';
 import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
+
+const windowWidth = Dimensions.get('window').width;
 
 const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   const [reported, setReported] = React.useState(0);
@@ -33,11 +35,19 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   }, []);
 
   return (
-    <View style={{paddingBottom:'3%'}}>
+    <View style={{paddingBottom:'2%'}}>
       <View style={styles.container}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'column', justifyContent: 'space-between', alignItems: 'top' }}>
           <Text style={styles.username}>{username}</Text>
-          {!isUser &&
+
+        <View style={{ justifyContent: 'center' }}>
+          <Text style={{fontSize:15}}>{confessions} confessions,
+            {' '}{reported} reported,
+            {' '}{reports} reports
+          </Text>
+        </View>
+        </View>
+        {!isUser &&
           <TouchableOpacity style={styles.leavejoinContainer} onPress={() => setBanModal(true)}>
             <Text style={styles.leavejoinText}>ban</Text>
           </TouchableOpacity>}
@@ -45,24 +55,19 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
            <TouchableOpacity disabled={true}style={styles.leavejoinContainerAdmin}>
            <Text style={styles.leavejoinTextAdmin}>admin</Text>
           </TouchableOpacity>}
-        </View>
-        <View style={{ justifyContent: 'center' }}>
-          <Text style={{fontSize:15}}>{confessions} confessions,
-            {' '}{reported} reported,
-            {' '}{reports} reports
-          </Text>
-        </View>
       </View>
       <Modal visible={banModal} transparent={true} animationType='slide'>
-        <View style={{ flex: 1, marginTop: '70%' }}>
+        <View style={{ flex: 1, marginTop: '70%', alignItems:'center' }}>
           <View style={styles.modal}>
-            <Text>Ban user </Text>
-            <Text style={{fontWeight:"bold", fontSize: 16}}>{username}</Text>
-            <Text>from space </Text>
-            <Text style={{fontWeight:'bold', fontSize: 16}}>{space_name}?</Text>
+            <View style={{alignItems:'center', paddingBottom:'5%'}}>
+              <Text>Ban user </Text>
+              <Text style={{fontWeight:"bold", fontSize: 16}}>{username}</Text>
+              <Text>from space </Text>
+              <Text style={{fontWeight:'bold', fontSize: 16}}>{space_name}?</Text>
+            </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <TouchableOpacity style={styles.leavejoinContainer} onPress={()=>setBanModal(false)}>
-                <Text style={styles.leavejoinText}>No</Text>
+              <TouchableOpacity style={styles.leavejoinContainerNo} onPress={()=>setBanModal(false)}>
+                <Text style={styles.leavejoinTextNo}>No</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.leavejoinContainerBan} onPress={() => {banUser(username, space_name); setBanModal(false);}}>
                 <Text style={styles.leavejoinTextBan}>Ban</Text>
@@ -78,22 +83,23 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    justifyContent: 'center',
+    width: windowWidth-10,
+    flexDirection:'row',
+    justifyContent: 'space-between',
     backgroundColor: '#ffb085',
-    padding: '4%',
-    paddingLeft: '4%',
-    paddingRight: '4%',
-    marginBottom: '4%',
+    padding: '3%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    marginBottom: 1,
     borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
   },
   username: {
     fontSize: 16,
@@ -102,13 +108,29 @@ const styles = StyleSheet.create({
   leavejoinContainer: {
     // backgroundColor: "#009688",
     borderWidth:'1px',
-    borderColor: "#90aacb",
+    borderColor: "#fff",
     borderRadius: 10,
-    paddingVertical: 9,
+    paddingVertical: 10,
     // paddingHorizontal: 11,
     width:'20%'
   },
   leavejoinText: {
+    fontSize: 12,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    alignItems:'center',
+  },
+  leavejoinContainerNo: {
+    // backgroundColor: "#009688",
+    borderWidth:'1px',
+    borderColor: "#90aacb",
+    borderRadius: 10,
+    paddingVertical: 10,
+    // paddingHorizontal: 11,
+    width:'20%'
+  },
+  leavejoinTextNo: {
     fontSize: 12,
     color: "#90aacb",
     fontWeight: "bold",
@@ -127,7 +149,7 @@ const styles = StyleSheet.create({
   },
   leavejoinTextBan: {
     fontSize: 12,
-    color: "#f9d5a7",
+    color: "#fff",
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',
@@ -138,7 +160,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     backgroundColor: "white",
     borderRadius: 10,
-    paddingVertical: 9,
+    paddingVertical: 10,
     // paddingHorizontal: 11,
     width:'20%'
   },
@@ -150,19 +172,20 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   modal: {
-    margin: 20,
-    backgroundColor: '#f9d5a7',
+    width: windowWidth-10,
+    // margin: 12,
+    backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    padding: 14,
+    // alignItems: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
   },
 });
 

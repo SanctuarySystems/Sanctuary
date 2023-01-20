@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Virgil',
     fontSize: 60,
     fontWeight: 'bold',
-    color: '#90AACB',
+    color: 'rgba(49, 94, 153, 1)',
     marginBottom: 50,
   },
   inputContainer: {

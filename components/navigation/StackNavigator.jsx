@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import Home from "../screens/Home.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";

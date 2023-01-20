@@ -10,7 +10,6 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const [plopped, setPlopped] = useState(false);
 
   const handlePop = () => {
-    console.log(commentId);
     if (popped === false) {
       if (plopped === false) {
         setPopped(true);
@@ -35,7 +34,6 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   };
 
   const handlePlop = () => {
-    console.log(commentId);
     if (plopped === false) {
       if (popped === false) {
         axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop`)

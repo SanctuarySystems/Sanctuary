@@ -4,19 +4,19 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator, ProfileStackNavigator, SearchStackNavigator, SpaceStackNavigator } from './StackNavigator.jsx';
 
 const renderHome = () => {
-  return <MaterialCommunityIcons name="home" size={30} />;
+  return <MaterialCommunityIcons name="home" size={30} color="white" />;
 };
 
 const renderSpaces = () => {
-  return <MaterialCommunityIcons name="google-classroom" size={25} />;
+  return <MaterialCommunityIcons name="google-classroom" size={25} color="white" />;
 };
 
 const renderSearch = () => {
-  return <Ionicons name="search" size={25} color="black" />;
+  return <Ionicons name="search" size={25} color="white" />;
 };
 
 const renderProfile = () => {
-  return <MaterialCommunityIcons name="account" size={30} />;
+  return <MaterialCommunityIcons name="account" size={30} color="white" />;
 };
 
 // const Stack = createNativeStackNavigator();
@@ -30,6 +30,8 @@ const HomeScreen = () => {
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         headerShown: false,
+        tabBarActiveBackgroundColor: '#FFB085',
+        tabBarInactiveBackgroundColor: '#FFB085',
       }}
     >
       <Tab.Screen

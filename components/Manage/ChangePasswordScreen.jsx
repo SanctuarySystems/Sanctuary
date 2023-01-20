@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase/app';
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -27,6 +27,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       navigation.navigate('Home Screen');
     } catch (error) {
       console.log(error);
+      setErrorMessage("Incorrect new or old password, please try again.");
     }
   };
 
@@ -53,7 +54,12 @@ const ChangePasswordScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Change Password</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -71,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 50,
   },
   inputContainer: {
     alignItems: 'center',
@@ -91,15 +97,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 50,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
   },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });
-
 
 export default ChangePasswordScreen;

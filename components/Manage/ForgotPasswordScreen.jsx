@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -14,7 +14,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       navigation.navigate('Login Screen');
     } catch (error) {
       console.log('error');
-      setErrorMessage(error.message);
+      setErrorMessage('Please enter your email address');
     }
   };
 
@@ -22,16 +22,20 @@ const ForgotPasswordScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.header}>Sanctuary</Text>
       <View style={styles.inputContainer}>
-        <Text>Enter your email below to reset your password</Text>
         <TextInput
           style={styles.inputBox}
           placeholder="Email"
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Submit" onPress={handleSubmit} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 80,
   },
   inputContainer: {
     alignItems: 'center',
@@ -69,13 +73,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 80,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

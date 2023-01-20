@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts } from 'expo-font';
 
 const storeData = async (value) => {
   try {
@@ -18,6 +19,11 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
+
+  const [fontsLoaded] = useFonts({
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
 
   const handleBan = () => {
     setIsReported(true);
@@ -35,16 +41,16 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
       .catch((err) => console.log('axios error in profile', err));
   };
 
-  if (!notifsCount) return;
+  if (!fontsLoaded || !notifsCount) return;
 
   return (
     <View style={{ borderRadius: 15, padding: 10, backgroundColor: `${colorTheme.orange}` }}>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 5 }}>
-        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{name} </Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold', fontFamily: "FuzzyBubblesBold" }}>{name} </Text>
         <Text style={{ fontSize: 16 }}>{post} in the </Text>
-        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{spaceName} </Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold', fontFamily: "FuzzyBubblesBold" }}>{spaceName} </Text>
         <Text style={{ fontSize: 16 }}>space has been reported by </Text>
-        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{reportedBy}.</Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold', fontFamily: "FuzzyBubblesBold" }}>{reportedBy}.</Text>
       </View>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }} >

@@ -12,11 +12,13 @@ const WelcomeScreen = ({ navigation }) => {
           title="Login"
           onPress={() => navigation.navigate('Login Screen')}
           style={styles.button}
+          color='#90AACB'
         />
         <Button
           title="Sign Up"
           onPress={() => navigation.navigate('Sign Up Screen')}
           style={styles.button}
+          color='#90AACB'
         />
       </View>
       <View style={styles.buttonContainer}>
@@ -24,11 +26,13 @@ const WelcomeScreen = ({ navigation }) => {
           title="Select Icon"
           onPress={() => navigation.navigate('Select Icon Screen')}
           style={styles.button}
+          color='#90AACB'
         />
         <Button
           title="Change Password"
           onPress={() => navigation.navigate('Change Password Screen')}
           style={styles.button}
+          color='#90AACB'
         />
       </View>
     </View>
@@ -44,10 +48,10 @@ const styles = StyleSheet.create({
   },
   header: {
     fontFamily: "Times New Roman",
-    fontSize: 60,
+    fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 135,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -55,9 +59,10 @@ const styles = StyleSheet.create({
   },
   button: {
     fontFamily: "Times New Roman",
-    backgroundColor: '#FFB085',
+    color: '#FFB085',
     fontSize: 60,
     marginHorizontal: 10,
+    fontWeight: 'bold',
   },
 });
 export default WelcomeScreen;

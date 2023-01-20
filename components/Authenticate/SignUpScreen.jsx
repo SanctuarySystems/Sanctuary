@@ -28,6 +28,7 @@ const SignUpScreen = ({ navigation }) => {
       await setUsername(newUsername);
       navigation.navigate('Select Icon Screen');
     } catch (error) {
+      setErrorMessage("All fields are required");
       console.log(error);
     }
   };
@@ -61,7 +62,7 @@ const SignUpScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Sign Up" onPress={handleSubmit} />
+        <Button style={styles.button} color='#90AACB' title="Sign Up" onPress={handleSubmit} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 50,
   },
   inputContainer: {
     alignItems: 'center',
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 50,
   },
   button: {
     fontFamily: 'Times New Roman',

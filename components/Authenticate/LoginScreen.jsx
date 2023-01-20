@@ -44,8 +44,8 @@ const LoginScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Log In" onPress={handleSubmit} />
-        <Button style={styles.button} title="Forgot password" onPress={handleForgotPassword} />
+        <Button style={styles.button} color='#90AACB' title="Log In" onPress={handleSubmit} />
+        <Button style={styles.button} color='#90AACB' title="Forgot password" onPress={handleForgotPassword} />
       </View>
     </SafeAreaView>
   );
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 70,
   },
   inputContainer: {
     alignItems: 'center',
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 70,
   },
   button: {
     fontFamily: 'Times New Roman',

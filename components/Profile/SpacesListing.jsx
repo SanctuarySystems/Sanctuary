@@ -48,6 +48,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
             navigation.navigate('Space', {
               space_name: spaceData.space_name,
               isAdmin: spaceData.created_by === currentUser,
+              username: currentUser
             })}
         />
       </View>

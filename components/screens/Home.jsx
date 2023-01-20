@@ -67,7 +67,7 @@ const Home = ({ navigation }) => {
       }
     >
       {allConfessions &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
+        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true}/>
       }
     </ScrollView>
   );

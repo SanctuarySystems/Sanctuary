@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
+import { useFonts } from 'expo-font';
 import { UsernameContext } from "../../App.js";
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 
 export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
+
+  const [fontsLoaded] = useFonts({
+    'Virgil': require('../../assets/fonts/Virgil.ttf'),
+  });
+
   const { username } = useContext(UsernameContext);
-  console.log('Here is the data', allConfessions);
   const images = [
     require(`../../assets/avatar/001.png`),
     require(`../../assets/avatar/002.png`),
@@ -47,7 +52,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
     allConfessions = 'none';
   }
 
-  const spaceNav = (spaceName, owner) => {
+  function spaceNav(spaceName, owner) {
 
     var isAdmin;
     if (isHome) {
@@ -60,6 +65,16 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
       nav.navigate('Home Space', {username: username, admin: isAdmin, space_name: spaceName});
     }
   }
+
+
+  if (!fontsLoaded) {
+
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  } else {
 
   return (
     <View style={styles.container}>
@@ -82,7 +97,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
                   <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                 </View>
                 <View style={{ width: '10%' }}>
-                  <Entypo name="dots-three-horizontal" size={24} color="black" />
+                  <Entypo name="dots-three-horizontal" size={20} color="black" />
                 </View>
               </View>
 
@@ -90,24 +105,24 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
             <Image source={images[1]} style={styles.image}/>
             <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
             </View>
-            <Text style={styles.bodyText}>{item.confession}</Text>
+              <Text style={styles.bodyText}>{item.confession}</Text>
             <View style={styles.buttonContainer}>
               <View style={styles.buttonStyleHug}>
                 <TouchableOpacity
                   onPress={() => console.log('yay')}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.hugs}</Text>
-                  <Text>Hugs</Text>
+                  <Text style={{fontFamily: 'Virgil'}}>Hugs</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
                   onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                  <Text>Comments</Text>
+                  <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
                 onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
-                <Text><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
+                <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
                 <Text>Comments</Text>
                 </TouchableOpacity>}
               </View>
@@ -119,6 +134,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
 
     </View>
   );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -127,7 +143,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(254, 241 , 230, .8)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0
+    borderWidth: 0,
+    fontFamily: 'Virgil'
   },
 
   errorText: {
@@ -141,7 +158,9 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(144, 170 , 203, .2)',
     backgroundColor: 'rgba(255, 255, 255, .85)',
     borderColor: 'black',
-    borderRadius: 10,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(27, 52, 83, .08)',
     marginTop: '1.5%',
     marginBottom: '1.5%',
     marginLeft: 'auto',
@@ -158,15 +177,25 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     flexDirection: 'row',
-    paddingTop: '2%'
+    paddingTop: '2%',
+    fontFamily: 'Virgil'
   },
 
   roomDateContainer: {
     flexDirection: 'row',
+   // backgroundColor: 'rgba(27, 52, 83, .08)',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    fontFamily: 'Virgil'
+
   },
   imgUserContainer: {
     flexDirection: 'row',
-    borderWidth: 0
+    borderWidth: 0,
+  //  backgroundColor: 'rgba(27, 52, 83, .08)',
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    fontFamily: 'Virgil'
   },
   image: {
     width: 20,
@@ -181,7 +210,8 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
-    paddingTop: '1%'
+    paddingTop: '1%',
+    fontFamily: 'Virgil'
   },
 
   buttonStyleComment: {
@@ -190,29 +220,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
-    paddingTop: '1%'
+    paddingTop: '1%',
+    fontFamily: 'Virgil'
   },
 
   roomNameStyle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: 'rgba(27, 52, 83, 1)'
+    color: 'rgba(27, 52, 83, 1)',
+    fontFamily: 'Virgil'
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
-    color: 'rgba(27, 52, 83, 1)'
+    color: 'rgba(27, 52, 83, 1)',
+    fontFamily: 'Virgil'
   },
 
   dateStyle: {
     fontStyle: 'italic',
     fontSize: 12,
-    paddingTop: '.5%',
-    color: 'rgba(49, 94, 153, 1)'
+    paddingTop: '1%',
+    color: 'rgba(49, 94, 153, 1)',
+    fontFamily: 'Virgil'
   },
   bodyText: {
-    color: 'rgba(49, 94, 153, 1)'
+    color: 'rgba(49, 94, 153, 1)',
+    fontSize: 18,
+    padding: '3%',
+    fontFamily: 'Virgil'
   },
 
   threeDots: {

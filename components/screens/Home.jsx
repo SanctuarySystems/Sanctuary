@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Button, Text, View, StyleSheet, RefreshControl, ScrollView } from "react-native";
-import ConfessionList from "../Confession/ConfessionList.js";
+import { StyleSheet, RefreshControl, ScrollView } from "react-native";
 import { UsernameContext } from "../../App.js";
+import ConfessionList from "../Confession/ConfessionList.js";
 
 const Home = ({ navigation }) => {
   const { username } = useContext(UsernameContext);
@@ -39,7 +39,7 @@ const Home = ({ navigation }) => {
               }),
             )
               .then(() => {
-                console.log('I am concatArray: ', concatArray.flat());
+                // console.log('I am concatArray: ', concatArray.flat());
                 setAllConfessions(concatArray.flat().sort((a, b) => {
                   return (a.createdAt < b.createdAt) ? 1 : ((a.createdAt > b.createdAt) ? -1 : 0);
                 }));
@@ -67,7 +67,7 @@ const Home = ({ navigation }) => {
       }
     >
       {allConfessions &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
+        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true}/>
       }
     </ScrollView>
   );
@@ -75,11 +75,12 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FEF1E6',
+    // backgroundColor: 'white',
     alignItems: 'center',
   },
   scrollView: {
     paddingBottom: 300,
+    backgroundColor: 'rgba(254, 241 , 230, .8)',
   },
 });
 

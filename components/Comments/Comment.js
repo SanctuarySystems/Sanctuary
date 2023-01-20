@@ -4,7 +4,7 @@ import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import moment from 'moment';
 import axios from 'axios';
 
-const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId }) => {
+const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId, handleReport }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
@@ -66,7 +66,7 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
         <Text>{moment(date).fromNow()}</Text>
       </View>
       <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
-        <Entypo name="dots-three-horizontal" size={24} color="black" />
+        <Entypo name="dots-three-horizontal" size={24} color="black" onPress={() => handleReport(commentId, username)} />
       </TouchableOpacity>
       <View style={styles.vote}>
         <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>

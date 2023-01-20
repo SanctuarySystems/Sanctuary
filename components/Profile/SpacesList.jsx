@@ -8,7 +8,7 @@ const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUse
     <View style={{ backgroundColor: 'white' }}>
       <View>
         { spaceArray.length === 0 &&
-          <Text style={{ alignSelf: 'center', padding: 50 }}>You are not in any spaces!</Text> }
+          <Text style={{ alignSelf: 'center', padding: 50 }}>You have not ${currentTab} any spaces!</Text> }
         { spaceArray.length > 0 &&
           spaceArray.map((item) => {
             const name = item.toLowerCase();

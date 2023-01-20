@@ -13,16 +13,19 @@ const storeData = async (value) => {
   }
 };
 
-const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, unreadNotifs, setUnreadNofits }) => {
+const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId,
+  navigation, reportedCookie, notifsCount, setNotifsCount, viewedCookieCount, setViewedCookieCount }) => {
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
+
+  setViewedCookieCount()
 
   const handleBan = () => {
     setIsReported(true);
 
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${spaceName}/${reported}/ban`)
-      .then(({ data }) => {
+      .then(() => {
         let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
         temporaryCookie.push({
           reportedUser: reported,
@@ -31,12 +34,12 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         });
         storeData(temporaryCookie);
 
-        setUnreadNofits(unreadNotifs - 1);
+        setUnreadNofits(notifsCount - 1);
       })
       .catch((err) => console.log('axios error in profile', err));
   };
 
-  if (!unreadNotifs) return;
+  if (!notifsCount) return;
 
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
@@ -54,7 +57,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           <Button
           // style={{ position: 'absolute', right: 5 }}
           size="sm"
-          buttonStyle={{ borderRadius: 30 }}
+          buttonStyle={{ borderRadius: 30, backgroundColor: '#FFB085' }}
           title={isReported ? "User Banned" : "Ban Reported"}
           type="outline"
           onPress={() => console.log('Banning reported') || handleBan()}

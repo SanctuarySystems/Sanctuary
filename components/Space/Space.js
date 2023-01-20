@@ -23,6 +23,16 @@ const Space = ({route, navigation}) => {
   const [editSpaceGuidelines, setEditSpaceGuidelines] = React.useState('GUIDELINES');
   const [disableEdit, setDisableEdit] = React.useState(true);
   const [confessions, setConfessions] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
+
   const banUser = (user_name, space_name) => {
     //wrong url for banning
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${user_name}/ban`)
@@ -92,10 +102,13 @@ const Space = ({route, navigation}) => {
           setLeaveJoin(1);
         }
       }).catch((err) => console.log(err))
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
-    .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
 
   }, []);
+
+  React.useEffect(() => {
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
+    .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
+  }, [refreshing]);
 
   React.useEffect(() => {
     if (writeConfession.length > 0 && disablePost) {
@@ -147,7 +160,10 @@ const Space = ({route, navigation}) => {
       <View style={{flex: 8, }}>
 
         {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
-          <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
+          <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
+          </ScrollView>
         </View>}
         {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4}}>{spaceGuidelines}</Text></View>}
         {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >

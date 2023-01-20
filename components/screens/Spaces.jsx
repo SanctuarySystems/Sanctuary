@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
+import { Button, StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl } from "react-native";
 import axios from 'axios';
 import { UsernameContext } from "../../App.js";
 
@@ -10,11 +10,20 @@ const Rooms = ({navigation}) => {
   const {username, setUsername } = React.useContext(UsernameContext);
   const [spaces, setSpaces] = React.useState(['space1', 'space2']);
   const [adminSpaces, setAdminSpaces] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
       .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
       .catch((err) => console.log(err));
-  }, []);
+  }, [refreshing]);
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
       .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
@@ -23,7 +32,8 @@ const Rooms = ({navigation}) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef1e6', paddingTop: '4%', width: '100%' }}>
       {/* <Text onPress={() => navigation.navigate('Space')}>Rooms</Text> */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         {spaces.map((space) => <View style={styles.spaceContainer}><Text style={styles.spaceText} onPress={() => navigation.navigate('Space', {space_name: space, isAdmin: adminSpaces.includes(space), username: username})} >{space}</Text></View>)}
       </ScrollView>
     </View>

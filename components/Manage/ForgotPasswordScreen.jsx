@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -25,12 +25,17 @@ const ForgotPasswordScreen = ({ navigation }) => {
         <TextInput
           style={styles.inputBox}
           placeholder="Email"
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} color='#90AACB' title="Submit" onPress={handleSubmit} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -71,10 +76,17 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    color: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

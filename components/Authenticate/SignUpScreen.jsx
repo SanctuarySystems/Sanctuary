@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet, TouchableOpacity } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { authentication } from "./firebase.js";
 import GlobalStyles from '../GlobalStyles.js';
@@ -28,7 +28,7 @@ const SignUpScreen = ({ navigation }) => {
       await setUsername(newUsername);
       navigation.navigate('Select Icon Screen');
     } catch (error) {
-      setErrorMessage("All fields are required");
+      setErrorMessage("All fields are");
       console.log(error);
     }
   };
@@ -62,7 +62,12 @@ const SignUpScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} color='#90AACB' title="Sign Up" onPress={handleSubmit} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -103,10 +108,17 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

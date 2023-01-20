@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, SafeAreaView, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firebase.js";
 import { UsernameContext } from '../../App.js';
@@ -44,8 +44,18 @@ const LoginScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} color='#90AACB' title="Log In" onPress={handleSubmit} />
-        <Button style={styles.button} color='#90AACB' title="Forgot password" onPress={handleForgotPassword} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Log In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleForgotPassword}
+        >
+          <Text style={styles.buttonText}>Forgot Password</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -86,10 +96,17 @@ const styles = StyleSheet.create({
     marginTop: 70,
   },
   button: {
-    fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

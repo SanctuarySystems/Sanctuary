@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -8,32 +8,18 @@ const WelcomeScreen = ({ navigation }) => {
         Sanctuary
       </Text>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => navigation.navigate('Login Screen')}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.button}
-          color='#90AACB'
-        />
-        <Button
-          title="Sign Up"
           onPress={() => navigation.navigate('Sign Up Screen')}
-          style={styles.button}
-          color='#90AACB'
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Select Icon"
-          onPress={() => navigation.navigate('Select Icon Screen')}
-          style={styles.button}
-          color='#90AACB'
-        />
-        <Button
-          title="Change Password"
-          onPress={() => navigation.navigate('Change Password Screen')}
-          style={styles.button}
-          color='#90AACB'
-        />
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -58,11 +44,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    fontFamily: "Times New Roman",
-    color: '#FFB085',
-    fontSize: 60,
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
     fontWeight: 'bold',
+    color: 'white',
   },
 });
 export default WelcomeScreen;
+
+// <View style={styles.buttonContainer}>
+//   <Button
+//     title="Select Icon"
+//     onPress={() => navigation.navigate('Select Icon Screen')}
+//     style={styles.button}
+//     color='#90AACB'
+//   />
+//   <Button
+//     title="Change Password"
+//     onPress={() => navigation.navigate('Change Password Screen')}
+//     style={styles.button}
+//     color='#90AACB'
+//   />
+// </View>;

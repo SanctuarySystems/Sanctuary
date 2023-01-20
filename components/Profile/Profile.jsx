@@ -55,7 +55,7 @@ const Profile = ({ navigation }) => {
   const [viewedCookieCount, setViewedCookieCount] = React.useState(null); // viewedCookieCount stored via async storage
 
   let refreshNotifications;
-  let avatarId;
+  // let avatarId;
 
   if (!username) return;
 
@@ -65,21 +65,20 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
-      avatarId = data.avatar < 10 ? Number(data.avatar.slice(1)) : data.avatar;
-      console.log('i am avatar id', avatarId);
-      console.log('image at id', images[avatarId]);
-      console.log('image at 1', images[1]);
+      // avatarId = data.avatar < 10 ? Number(data.avatar.slice(1)) : data.avatar;
+      // console.log('i am avatar id', avatarId);
+      // console.log('image at id', images[avatarId]);
+      // console.log('image at 1', images[1]);
     });
-
-    console.log(userData);
 
     getConfessions(username, (data) => {
       setReportedPosts(data);
       setNotifsCount(data.length);
+      console.log('found reported');
     });
 
     // initialize and set cookies for notifications every 30k seconds
-    initializeCookies();
+    // initializeCookies();
     refreshCookies();
   }, []);
 
@@ -110,14 +109,14 @@ const Profile = ({ navigation }) => {
             justifyContent: 'space-between',
             padding: 5,
             height: 50,
-            backgroundColor: 'white',
+            backgroundColor: `${colorTheme.beige}`,
           }}
         >
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}` }}
+            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -125,7 +124,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}` }}
+            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               viewedCookies,
@@ -141,12 +140,12 @@ const Profile = ({ navigation }) => {
               <Badge
                 status="error"
                 value={notifsCount}
-                containerStyle={{ position: 'absolute', top: 6, right: 115 }}
+                containerStyle={{ position: 'absolute', top: 6, right: 122 }}
               />
             )}
         </View>
 
-        <View style={{ flexDirection: 'column', height: 220, backgroundColor: 'white' }}>
+        <View style={{ flexDirection: 'column', height: 220, backgroundColor: `${colorTheme.beige}` }}>
           <View style={{ flex: 0.7 }}>
             {/* AVATAR */}
             <Avatar
@@ -166,23 +165,23 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', top: 2 }}>
             {/* USERNAME */}
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
               {userData.username}
             </Text>
-            <Icon
+            {/* <Icon
               style={{ paddingLeft: 8, top: 5 }}
               size={15}
               name='pencil'
               type='font-awesome'
               color={colorTheme.blue}
-              onPress={() => console.log('hello')} />
+              onPress={() => console.log('hello')} /> */}
             </View>
         </View>
 
         {/* TABS */}
-        <View style={{ height: 40, backgroundColor: 'white' }}>
+        <View style={{ height: 40, backgroundColor: `${colorTheme.beige}` }}>
 
-          <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+          <View style={{ height: 40, backgroundColor: `${colorTheme.beige}`, flexDirection: 'row', justifyContent: 'space-evenly' }}>
             <View style={[currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
@@ -213,8 +212,8 @@ const Profile = ({ navigation }) => {
         <View>
           <SearchBar
             platform="ios"
-            containerStyle={{ backgroundColor: 'white' }}
-            inputContainerStyle={{}}
+            containerStyle={{ backgroundColor: `${colorTheme.beige}` }}
+            inputContainerStyle={{ backgroundColor: `${colorTheme.yellow}` }}
             inputStyle={{}}
             loadingProps={{}}
             onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -296,21 +295,23 @@ const styles = StyleSheet.create({
     fontSize: '18%',
     textDecorationThickness: '2%',
     color: '#90aacb',
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
   selectedTabView: {
-    borderBottomWidth: '2px',
+    borderBottomWidth: '3px',
     borderBottomColor: '#90aacb',
     paddingBottom: 1,
+    fontWeight: 'bold',
   },
   unselectedTab: {
     fontSize: '18%',
     color: 'rgba(0,0,0,0.5)',
-
+    fontWeight: 'bold',
   },
   unselectedTabView: {
     color: 'rgba(0,0,0,0.5)',
     paddingBottom: 1,
+    fontWeight: 'bold',
   },
 });
 

@@ -140,9 +140,7 @@ const SelectIconScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-          // Save changes functionality here
-          }}
+          onPress={handleSubmit}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

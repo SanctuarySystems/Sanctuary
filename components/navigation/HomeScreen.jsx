@@ -30,8 +30,8 @@ const HomeScreen = () => {
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         headerShown: false,
-        tabBarActiveBackgroundColor: '#FFB085',
-        tabBarInactiveBackgroundColor: '#FFB085',
+        tabBarInactiveBackgroundColor: '#772E25',
+        tabBarActiveBackgroundColor: '#772E25',
       }}
     >
       <Tab.Screen

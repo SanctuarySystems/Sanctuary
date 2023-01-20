@@ -22,7 +22,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.header}>Sanctuary</Text>
       <View style={styles.inputContainer}>
-        <Text>Enter your email below to reset your password</Text>
         <TextInput
           style={styles.inputBox}
           placeholder="Email"

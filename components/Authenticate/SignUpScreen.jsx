@@ -23,11 +23,9 @@ const SignUpScreen = ({ navigation }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log('user', user);
       await updateProfile(user, { displayName: newUsername });
       await sendEmailVerification(user);
-      setUsername(newUsername);
-      console.log(newUsername);
+      await setUsername(newUsername);
       navigation.navigate('Select Icon Screen');
     } catch (error) {
       console.log(error);
@@ -51,6 +49,7 @@ const SignUpScreen = ({ navigation }) => {
         <TextInput
           style={styles.inputBox}
           placeholder="Password"
+          secureTextEntry
           onChangeText={(text) => setPassword(text)}
         />
         <TextInput

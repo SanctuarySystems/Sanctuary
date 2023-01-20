@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export const UsernameContext = React.createContext();
-
 const WelcomeScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('lookingforpeace');
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -14,18 +10,16 @@ const WelcomeScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Login"
-          onPress={() => navigation.navigate('Login Screen', {
-            setUsername,
-          })}
+          onPress={() => navigation.navigate('Login Screen')}
           style={styles.button}
         />
         <Button
           title="Sign Up"
-          onPress={() => navigation.navigate('Sign Up Screen', {
-            setUsername,
-          })}
+          onPress={() => navigation.navigate('Sign Up Screen')}
           style={styles.button}
         />
+      </View>
+      <View style={styles.buttonContainer}>
         <Button
           title="Select Icon"
           onPress={() => navigation.navigate('Select Icon Screen')}
@@ -49,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: "Times New Roman",
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
@@ -60,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    fontFamily: 'Times New Roman',
+    fontFamily: "Times New Roman",
     backgroundColor: '#FFB085',
     fontSize: 60,
     marginHorizontal: 10,

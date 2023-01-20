@@ -14,14 +14,12 @@ const LoginScreen = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(authentication, email, password);
       // setUsername(authentication.currentUser.username);
-      console.log('user', authentication.currentUser.displayName);
-      setUsername('TEST');
+      await setUsername(authentication.currentUser.displayName);
       navigation.navigate('Home Screen');
     } catch (error) {
       setErrorMessage("Incorrect email or password, please try again");
       console.log(error);
     }
-    // navigation.navigate('Home Screen');
   };
 
   const handleForgotPassword = async () => {

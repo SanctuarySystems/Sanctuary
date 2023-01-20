@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
 import HomeScreen from './components/navigation/HomeScreen.jsx';
 import WelcomeScreen from './components/Authenticate/WelcomeScreen.jsx';
 import LoginScreen from "./components/Authenticate/LoginScreen.jsx";
@@ -14,7 +15,7 @@ export const UsernameContext = React.createContext();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [username, setUsername] = useState('lookingforpeace');
+  const [username, setUsername] = useState('');
 
   return (
     <NavigationContainer>
@@ -32,29 +33,5 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
-/* <NavigationContainer>
-  <HomeScreen />
-</NavigationContainer> */
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
-// const App = () => {
-// return (
-//   <NavigationContainer>
-//     <Stack.Navigator initialRouteName="Home">
-//       <Stack.Screen name="Home" component={Home} />
-//       <Stack.Screen name="Second Page" component={SecondPageTest} />
-//     </Stack.Navigator>
-//   </NavigationContainer>
-// );
-// };
 
 export default App;

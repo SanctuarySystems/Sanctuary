@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { SafeAreaView, View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import axios from 'axios';
 import { authentication } from "./firebase.js";
 import GlobalStyles from '../GlobalStyles.js';
 import { UsernameContext } from '../../App.js';
@@ -13,10 +14,23 @@ const SignUpScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [goodUsername, setGoodUsername] = useState(false);
   const { username, setUsername } = useContext(UsernameContext);
 
+  const handleUsername = () => {
+    console.log('in handle username');
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${newUsername}`)
+      .then(({ data }) => {
+        if (data.length === 0) {
+          setGoodUsername(true);
+        } else {
+          setErrorMessage("Username is taken, please try again.");
+        }
+      });
+  };
+
   const handleSubmit = async () => {
-    if (password !== confirmPassword) {
+    if (password && confirmPassword && goodUsername) {
       setErrorMessage("Passwords do not match, please try again.");
       return;
     }

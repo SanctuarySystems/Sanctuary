@@ -95,7 +95,7 @@ const Profile = ({ navigation }) => {
               setViewedCookieCount,
             })}
           />
-          { notifsCount > viewedCookieCount &&
+          {notifsCount > viewedCookieCount &&
             (
               <Badge
                 status="error"
@@ -133,10 +133,10 @@ const Profile = ({ navigation }) => {
         <View style={{ height: 40, backgroundColor: 'white' }}>
 
           <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-            <View style={[ currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView ]}>
+            <View style={[currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
-                style={[ currentTab === 'joined' ? styles.selectedTab : styles.unselectedTab ]}
+                style={[currentTab === 'joined' ? styles.selectedTab : styles.unselectedTab]}
                 onPress={() => {
                   setCurrentTab('joined');
                   setSpaceData(userData.spaces_joined);
@@ -145,10 +145,10 @@ const Profile = ({ navigation }) => {
                 Joined Spaces
               </Text>
             </View>
-            <View style={[ currentTab === 'created' ? styles.selectedTabView : styles.unselectedTabView ]}>
+            <View style={[currentTab === 'created' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
-                style={[ currentTab === 'created' ? styles.selectedTab : styles.unselectedTab ]}
+                style={[currentTab === 'created' ? styles.selectedTab : styles.unselectedTab]}
                 onPress={() => {
                   setCurrentTab('created');
                   setSpaceData(userData.spaces_created);
@@ -161,22 +161,22 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View>
-            <SearchBar
-              platform="ios"
-              containerStyle={{ backgroundColor: 'white' }}
-              inputContainerStyle={{}}
-              inputStyle={{}}
-              loadingProps={{}}
-              onChangeText={(newVal) => setSearchTerm(newVal)}
-              onClearText={() => setSearchTerm('')}
-              placeholder="Search..."
-              placeholderTextColor="#888"
-              showCancel
-              cancelButtonTitle="Cancel"
-              cancelButtonProps={{ color: `${colorTheme.blue}` }}
-              onCancel={() => setSearchTerm('')}
-              value={searchTerm}
-            />
+          <SearchBar
+            platform="ios"
+            containerStyle={{ backgroundColor: 'white' }}
+            inputContainerStyle={{}}
+            inputStyle={{}}
+            loadingProps={{}}
+            onChangeText={(newVal) => setSearchTerm(newVal)}
+            onClearText={() => setSearchTerm('')}
+            placeholder="Search..."
+            placeholderTextColor="#888"
+            showCancel
+            cancelButtonTitle="Cancel"
+            cancelButtonProps={{ color: `${colorTheme.blue}` }}
+            onCancel={() => setSearchTerm('')}
+            value={searchTerm}
+          />
         </View>
 
         <View>
@@ -243,7 +243,7 @@ const colorTheme = {
 
 const styles = StyleSheet.create({
   selectedTab: {
-    fontSize:'18%',
+    fontSize: '18%',
     textDecorationThickness: '2%',
     color: '#90aacb',
     fontWeight: 'bold',
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
   },
   unselectedTab: {
-    fontSize:'18%',
+    fontSize: '18%',
     color: 'rgba(0,0,0,0.5)',
 
   },

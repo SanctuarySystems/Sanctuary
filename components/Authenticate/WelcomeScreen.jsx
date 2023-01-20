@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: Platform.OS === 'ios' ? 'Pacifico-Regular' : 'Pacifico_Regular',
+    fontFamily: 'Times New Roman',
     fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',

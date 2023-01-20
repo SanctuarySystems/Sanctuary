@@ -21,9 +21,7 @@ const SignUpScreen = ({ navigation }) => {
     console.log('in handle username');
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${newUsername}`)
       .then(({ data }) => {
-        console.log('data', data.length);
         if (data.length === 0) {
-          console.log(true);
           setGoodUsername(true);
         } else {
           setErrorMessage("Username is taken, please try again.");

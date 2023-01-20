@@ -35,6 +35,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    handleUsername();
     if (password && confirmPassword && goodUsername) {
       setErrorMessage("Passwords do not match, please try again.");
       return;

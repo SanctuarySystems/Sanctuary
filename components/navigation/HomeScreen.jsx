@@ -33,6 +33,14 @@ const HomeScreen = () => {
         tabBarInactiveBackgroundColor: '#F9D5A7',
         tabBarActiveBackgroundColor: '#F9D5A7',
       }}
+      tabBarOptions={{
+        safeAreaInsets: {
+          bottom: 0,
+        },
+        style: {
+          backgroundColor: 'orange',
+        },
+      }}
     >
       <Tab.Screen
         name="My Home"

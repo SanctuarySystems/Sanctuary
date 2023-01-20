@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import * as firebase from 'firebase/app';
 import { authentication } from "../Authenticate/firebase.js";
+import { useFonts } from 'expo-font';
 
 const ChangePasswordScreen = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [fontsLoaded] = useFonts({
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+  });
 
   const handleSubmit = async () => {
     if (newPassword !== confirmPassword) {
@@ -30,6 +35,14 @@ const ChangePasswordScreen = ({ navigation }) => {
       setErrorMessage("Incorrect new or old password, please try again.");
     }
   };
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
@@ -78,7 +91,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   header: {
-    fontFamily: 'Times New Roman',
+    fontFamily: 'Virgil',
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',

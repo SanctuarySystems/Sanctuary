@@ -121,7 +121,7 @@ export default function ConfessionList({ allConfessions, nav, isRoom, isHome}) {
                   <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id})}>
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
                 <Text>Comments</Text>
                 </TouchableOpacity>}

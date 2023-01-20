@@ -63,8 +63,6 @@ const Profile = ({ navigation }) => {
     FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
-  if (!fontsLoaded || !username) return;
-
   React.useEffect(() => {
     // grab user data
     getUser(username, (data) => {
@@ -92,6 +90,8 @@ const Profile = ({ navigation }) => {
     clearInterval(refreshNotifications);
     refreshCookies();
   }, [viewedCookieCount]);
+
+  if (!username) return;
 
   // grab viewedCookies for viewed notifications every 30k seconds
   const refreshCookies = () => {

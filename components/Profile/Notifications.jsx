@@ -1,25 +1,26 @@
 import React from 'react';
 import { View, SafeAreaView, Text } from 'react-native';
-import NotificationListing from './NotificationListing';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
   const { username, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
     viewedCookieCount, setViewedCookieCount } = route.params;
 
   React.useEffect(() => {
-    setViewedCookieCount(reportedPosts.length);
     updateCookies(reportedPosts);
     console.log('set cookies for viewed notif count');
 
     const getCookieCount = async () => {
       try {
         const count = await AsyncStorage.getItem('viewedCount');
-        console.log(count);
+        console.log('getting cookie count in notifs', count);
       } catch (e) {
         console.log(e);
       }
     };
+
+    setViewedCookieCount(reportedPosts.length);
 
     getCookieCount();
   }, []);
@@ -111,6 +112,7 @@ export default Notifications;
 const updateCookies = async (reportedPosts) => {
   try {
     await AsyncStorage.setItem('viewedCount', reportedPosts.length.toString());
+    console.log('set cookie to reportedPosts.length.toString()', reportedPosts.length.toString());
   } catch (e) {
     console.log(e);
   }

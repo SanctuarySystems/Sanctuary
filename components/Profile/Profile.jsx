@@ -22,16 +22,12 @@ const Profile = ({ navigation }) => {
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
   // revisit after notifs
+  const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
+  const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
   const [viewedCookieCount, setViewedCookieCount] = React.useState(0); // viewedCookieCount stored via async storage
-  const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
-  const [reportedPosts, setReportedPosts] = React.useState([]);
 
-  const getUser = (name, cb) => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
-      .then(({ data }) => cb(data))
-      .catch((err) => console.log('axios error in profile', err));
-  };
+  let refreshNotifications;
 
   React.useEffect(() => {
     // grab user data
@@ -41,24 +37,36 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
-      .then(({ data }) => {
-        setReportedPosts(data);
-        setNotifsCount(data.length);
-      })
-      .catch((err) => console.log('axios error in profile for confessions', err));
+    getConfessions(username, (data) => {
+      setReportedPosts(data);
+      setNotifsCount(data.length);
+    });
 
-    // AsyncStorage.clear();
+    // initialize and set cookies for notifications every 30k seconds
+    // initializeCookies();
 
-    // grab localstorage viewedCookies for viewed notifications every 30k seconds
-    initializeCookies();
-    refreshNotifications(setViewedCookies, setViewedCookieCount);
+    refreshCookies();
   }, []);
+
+  React.useEffect(() => {
+    clearInterval(refreshNotifications);
+    refreshCookies();
+
+    console.log("notifsCount after refreshing", notifsCount);
+    console.log("viewedCookieCount after refreshing", viewedCookieCount);
+  }, [viewedCookieCount]);
+
+  // grab viewedCookies for viewed notifications every 30k seconds
+  const refreshCookies = () => {
+    refreshNotifications = setInterval(() => {
+      getCookies(setViewedCookies);
+      getCookieCount(setViewedCookieCount);
+    }, 30000);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
-        // style={{ position: 1, height: '100%' }}
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
       >
@@ -194,47 +202,43 @@ const Profile = ({ navigation }) => {
   );
 };
 
+const getUser = (name, cb) => {
+  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
+    .then(({ data }) => cb(data))
+    .catch((err) => console.log('axios error for /users in profile', err));
+};
+
+const getConfessions = (name, cb) => {
+  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${name}&reported=true`)
+    .then(({ data }) => cb(data))
+    .catch((err) => console.log('axios error for /confessions in profile', err));
+};
+
 const initializeCookies = async () => {
   try {
-    await AsyncStorage.setItem('reported', '[]');
-    await AsyncStorage.setItem('viewedCount', '0');
+    const reported = await AsyncStorage.setItem('reported', '[]');
+    const viewedCount = await AsyncStorage.setItem('viewedCount', '0');
   } catch (e) {
-    console.log('cookie initialization error');
+    console.log('cookie initialization error', e);
   }
 };
 
-const getCookies = async () => {
+const getCookies = async (cb) => {
   try {
     const jsonValue = await AsyncStorage.getItem('reported');
-    return jsonValue ? JSON.parse(jsonValue) : null;
+    jsonValue ? cb(JSON.parse(jsonValue).z) : cb(null);
   } catch (e) {
-    console.log(e);
+    console.log('get cookie error', e);
   }
 };
 
-const getCookieCount = async () => {
+const getCookieCount = async (cb) => {
   try {
     const count = await AsyncStorage.getItem('viewedCount');
-    return count ? JSON.parse(count) : null;
+    count ? cb(Number(count)) : cb(0);
   } catch (e) {
-    console.log(e);
+    console.log('get cookie count error', e);
   }
-};
-
-// grab viewedCookies for viewed notifications every 30k seconds
-const refreshNotifications = (cb1, cb2) => {
-  setInterval(() => {
-    const viewedCookies = getCookies()._z;
-
-    const count = getCookieCount();
-    if (count._z === null) {
-      cb2(0);
-    } else {
-      cb2(count._z.toString());
-    }
-
-    cb1(viewedCookies);
-  }, 30000);
 };
 
 const styles = StyleSheet.create({

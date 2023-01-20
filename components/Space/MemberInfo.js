@@ -75,10 +75,10 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
         <View style={{ flex: 1, marginTop: '70%', alignItems:'center' }}>
           <View style={styles.modal}>
             <View style={{alignItems:'center', paddingBottom:'5%'}}>
-              <Text>Ban user </Text>
-              <Text style={{fontWeight:"bold", fontSize: 16}}>{username}</Text>
-              <Text>from space </Text>
-              <Text style={{fontWeight:'bold', fontSize: 16}}>{space_name}?</Text>
+              <Text style={{ fontSize:16}}>Ban user </Text>
+              <Text style={{fontFamily:"FuzzyBubblesBold", fontSize: 19}}>{username}</Text>
+              <Text style={{fontSize: 16}}>from space </Text>
+              <Text style={{fontFamily:'FuzzyBubblesBold', fontSize: 19}}>{space_name} ?</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <TouchableOpacity style={styles.leavejoinContainerNo} onPress={()=>setBanModal(false)}>

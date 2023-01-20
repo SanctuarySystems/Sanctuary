@@ -49,7 +49,7 @@ const Space = ({route, navigation}) => {
         setNumMembers(data.data[0].members.length);
         setSpaceMembers(data.data[0].members);
       }).catch((err) => console.log(err));
-      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}`)
+      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200`)
       .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
 
     }).catch((err) => console.log(err));

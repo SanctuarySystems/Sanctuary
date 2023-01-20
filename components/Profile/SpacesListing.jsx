@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Button } from '@rneui/themed';
 import axios from 'axios';
 
 const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
@@ -21,7 +22,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderRadius: 15,
-        backgroundColor: `${colorTheme.beige}`,
+        backgroundColor: `${colorTheme.orange}`,
         padding: 18,
       }}>
       <View style={{ flexDirection: 'row' }}>
@@ -33,7 +34,9 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
         </View>
         <View>
           { spaceData.created_by === currentUser &&
-            <Text style={{ left: 7, top: 2, color: `${colorTheme.orange}` }}>admin</Text>
+            <Text style={{ left: 7, top: 2, color: `${colorTheme.yellow}`, fontWeight: 'bold' }}>
+              admin
+            </Text>
             }
         </View>
       </View>
@@ -41,6 +44,10 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
       <View>
         <Button
           color={`${colorTheme.blue}`}
+          titleStyle={{ fontWeight: 'bold' }}
+          buttonStyle={{
+            borderRadius: 5,
+          }}
           title="View Space"
           onPress={() => console.log('lead to space') ||
             navigation.navigate('Space', {

@@ -31,7 +31,7 @@ const Notifications = ({ route, navigation }) => {
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 15 }}>
+      <View style={{ padding: 15, backgroundColor: `${colorTheme.beige}`, height: '100%' }}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
@@ -116,4 +116,11 @@ const updateCookies = async (reportedPosts) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+const colorTheme = {
+  beige: '#FEF1E6',
+  yellow: '#F9D5A7',
+  orange: '#FFB085',
+  blue: '#90AACB',
 };

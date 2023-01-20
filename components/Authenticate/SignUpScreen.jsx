@@ -60,13 +60,15 @@ const SignUpScreen = ({ navigation }) => {
             secureTextEntry
             onChangeText={(text) => setConfirmPassword(text)}
           />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
           {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </TouchableOpacity>
@@ -101,6 +103,13 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     backgroundColor: '#FAF9F6',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    marginTop: 50,
   },
   button: {
     backgroundColor: "#FFB085",

@@ -24,8 +24,6 @@ const Rooms = ({navigation}) => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef1e6', paddingTop: '4%', width: '100%' }}>
       {/* <Text onPress={() => navigation.navigate('Space')}>Rooms</Text> */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <Text>My Spaces</Text> */}
-        <Text>{username}</Text>
         {spaces.map((space) => <View style={styles.spaceContainer}><Text style={styles.spaceText} onPress={() => navigation.navigate('Space', {space_name: space, isAdmin: adminSpaces.includes(space), username: username})} >{space}</Text></View>)}
       </ScrollView>
     </View>

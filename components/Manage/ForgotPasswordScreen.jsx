@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../Authenticate/firebase.js";
 
@@ -19,34 +19,38 @@ const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.header}>Sanctuary</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
-        />
-      </View>
-      {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit}
-        >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+    <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.inputContainer} behavior='padding' keyboardVerticalOffset={150}>
+          <Text style={styles.header}>Sanctuary</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Email"
+            onChangeText={(text) => setEmail(text)}
+          />
+          {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#FEF1E6',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FEF1E6',
+    width: '100%',
+    height: '100%',
+    borderWidth: 2,
   },
   header: {
     fontFamily: 'Times New Roman',

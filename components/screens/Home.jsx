@@ -60,13 +60,6 @@ const Home = ({ navigation }) => {
   }, [refreshing]);
 
   return (
-<<<<<<< HEAD
-    <View style={styles.container}>
-      {allConfessions &&
-      <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
-      }
-    </View>
-=======
     <ScrollView contentContainerStyle={styles.container}
       style={styles.scrollView}
       refreshControl={
@@ -74,10 +67,9 @@ const Home = ({ navigation }) => {
       }
     >
       {allConfessions &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />
+        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true} />
       }
     </ScrollView>
->>>>>>> 3ccd4148d9b1057f427be88a9ef7257f8d05d9b4
   );
 };
 

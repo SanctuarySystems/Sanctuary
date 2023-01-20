@@ -22,10 +22,9 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderWidth: 1,
         borderRadius: 15,
-        padding: 10,
-        borderColor: `${colorTheme.yellow}`
+        backgroundColor: `${colorTheme.beige}`,
+        padding: 18,
       }}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column' }}>
@@ -36,7 +35,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
         </View>
         <View>
           { spaceData.created_by === currentUser &&
-            <Text style={{ left: 5, color: `${colorTheme.orange}` }}>admin</Text>
+            <Text style={{ left: 5, color: `${colorTheme.orange}` }}>(admin)</Text>
             }
         </View>
       </View>

@@ -13,7 +13,8 @@ const storeData = async (value) => {
   }
 };
 
-const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId, navigation, reportedCookie, unreadNotifs, setUnreadNofits }) => {
+const NotificationListing = ({ username, reported, reportedBy, spaceName, commentId, confessionId,
+  navigation, reportedCookie, notifsCount, setNotifsCount, viewedCookieCount, setViewedCookieCount }) => {
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
@@ -22,7 +23,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
     setIsReported(true);
 
     axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${spaceName}/${reported}/ban`)
-      .then(({ data }) => {
+      .then(() => {
         let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
         temporaryCookie.push({
           reportedUser: reported,
@@ -30,13 +31,11 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           commentId: commentId,
         });
         storeData(temporaryCookie);
-
-        setUnreadNofits(unreadNotifs - 1);
       })
       .catch((err) => console.log('axios error in profile', err));
   };
 
-  if (!unreadNotifs) return;
+  if (!notifsCount) return;
 
   return (
     <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
@@ -48,27 +47,28 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         <Text style={{ fontWeight: 'bold' }}>{reportedBy}.</Text>
       </View>
 
-      <View style={{ flexDirection: 'row' }}>
-      {/* , justifyContent: 'space-evenly'  */}
-        { reported !== username &&
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }} >
+        <View style={{ flex: 1, alignContent: 'center', padding: 5 }} >
+          { reported !== username &&
+            <Button
+            size="sm"
+            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            title={isReported ? "User banned" : "Ban reported"}
+            onPress={() => console.log('Banning reported') || handleBan()}
+            />
+          }
+        </View>
+        <View style={{ flex: 1, alignContent: 'center', padding: 5 }} >
           <Button
-          // style={{ position: 'absolute', right: 5 }}
-          size="sm"
-          buttonStyle={{ borderRadius: 30 }}
-          title={isReported ? "User Banned" : "Ban Reported"}
-          type="outline"
-          onPress={() => console.log('Banning reported') || handleBan()}
+            size="sm"
+            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            title={`View ${post}`}
+            onPress={() => navigation.navigate('Comments', {
+              confession_id: confessionId,
+              comment_id: commentId,
+            })}
           />
-        }
-        <Button
-          size="sm"
-          buttonStyle={{ borderRadius: 30 }}
-          title={`View ${post}`}
-          onPress={() => navigation.navigate('Comments', {
-            confession_id: confessionId,
-            comment_id: commentId,
-          })}
-        />
+        </View>
       </View>
     </View>
   );

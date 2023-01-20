@@ -1,36 +1,26 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
 
-const colorTheme = {
-  beige: '#FEF1E6',
-  yellow: '#F9D5A7',
-  orange: '#FFB085',
-  blue: '#90AACB',
-};
-
 const Profile = ({ navigation }) => {
-  // const username = React.useContext(UsernameContext); // username for get user call
-  const username = 'lookingforpeace'; // username for get user call
+  const { username } = React.useContext(UsernameContext); // username for get user call
+  // const username = 'lookingforpeace'; // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
-
+  // notification states
+  const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
+  const [notifsCount, setNotifsCount] = React.useState(0); // # of unread notifications
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
-  const [unreadNotifs, setUnreadNofits] = React.useState(0); // # of unread notifications
-  const [reportedPosts, setReportedPosts] = React.useState([]);
+  const [viewedCookieCount, setViewedCookieCount] = React.useState(0); // viewedCookieCount stored via async storage
 
-  const getUser = (name, cb) => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
-      .then(({ data }) => cb(data))
-      .catch((err) => console.log('axios error in profile', err));
-  };
+  let refreshNotifications;
 
   React.useEffect(() => {
     // grab user data
@@ -40,26 +30,36 @@ const Profile = ({ navigation }) => {
       setCreated(data.spaces_created);
     });
 
-    // axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${username}&reported=true`)
-    //   .then(({ data }) => {
-    //     if (data.length > 1) {
-    //       setReportedPosts(data);
-    //       setUnreadNofits(data.length);
-    //       console.log('reportedPosts within notif useeffect', data);
-    //     }
-    //   })
-    //   .catch((err) => console.log('axios error in notifications', err));
+    getConfessions(username, (data) => {
+      setReportedPosts(data);
+      setNotifsCount(data.length);
+    });
 
-    AsyncStorage.clear();
+    // initialize and set cookies for notifications every 30k seconds
+    // initializeCookies();
 
-    // grab localstorage viewedCookies for viewed notifications every 30k seconds
-    refreshNotifications(setViewedCookies);
+    refreshCookies();
   }, []);
+
+  React.useEffect(() => {
+    clearInterval(refreshNotifications);
+    refreshCookies();
+
+    console.log("notifsCount after refreshing", notifsCount);
+    console.log("viewedCookieCount after refreshing", viewedCookieCount);
+  }, [viewedCookieCount]);
+
+  // grab viewedCookies for viewed notifications every 30k seconds
+  const refreshCookies = () => {
+    refreshNotifications = setInterval(() => {
+      getCookies(setViewedCookies);
+      getCookieCount(setViewedCookieCount);
+    }, 30000);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
-        // style={{ position: 1, height: '100%' }}
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
       >
@@ -76,7 +76,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Log out"
             type="clear"
-            color={`${colorTheme.blue}`}
+            titleStyle={{ color: `${colorTheme.blue}` }}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -84,21 +84,22 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
-            color={`${colorTheme.blue}`}
+            titleStyle={{ color: `${colorTheme.blue}` }}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
-              spaces: created,
               viewedCookies,
-              unreadNotifs,
-              setUnreadNofits,
+              notifsCount,
+              setNotifsCount,
               reportedPosts,
+              viewedCookieCount,
+              setViewedCookieCount,
             })}
           />
-          { reportedPosts > viewedCookies &&
+          { notifsCount > viewedCookieCount &&
             (
               <Badge
                 status="error"
-                value={unreadNotifs}
+                value={notifsCount}
                 containerStyle={{ position: 'absolute', top: 6, right: 115 }}
               />
             )}
@@ -130,36 +131,40 @@ const Profile = ({ navigation }) => {
 
         {/* TABS */}
         <View style={{ height: 40, backgroundColor: 'white' }}>
-          <Tab
-            value={currentTab}
-            dense
-            titleStyle={{ color: `${colorTheme.blue}` }}
-            buttonStyle={{ active: true }}
-            // buttonStyle='View Style'
-            style={{ backgroundColor: 'white', color: `${colorTheme.blue}` }}
-            onChange={(e) => {
-              if (!e) {
-                console.log('showing joined');
-                setCurrentTab('joined');
-                setSpaceData(userData.spaces_joined);
-              } else {
-                console.log('showing created');
-                setCurrentTab('created');
-                setSpaceData(userData.spaces_created);
-              }
-            }}
-          >
-            <Tab.Item title='Joined Spaces' />
-            <Tab.Item title='Created Spaces' />
-          </Tab>
+
+          <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <View style={[ currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView ]}>
+              <Text
+                suppressHighlighting={true}
+                style={[ currentTab === 'joined' ? styles.selectedTab : styles.unselectedTab ]}
+                onPress={() => {
+                  setCurrentTab('joined');
+                  setSpaceData(userData.spaces_joined);
+                }}
+              >
+                Joined Spaces
+              </Text>
+            </View>
+            <View style={[ currentTab === 'created' ? styles.selectedTabView : styles.unselectedTabView ]}>
+              <Text
+                suppressHighlighting={true}
+                style={[ currentTab === 'created' ? styles.selectedTab : styles.unselectedTab ]}
+                onPress={() => {
+                  setCurrentTab('created');
+                  setSpaceData(userData.spaces_created);
+                }}
+              >
+                Created Spaces
+              </Text>
+            </View>
+          </View>
         </View>
 
         <View>
-          {/* { spaceData.length > 0 && */}
             <SearchBar
               platform="ios"
               containerStyle={{ backgroundColor: 'white' }}
-              inputContainerStyle={{ backgroundColor: `${colorTheme.beige}` }}
+              inputContainerStyle={{}}
               inputStyle={{}}
               loadingProps={{}}
               onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -168,11 +173,10 @@ const Profile = ({ navigation }) => {
               placeholderTextColor="#888"
               showCancel
               cancelButtonTitle="Cancel"
-              cancelButtonProps={{}}
+              cancelButtonProps={{ color: `${colorTheme.blue}` }}
               onCancel={() => setSearchTerm('')}
               value={searchTerm}
             />
-            {/* } */}
         </View>
 
         <View>
@@ -191,22 +195,73 @@ const Profile = ({ navigation }) => {
   );
 };
 
-const getCookies = async () => {
+const getUser = (name, cb) => {
+  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
+    .then(({ data }) => cb(data))
+    .catch((err) => console.log('axios error for /users in profile', err));
+};
+
+const getConfessions = (name, cb) => {
+  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${name}&reported=true`)
+    .then(({ data }) => cb(data))
+    .catch((err) => console.log('axios error for /confessions in profile', err));
+};
+
+const initializeCookies = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem('reported');
-    return jsonValue ? JSON.parse(jsonValue) : null;
+    const reported = await AsyncStorage.setItem('reported', '[]');
+    const viewedCount = await AsyncStorage.setItem('viewedCount', '0');
   } catch (e) {
-    console.log(e);
+    console.log('cookie initialization error', e);
   }
 };
 
-// grab viewedCookies for viewed notifications every 30k seconds
-const refreshNotifications = (cb) => {
-  setInterval(() => {
-    const viewedCookies = getCookies()._z;
-    cb(viewedCookies);
-    console.log("viewedCookies", viewedCookies);
-  }, 30000);
+const getCookies = async (cb) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('reported');
+    jsonValue ? cb(JSON.parse(jsonValue).z) : cb(null);
+  } catch (e) {
+    console.log('get cookie error', e);
+  }
 };
+
+const getCookieCount = async (cb) => {
+  try {
+    const count = await AsyncStorage.getItem('viewedCount');
+    count ? cb(Number(count)) : cb(0);
+  } catch (e) {
+    console.log('get cookie count error', e);
+  }
+};
+
+const colorTheme = {
+  beige: '#FEF1E6',
+  yellow: '#F9D5A7',
+  orange: '#FFB085',
+  blue: '#90AACB',
+};
+
+const styles = StyleSheet.create({
+  selectedTab: {
+    fontSize:'18%',
+    textDecorationThickness: '2%',
+    color: '#90aacb',
+    fontWeight: 'bold',
+  },
+  selectedTabView: {
+    borderBottomWidth: '3px',
+    borderBottomColor: '#90aacb',
+    paddingBottom: 1,
+  },
+  unselectedTab: {
+    fontSize:'18%',
+    color: 'rgba(0,0,0,0.5)',
+
+  },
+  unselectedTabView: {
+    color: 'rgba(0,0,0,0.5)',
+    paddingBottom: 1,
+  },
+});
 
 export default Profile;

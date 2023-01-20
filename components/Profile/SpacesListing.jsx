@@ -34,7 +34,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
         </View>
         <View>
           { spaceData.created_by === currentUser &&
-            <Text style={{ left: 7, top: 2, color: `${colorTheme.yellow}`, fontWeight: 'bold' }}>
+            <Text style={{ left: 7, top: 2, color: `${colorTheme.beige}`, fontWeight: 'bold' }}>
               admin
             </Text>
             }

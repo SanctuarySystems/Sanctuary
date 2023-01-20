@@ -3,12 +3,17 @@ import { View, StyleSheet, Text } from "react-native";
 import { Button, Input } from '@rneui/themed';
 import axios from "axios";
 import { UsernameContext } from "../../App.js";
+import { useFonts } from 'expo-font';
 
 const SpacesForm = ({ navigation }) => {
   const { username } = useContext(UsernameContext);
   const [spaceName, setSpaceName] = useState('');
   const [description, setDescription] = useState('');
   const [guidelines, setGuidelines] = useState('');
+
+  const [fontsLoaded] = useFonts({
+    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,6 +44,14 @@ const SpacesForm = ({ navigation }) => {
     }
   };
 
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>Still loading font</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -60,7 +73,7 @@ const SpacesForm = ({ navigation }) => {
       <Button
         buttonStyle={{
           backgroundColor: 'rgba(111, 202, 186, 1)',
-          borderRadius: 5,
+          borderRadius: 30,
         }}
         titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
         containerStyle={{
@@ -83,11 +96,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    fontFamily: 'FuzzyBubbles',
     paddingTop: 20,
     paddingBottom: 0,
     fontSize: 35,
   },
   labels: {
+    fontFamily: 'FuzzyBubbles',
     padding: 10,
     fontSize: 30,
   },

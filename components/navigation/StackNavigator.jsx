@@ -22,7 +22,7 @@ const screenOptionStyle = {
     backgroundColor: '#F9D5A7',
   },
   headerTitleStyle: {
-    color: "#90AACB",
+    color: "rgba(49, 94, 153, 1)",
     fontSize: 25,
     fontWeight: 'bold',
 

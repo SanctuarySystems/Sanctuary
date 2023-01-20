@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   labels: {
+    fontFamily: 'FuzzyBubbles',
     padding: 10,
     fontSize: 30,
   },

@@ -1,13 +1,15 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
+import { UsernameContext } from '../../App.js';
 
 const Comments = ({ route }) => {
   const { confession_id } = route.params;
+  const { username } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const Comments = ({ route }) => {
           data={confession.comments.sort((a, b) => b.pops - a.pops)}
           renderItem={({ item }) => <Comment username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
         />
-        <AddComment add={add} />
+        <AddComment add={add} username={username} confessionId={confession_id} />
       </>
       )}
     </View>

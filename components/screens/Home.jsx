@@ -29,7 +29,21 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {allConfessions.length !== 0 &&
-        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} />}
+        <ConfessionList allConfessions={allConfessions} nav={navigation} />}
+
+      <Button
+        title="Go to Test Page"
+        onPress={() => navigation.navigate('Test Page')}
+      />
+      <Button
+        title="Go to Comments Page"
+        onPress={() => navigation.navigate('Comments')}
+      />
+      <Text>Welcome Page</Text>
+      <Button
+        title="Go to Welcome Screen"
+        onPress={() => navigation.navigate('Welcome Screen')}
+      />
     </View>
   );
 };

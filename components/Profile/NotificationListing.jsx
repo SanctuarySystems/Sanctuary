@@ -19,7 +19,7 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
 
-  setViewedCookieCount()
+  setViewedCookieCount();
 
   const handleBan = () => {
     setIsReported(true);

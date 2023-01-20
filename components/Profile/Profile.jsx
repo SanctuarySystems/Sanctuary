@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SpacesList from './SpacesList';
 import { UsernameContext } from '../../App';
+import { useFonts } from 'expo-font';
 
 const images = [
   { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
@@ -57,7 +58,12 @@ const Profile = ({ navigation }) => {
   let refreshNotifications;
   // let avatarId;
 
-  if (!username) return;
+  const [fontsLoaded] = useFonts({
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
+
+  if (!fontsLoaded || !username) return;
 
   React.useEffect(() => {
     // grab user data
@@ -165,7 +171,12 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', top: 2 }}>
             {/* USERNAME */}
-            <Text style={{ fontSize: 30, fontWeight: 'bold', color: `${colorTheme.darkblue}` }}>
+            <Text style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              color: `${colorTheme.darkblue}`,
+              fontFamily: "FuzzyBubblesBold",
+            }}>
               {userData.username}
             </Text>
             {/* <Icon

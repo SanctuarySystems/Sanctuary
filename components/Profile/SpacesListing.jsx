@@ -2,9 +2,15 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
+import { useFonts } from 'expo-font';
 
 const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
   const [spaceData, setSpaceData] = React.useState({});
+
+  const [fontsLoaded] = useFonts({
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+  });
 
   React.useEffect(() => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}`)
@@ -14,7 +20,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
       .catch((err) => console.log('err from spaceslisting', err));
   }, []);
 
-  if (Object.keys(spaceData).length === 0) return;
+  if (!fontsLoaded || Object.keys(spaceData).length === 0) return;
 
   return (
     <View
@@ -27,7 +33,7 @@ const SpacesListing = ({ colorTheme, space, currentUser, navigation }) => {
       }}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column' }}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{spaceData.space_name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', fontFamily: "FuzzyBubblesBold" }}>{spaceData.space_name}</Text>
           <Text>
             {spaceData.members.length} members
           </Text>

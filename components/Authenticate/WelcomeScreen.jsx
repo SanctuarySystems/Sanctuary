@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { Platform } from 'react-native'
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontFamily: "Times New Roman",
+    fontFamily: Platform.OS === 'ios' ? 'Pacifico-Regular' : 'Pacifico_Regular',
     fontSize: 65,
     fontWeight: 'bold',
     color: '#90AACB',

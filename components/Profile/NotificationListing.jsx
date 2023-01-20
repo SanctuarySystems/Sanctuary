@@ -38,13 +38,13 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   if (!notifsCount) return;
 
   return (
-    <View style={{ borderWidth: 1, borderRadius: 15, padding: 10 }}>
+    <View style={{ borderRadius: 15, padding: 10, backgroundColor: `${colorTheme.orange}` }}>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 5 }}>
-        <Text style={{ fontWeight: 'bold' }}>{name} </Text>
-        <Text>{post} in the </Text>
-        <Text style={{ fontWeight: 'bold' }}>{spaceName} </Text>
-        <Text>space has been reported by </Text>
-        <Text style={{ fontWeight: 'bold' }}>{reportedBy}.</Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{name} </Text>
+        <Text style={{ fontSize: 16 }}>{post} in the </Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{spaceName} </Text>
+        <Text style={{ fontSize: 16 }}>space has been reported by </Text>
+        <Text style={{ color: `${colorTheme.beige}`, fontSize: 16, fontWeight: 'bold' }}>{reportedBy}.</Text>
       </View>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }} >
@@ -52,8 +52,9 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           { reported !== username &&
             <Button
             size="sm"
-            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            buttonStyle={{ borderRadius: 10, backgroundColor: `${colorTheme.blue}`, padding: 8 }}
             title={isReported ? "User banned" : "Ban reported"}
+            titleStyle={{ fontWeight: 'bold' }}
             onPress={() => console.log('Banning reported') || handleBan()}
             />
           }
@@ -61,8 +62,9 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         <View style={{ flex: 1, alignContent: 'center', padding: 5 }} >
           <Button
             size="sm"
-            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            buttonStyle={{ borderRadius: 10, backgroundColor: `${colorTheme.blue}`, padding: 8 }}
             title={`View ${post}`}
+            titleStyle={{ fontWeight: 'bold' }}
             onPress={() => navigation.navigate('Comments', {
               confession_id: confessionId,
               comment_id: commentId,
@@ -72,6 +74,13 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
       </View>
     </View>
   );
+};
+
+const colorTheme = {
+  beige: '#FEF1E6',
+  yellow: '#F9D5A7',
+  orange: '#FFB085',
+  blue: '#90AACB',
 };
 
 export default NotificationListing;

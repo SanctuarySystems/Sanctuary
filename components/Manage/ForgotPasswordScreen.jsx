@@ -10,6 +10,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   const handleSubmit = async () => {
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    fontFamily: "Times New Roman",
+    fontFamily: "FuzzyBubbles",
     fontSize: 15,
     fontWeight: 'bold',
     color: 'white',

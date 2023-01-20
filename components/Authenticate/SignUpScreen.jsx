@@ -20,6 +20,7 @@ const SignUpScreen = ({ navigation }) => {
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   const handleUsername = () => {
@@ -35,6 +36,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    handleUsername();
     if (password && confirmPassword && goodUsername) {
       setErrorMessage("Passwords do not match, please try again.");
       return;
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    fontFamily: "Times New Roman",
+    fontFamily: "FuzzyBubbles",
     fontSize: 15,
     fontWeight: 'bold',
     color: 'white',

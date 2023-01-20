@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -51,6 +51,7 @@ const Profile = ({ navigation }) => {
     // AsyncStorage.clear();
 
     // grab localstorage viewedCookies for viewed notifications every 30k seconds
+    initializeCookies();
     refreshNotifications(setViewedCookies, setViewedCookieCount);
   }, []);
 
@@ -85,7 +86,6 @@ const Profile = ({ navigation }) => {
             titleStyle={{ color: `${colorTheme.blue}` }}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
-              spaces: created,
               viewedCookies,
               notifsCount,
               setNotifsCount,
@@ -130,28 +130,33 @@ const Profile = ({ navigation }) => {
 
         {/* TABS */}
         <View style={{ height: 40, backgroundColor: 'white' }}>
-          <Tab
-            value={currentTab}
-            dense
-            titleStyle={{ color: `${colorTheme.blue}` }}
-            buttonStyle={{ active: true }}
-            // buttonStyle='View Style'
-            style={{ backgroundColor: 'white', color: `${colorTheme.blue}` }}
-            onChange={(e) => {
-              if (!e) {
-                console.log('showing joined');
-                setCurrentTab('joined');
-                setSpaceData(userData.spaces_joined);
-              } else {
-                console.log('showing created');
-                setCurrentTab('created');
-                setSpaceData(userData.spaces_created);
-              }
-            }}
-          >
-            <Tab.Item title='Joined Spaces' />
-            <Tab.Item title='Created Spaces' />
-          </Tab>
+
+          <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <View style={[ currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView ]}>
+              <Text
+                suppressHighlighting={true}
+                style={[ currentTab === 'joined' ? styles.selectedTab : styles.unselectedTab ]}
+                onPress={() => {
+                  setCurrentTab('joined');
+                  setSpaceData(userData.spaces_joined);
+                }}
+              >
+                Joined Spaces
+              </Text>
+            </View>
+            <View style={[ currentTab === 'created' ? styles.selectedTabView : styles.unselectedTabView ]}>
+              <Text
+                suppressHighlighting={true}
+                style={[ currentTab === 'created' ? styles.selectedTab : styles.unselectedTab ]}
+                onPress={() => {
+                  setCurrentTab('created');
+                  setSpaceData(userData.spaces_created);
+                }}
+              >
+                Created Spaces
+              </Text>
+            </View>
+          </View>
         </View>
 
         <View>
@@ -189,6 +194,15 @@ const Profile = ({ navigation }) => {
   );
 };
 
+const initializeCookies = async () => {
+  try {
+    await AsyncStorage.setItem('reported', '[]');
+    await AsyncStorage.setItem('viewedCount', '0');
+  } catch (e) {
+    console.log('cookie initialization error');
+  }
+};
+
 const getCookies = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('reported');
@@ -216,11 +230,34 @@ const refreshNotifications = (cb1, cb2) => {
     if (count._z === null) {
       cb2(0);
     } else {
-      cb2(count._z);
+      cb2(count._z.toString());
     }
 
     cb1(viewedCookies);
   }, 30000);
 };
+
+const styles = StyleSheet.create({
+  selectedTab: {
+    fontSize:'18%',
+    textDecorationThickness: '2%',
+    color: '#90aacb',
+    fontWeight: 'bold',
+  },
+  selectedTabView: {
+    borderBottomWidth: '3px',
+    borderBottomColor: '#90aacb',
+    paddingBottom: 1,
+  },
+  unselectedTab: {
+    fontSize:'18%',
+    color: 'rgba(0,0,0,0.5)',
+
+  },
+  unselectedTabView: {
+    color: 'rgba(0,0,0,0.5)',
+    paddingBottom: 1,
+  },
+});
 
 export default Profile;

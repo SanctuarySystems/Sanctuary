@@ -19,8 +19,6 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
   const name = reported === username ? 'Your' : username + "'s";
   const post = commentId ? 'comment' : 'confession';
 
-  setViewedCookieCount();
-
   const handleBan = () => {
     setIsReported(true);
 
@@ -33,8 +31,6 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
           commentId: commentId,
         });
         storeData(temporaryCookie);
-
-        setUnreadNofits(notifsCount - 1);
       })
       .catch((err) => console.log('axios error in profile', err));
   };
@@ -51,27 +47,28 @@ const NotificationListing = ({ username, reported, reportedBy, spaceName, commen
         <Text style={{ fontWeight: 'bold' }}>{reportedBy}.</Text>
       </View>
 
-      <View style={{ flexDirection: 'row' }}>
-      {/* , justifyContent: 'space-evenly'  */}
-        { reported !== username &&
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }} >
+        <View style={{ flex: 1, alignContent: 'center', padding: 5 }} >
+          { reported !== username &&
+            <Button
+            size="sm"
+            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            title={isReported ? "User banned" : "Ban reported"}
+            onPress={() => console.log('Banning reported') || handleBan()}
+            />
+          }
+        </View>
+        <View style={{ flex: 1, alignContent: 'center', padding: 5 }} >
           <Button
-          // style={{ position: 'absolute', right: 5 }}
-          size="sm"
-          buttonStyle={{ borderRadius: 30, backgroundColor: '#FFB085' }}
-          title={isReported ? "User Banned" : "Ban Reported"}
-          type="outline"
-          onPress={() => console.log('Banning reported') || handleBan()}
+            size="sm"
+            buttonStyle={{ borderRadius: 10, backgroundColor: '#FFB085', padding: 8 }}
+            title={`View ${post}`}
+            onPress={() => navigation.navigate('Comments', {
+              confession_id: confessionId,
+              comment_id: commentId,
+            })}
           />
-        }
-        <Button
-          size="sm"
-          buttonStyle={{ borderRadius: 30 }}
-          title={`View ${post}`}
-          onPress={() => navigation.navigate('Comments', {
-            confession_id: confessionId,
-            comment_id: commentId,
-          })}
-        />
+        </View>
       </View>
     </View>
   );

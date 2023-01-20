@@ -21,7 +21,8 @@ const screenOptionStyle = {
   headerStyle: {
     backgroundColor: '#F9D5A7',
     fontWeight: 'bold',
-    fontSize: 65,
+    fontSize: 25,
+    height: 100,
   },
   headerTitleStyle: {
     color: "#90AACB",

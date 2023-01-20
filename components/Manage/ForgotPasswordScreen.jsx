@@ -14,7 +14,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       navigation.navigate('Login Screen');
     } catch (error) {
       console.log('error');
-      setErrorMessage(error.message);
+      setErrorMessage('Please enter your email address');
     }
   };
 
@@ -22,7 +22,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.header}>Sanctuary</Text>
       <View style={styles.inputContainer}>
-        <Text>Enter your email below to reset your password</Text>
         <TextInput
           style={styles.inputBox}
           placeholder="Email"
@@ -31,7 +30,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       </View>
       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
       <View style={styles.buttonContainer}>
-        <Button style={styles.button} title="Submit" onPress={handleSubmit} />
+        <Button style={styles.button} color='#90AACB' title="Submit" onPress={handleSubmit} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#90AACB',
-    marginBottom: 150,
+    marginBottom: 80,
   },
   inputContainer: {
     alignItems: 'center',
@@ -69,11 +68,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '80%',
-    marginTop: 30,
+    marginTop: 80,
   },
   button: {
     fontFamily: 'Times New Roman',
-    backgroundColor: '#FFB085',
+    color: '#FFB085',
     fontSize: 60,
     marginHorizontal: 10,
   },

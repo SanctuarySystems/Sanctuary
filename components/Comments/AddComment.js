@@ -40,7 +40,7 @@ const AddComment = ({ add, username, confessionId }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#90AACB',
+    backgroundColor: '#FEF1E6',
   },
   input: {
     flexDirection: 'row',

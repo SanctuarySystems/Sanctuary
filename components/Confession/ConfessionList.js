@@ -38,12 +38,16 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   useEffect(() => {
 
-    getData();
+    ///Add line below to reset local storage
+    //saveData({});
+     getData();
   },[])
 
 
   const [fontsLoaded] = useFonts({
     'Virgil': require('../../assets/fonts/Virgil.ttf'),
+    'FuzzyReg': require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    'FuzzyBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   const { username } = useContext(UsernameContext);
@@ -160,24 +164,24 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
               <View style={styles.buttonStyleHug}>
                 {idList[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
-                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.hugs}</Text>
-                  <Text style={{fontFamily: 'Virgil'}}>Hugs</Text>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} />{' ' + item.hugs}</Text>
+                  <Text style={{fontFamily: 'FuzzyBold'}}>Hug</Text>
                 </TouchableOpacity>}
                 {idList[item.confession_id] !== undefined && <View>
-                  <Text style={{textAlign: 'center', color: 'red'}}><FontAwesome5 name="hands-helping" size={20} color="red" />{' ' + (item.hugs + 1)}</Text>
-                  <Text style={{fontFamily: 'Virgil', color: 'red'}}>Hugs</Text>
+                  <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
+                  <Text style={{fontFamily: 'FuzzyBold', color: 'rgba(49, 94, 153, 1)', textAlign: 'center'}}>Hugged!</Text>
                   </View>}
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
                   onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, images: images})}>
-                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                  <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
+                  <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id, item: item, images: images })}>
-                <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                <Text style={{fontFamily: 'Virgil'}}>Comments</Text>
+                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id, item: item, images: images})}>
+                <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
+                <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity>}
               </View>
               </View>
@@ -282,14 +286,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'Virgil'
+    //fontFamily: 'Times New Roman'
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
-    color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'Virgil'
+    fontWeight: 'bold',
+    //color: 'rgba(27, 52, 83, 1)',
+    color: 'rgba(49, 94, 153, 1)',
+    //fontFamily: 'Times New Roman'
   },
 
   dateStyle: {
@@ -297,13 +303,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingTop: '1%',
     color: 'rgba(49, 94, 153, 1)',
-    fontFamily: 'Virgil'
+    //fontFamily: 'Times New Roman'
   },
   bodyText: {
-    color: 'rgba(49, 94, 153, 1)',
+  //  color: 'rgba(49, 94, 153, 1)',
     fontSize: 18,
     padding: '3%',
-    fontFamily: 'Virgil'
+    fontFamily: 'FuzzyReg'
   },
 
   threeDots: {

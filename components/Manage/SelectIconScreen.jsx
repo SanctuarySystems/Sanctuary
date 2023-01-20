@@ -5,7 +5,7 @@ import { UsernameContext } from "../../App.js";
 
 const SelectIconScreen = ({ navigation }) => {
   const [selected, setSelected] = useState(null);
-  const {username, setUsername} = useContext(UsernameContext);
+  const { username, setUsername } = useContext(UsernameContext);
   let currentSelect = 1;
 
   const images = [
@@ -107,7 +107,7 @@ const SelectIconScreen = ({ navigation }) => {
   return (
 
     <View style={styles.container}>
-      <Text style={styles.title}>Select an Avatar</Text>
+      <Text style={styles.header}>Select an Avatar</Text>
       <View style={styles.grid}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -137,12 +137,15 @@ const SelectIconScreen = ({ navigation }) => {
           )}
         />
       </View>
-        <View style={styles.submitContainer}>
-          <Button
-            title="Save Changes"
-            color="rgba(77, 131, 203, 0.8)"
-            onPress={handleSubmit}
-        />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+          // Save changes functionality here
+          }}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -171,21 +174,32 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
-  submitContainer: {
-    width: '90%',
-    alignItems: 'center',
-    padding: 10,
-    marginTop: '20%',
-    backgroundColor: 'rgba(255, 176, 133, 1)',
-    borderRadius: '10',
-  },
-  title: {
-    width: '100%',
-    color: 'rgba(144, 170 ,203, 1)',
-    textAlign: 'center',
-    fontSize: 24,
+  header: {
+    fontFamily: 'Times New Roman',
+    fontSize: 40,
     fontWeight: 'bold',
-    paddingBottom: '25%',
+    color: '#90AACB',
+    marginBottom: 50,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    marginTop: 50,
+  },
+  button: {
+    backgroundColor: "#FFB085",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  buttonText: {
+    fontFamily: "Times New Roman",
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

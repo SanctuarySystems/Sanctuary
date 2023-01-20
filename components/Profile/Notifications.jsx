@@ -1,13 +1,28 @@
 import React from 'react';
 import { View, SafeAreaView, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, spaces, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
+  const { username, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
     viewedCookieCount, setViewedCookieCount } = route.params;
 
   React.useEffect(() => {
-    updateCookies();
+    updateCookies(reportedPosts);
+    console.log('set cookies for viewed notif count');
+
+    const getCookieCount = async () => {
+      try {
+        const count = await AsyncStorage.getItem('viewedCount');
+        console.log('getting cookie count in notifs', count);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    setViewedCookieCount(reportedPosts.length);
+
+    getCookieCount();
   }, []);
 
   if (reportedPosts.length === 0) {
@@ -16,7 +31,7 @@ const Notifications = ({ route, navigation }) => {
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 15 }}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
@@ -94,10 +109,10 @@ const Notifications = ({ route, navigation }) => {
 
 export default Notifications;
 
-const updateCookies = async () => {
-  setViewedCookieCount(reportedPosts.length);
+const updateCookies = async (reportedPosts) => {
   try {
-    await AsyncStorage.setItem('viewedCount', reportedPosts.length)
+    await AsyncStorage.setItem('viewedCount', reportedPosts.length.toString());
+    console.log('set cookie to reportedPosts.length.toString()', reportedPosts.length.toString());
   } catch (e) {
     console.log(e);
   }

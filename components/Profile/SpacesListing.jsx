@@ -14,7 +14,7 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
   });
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}&exact=true`)
       .then(({ data }) => {
         setSpaceData(data[0]);
       })

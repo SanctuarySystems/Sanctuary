@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item, RefreshControl } from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -102,6 +102,13 @@ const Profile = ({ navigation }) => {
       <ScrollView
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={onRefresh}
+        //     tintColor="#fff"
+        //   />
+        // }
       >
         <View style={styles.profileView}>
           {/* LOG OUT BUTTON */}

@@ -102,25 +102,17 @@ const Profile = ({ navigation }) => {
   if (!fontsLoaded || !username || !userData) return;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 5,
-            height: 50,
-            backgroundColor: `${colorTheme.beige}`,
-          }}
-        >
+        <View style={styles.profileView}>
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
+            titleStyle={styles.header}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
 
@@ -128,7 +120,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
-            titleStyle={{ color: `${colorTheme.blue}`, fontWeight: 'bold' }}
+            titleStyle={styles.header}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               viewedCookies,
@@ -149,13 +141,13 @@ const Profile = ({ navigation }) => {
             )}
         </View>
 
-        <View style={{ flexDirection: 'column', height: 220, backgroundColor: `${colorTheme.beige}` }}>
-          <View style={{ flex: 0.7 }}>
+        <View style={styles.userView}>
+          <View style={styles.avatarView}>
             {/* AVATAR */}
             <Avatar
               size={100}
               rounded
-              containerStyle={{ position: 'absolute', top: '25%', right: '38%' }}
+              containerStyle={styles.avatar}
               // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
               source={require(`../../assets/avatars/012.png`)}
             >
@@ -167,14 +159,9 @@ const Profile = ({ navigation }) => {
               /> */}
             </Avatar>
           </View>
-          <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', top: 2 }}>
+          <View style={styles.userContainer}>
             {/* USERNAME */}
-            <Text style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              color: `${colorTheme.darkblue}`,
-              fontFamily: "FuzzyBubblesBold",
-            }}>
+            <Text style={styles.username}>
               {userData.username}
             </Text>
             {/* <Icon
@@ -188,9 +175,8 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* TABS */}
-        <View style={{ height: 40, backgroundColor: `${colorTheme.beige}` }}>
-
-          <View style={{ height: 40, backgroundColor: `${colorTheme.beige}`, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+        <View style={styles.tabsView}>
+          <View style={styles.tabsContainer}>
             <View style={[currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
@@ -253,6 +239,82 @@ const Profile = ({ navigation }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  profileView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+    height: 50,
+    backgroundColor: `${colorTheme.beige}`,
+  },
+  header: {
+    color: `${colorTheme.blue}`,
+    fontWeight: 'bold',
+  },
+  userView: {
+    flexDirection: 'column',
+    height: 220,
+    backgroundColor: `${colorTheme.beige}`,
+  },
+  avatarView: {
+    flex: 0.7,
+  },
+  avatar: {
+    position: 'absolute',
+    top: '25%',
+    right: '38%',
+  },
+  userContainer: {
+    flex: 0.2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    top: 2
+  },
+  username: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: `${colorTheme.darkblue}`,
+    fontFamily: "FuzzyBubblesBold",
+  },
+  tabsView: {
+    height: 40,
+    backgroundColor: `${colorTheme.beige}`,
+  },
+  tabsContainer: {
+    height: 40,
+    backgroundColor: `${colorTheme.beige}`,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  selectedTabView: {
+    borderBottomWidth: '3px',
+    borderBottomColor: '#90aacb',
+    paddingBottom: 1,
+    fontWeight: 'bold',
+  },
+  unselectedTabView: {
+    color: 'rgba(0,0,0,0.5)',
+    paddingBottom: 1,
+    fontWeight: 'bold',
+  },
+  selectedTab: {
+    fontSize: '18%',
+    textDecorationThickness: '2%',
+    color: '#90aacb',
+    fontWeight: 'bold',
+  },
+  unselectedTab: {
+    fontSize: '18%',
+    color: 'rgba(0,0,0,0.5)',
+    fontWeight: 'bold',
+  },
+
+});
+
 const getUser = (name, cb) => {
   axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
     .then(({ data }) => cb(data))
@@ -300,29 +362,6 @@ const colorTheme = {
   darkblue: 'rgba(49, 94, 153, 1)',
 };
 
-const styles = StyleSheet.create({
-  selectedTab: {
-    fontSize: '18%',
-    textDecorationThickness: '2%',
-    color: '#90aacb',
-    fontWeight: 'bold',
-  },
-  selectedTabView: {
-    borderBottomWidth: '3px',
-    borderBottomColor: '#90aacb',
-    paddingBottom: 1,
-    fontWeight: 'bold',
-  },
-  unselectedTab: {
-    fontSize: '18%',
-    color: 'rgba(0,0,0,0.5)',
-    fontWeight: 'bold',
-  },
-  unselectedTabView: {
-    color: 'rgba(0,0,0,0.5)',
-    paddingBottom: 1,
-    fontWeight: 'bold',
-  },
-});
+
 
 export default Profile;

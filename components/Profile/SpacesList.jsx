@@ -1,25 +1,30 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { colorTheme } from './colorTheme';
 import SpacesListing from './SpacesListing';
 
-const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
+const SpacesList = ({ searchTerm, currentTab, spaceArray, currentUser, navigation }) => {
   if (!spaceArray) return;
+
   return (
-    <View style={{ backgroundColor: `${colorTheme.beige}` }}>
-      <View style={{ height: '100%' }}>
-        { spaceArray.length === 0 &&
-          <Text style={{ alignSelf: 'center', padding: 50 }}>You have not {currentTab} any spaces!</Text> }
-        { spaceArray.length > 0 &&
-          spaceArray.map((item) => {
+    <View style={styles.listView}>
+      <View style={styles.listContainer}>
+        { spaceArray.length === 0
+          && (
+            <Text style={styles.emptyState}>
+              You have not {currentTab} any spaces!
+            </Text>
+          )}
+        { spaceArray.length > 0
+          && spaceArray.map((item) => {
             const name = item.toLowerCase();
             const search = searchTerm.toLowerCase();
             if (searchTerm.length !== 0 && name.indexOf(search) < 0) return;
 
             return (
-              <View style={{ padding: 10 }}>
+              <View style={styles.listingContainer}>
                 <SpacesListing
                   key={item}
-                  colorTheme={colorTheme}
                   currentTab={currentTab}
                   space={item}
                   currentUser={currentUser}
@@ -32,5 +37,22 @@ const SpacesList = ({ colorTheme, searchTerm, currentTab, spaceArray, currentUse
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  listView: {
+    backgroundColor: `${colorTheme.beige}`,
+    height: '100%',
+  },
+  listContainer: {
+    height: '100%',
+  },
+  emptyState: {
+    alignSelf: 'center',
+    padding: 50,
+  },
+  listingContainer: {
+    padding: 10,
+  },
+});
 
 export default SpacesList;

@@ -1,37 +1,32 @@
 import React from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { colorTheme } from './colorTheme';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
-    viewedCookieCount, setViewedCookieCount } = route.params;
+  const {
+    username,
+    reportedCookie,
+    notifsCount,
+    setNotifsCount,
+    reportedPosts,
+    viewedCookieCount,
+    setViewedCookieCount,
+  } = route.params;
 
   React.useEffect(() => {
     updateCookies(reportedPosts);
-    console.log('set cookies for viewed notif count');
-
-    const getCookieCount = async () => {
-      try {
-        const count = await AsyncStorage.getItem('viewedCount');
-        console.log('getting cookie count in notifs', count);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
     setViewedCookieCount(reportedPosts.length);
-
-    getCookieCount();
   }, []);
 
   if (reportedPosts.length === 0) {
-    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
+    return <Text style={styles.emptyState}>You are all caught up!</Text>;
   }
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 15, backgroundColor: `${colorTheme.beige}`, height: '100%' }}>
+      <View style={styles.notificationsView}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
@@ -107,20 +102,24 @@ const Notifications = ({ route, navigation }) => {
   );
 };
 
-export default Notifications;
-
 const updateCookies = async (reportedPosts) => {
   try {
     await AsyncStorage.setItem('viewedCount', reportedPosts.length.toString());
-    console.log('set cookie to reportedPosts.length.toString()', reportedPosts.length.toString());
   } catch (e) {
-    console.log(e);
+    console.log('updating cookie error: ', e);
   }
 };
 
-const colorTheme = {
-  beige: '#FEF1E6',
-  yellow: '#F9D5A7',
-  orange: '#FFB085',
-  blue: '#90AACB',
-};
+const styles = StyleSheet.create({
+  emptyState: {
+    alignSelf: 'center',
+    padding: 20,
+  },
+  notificationsView: {
+    padding: 15,
+    backgroundColor: `${colorTheme.beige}`,
+    height: '100%',
+  },
+});
+
+export default Notifications;

@@ -3,9 +3,10 @@ import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item
 import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import SpacesList from './SpacesList';
-import { UsernameContext } from '../../App';
 import { useFonts } from 'expo-font';
+import { UsernameContext } from '../../App';
+import { colorTheme } from './colorTheme';
+import SpacesList from './SpacesList';
 
 const images = [
   { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
@@ -56,7 +57,6 @@ const Profile = ({ navigation }) => {
   const [viewedCookieCount, setViewedCookieCount] = React.useState(null); // viewedCookieCount stored via async storage
 
   let refreshNotifications;
-  // let avatarId;
 
   const [fontsLoaded] = useFonts({
     FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
@@ -69,10 +69,6 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
-      // avatarId = data.avatar < 10 ? Number(data.avatar.slice(1)) : data.avatar;
-      // console.log('i am avatar id', avatarId);
-      // console.log('image at id', images[avatarId]);
-      // console.log('image at 1', images[1]);
     });
 
     getConfessions(username, (data) => {
@@ -102,7 +98,7 @@ const Profile = ({ navigation }) => {
   if (!fontsLoaded || !username || !userData) return;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView contentContainerStyle={styles.container}>
       <ScrollView
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
@@ -131,8 +127,8 @@ const Profile = ({ navigation }) => {
               setViewedCookieCount,
             })}
           />
-          {notifsCount > viewedCookieCount &&
-            (
+          {notifsCount > viewedCookieCount
+            && (
               <Badge
                 status="error"
                 value={notifsCount}
@@ -207,8 +203,8 @@ const Profile = ({ navigation }) => {
         <View>
           <SearchBar
             platform="ios"
-            containerStyle={{ backgroundColor: `${colorTheme.beige}` }}
-            inputContainerStyle={{ backgroundColor: `${colorTheme.yellow}` }}
+            containerStyle={styles.searchContainer}
+            inputContainerStyle={styles.searchInput}
             inputStyle={{}}
             loadingProps={{}}
             onChangeText={(newVal) => setSearchTerm(newVal)}
@@ -217,7 +213,7 @@ const Profile = ({ navigation }) => {
             placeholderTextColor="#888"
             showCancel
             cancelButtonTitle="Cancel"
-            cancelButtonProps={{ color: `${colorTheme.blue}` }}
+            cancelButtonProps={styles.searchCancel}
             onCancel={() => setSearchTerm('')}
             value={searchTerm}
           />
@@ -226,7 +222,6 @@ const Profile = ({ navigation }) => {
         <View>
           {/* SPACES */}
           <SpacesList
-            colorTheme={colorTheme}
             searchTerm={searchTerm}
             currentTab={currentTab}
             spaceArray={spaceData}
@@ -312,7 +307,15 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.5)',
     fontWeight: 'bold',
   },
-
+  searchContainer: {
+    backgroundColor: `${colorTheme.beige}`,
+  },
+  searchInput: {
+    backgroundColor: `${colorTheme.yellow}`,
+  },
+  searchCancel: {
+    color: `${colorTheme.blue}`,
+  }
 });
 
 const getUser = (name, cb) => {
@@ -353,15 +356,5 @@ const getCookieCount = async (cb) => {
     console.log('get cookie count error', e);
   }
 };
-
-const colorTheme = {
-  beige: '#FEF1E6',
-  yellow: '#F9D5A7',
-  orange: '#FFB085',
-  blue: '#90AACB',
-  darkblue: 'rgba(49, 94, 153, 1)',
-};
-
-
 
 export default Profile;

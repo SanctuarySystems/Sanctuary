@@ -6,49 +6,15 @@ import axios from 'axios';
 import { useFonts } from 'expo-font';
 import { UsernameContext } from '../../App';
 import { colorTheme } from './colorTheme';
+import { images } from './images';
 import SpacesList from './SpacesList';
-
-const images = [
-  { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
-  { id: 2, img: require(`../../assets/avatars/002.png`), animate: new Animated.Value(0) },
-  { id: 3, img: require(`../../assets/avatars/003.png`), animate: new Animated.Value(0) },
-  { id: 4, img: require(`../../assets/avatars/004.png`), animate: new Animated.Value(0) },
-  { id: 5, img: require(`../../assets/avatars/005.png`), animate: new Animated.Value(0) },
-  { id: 6, img: require(`../../assets/avatars/006.png`), animate: new Animated.Value(0) },
-  { id: 7, img: require(`../../assets/avatars/007.png`), animate: new Animated.Value(0) },
-  { id: 8, img: require(`../../assets/avatars/008.png`), animate: new Animated.Value(0) },
-  { id: 9, img: require(`../../assets/avatars/009.png`), animate: new Animated.Value(0) },
-  { id: 10, img: require(`../../assets/avatars/010.png`), animate: new Animated.Value(0) },
-  { id: 11, img: require(`../../assets/avatars/011.png`), animate: new Animated.Value(0) },
-  { id: 12, img: require(`../../assets/avatars/012.png`), animate: new Animated.Value(0) },
-  { id: 13, img: require(`../../assets/avatars/013.png`), animate: new Animated.Value(0) },
-  { id: 14, img: require(`../../assets/avatars/014.png`), animate: new Animated.Value(0) },
-  { id: 15, img: require(`../../assets/avatars/015.png`), animate: new Animated.Value(0) },
-  { id: 16, img: require(`../../assets/avatars/016.png`), animate: new Animated.Value(0) },
-  { id: 17, img: require(`../../assets/avatars/017.png`), animate: new Animated.Value(0) },
-  { id: 18, img: require(`../../assets/avatars/018.png`), animate: new Animated.Value(0) },
-  { id: 19, img: require(`../../assets/avatars/019.png`), animate: new Animated.Value(0) },
-  { id: 20, img: require(`../../assets/avatars/020.png`), animate: new Animated.Value(0) },
-  { id: 21, img: require(`../../assets/avatars/021.png`), animate: new Animated.Value(0) },
-  { id: 22, img: require(`../../assets/avatars/022.png`), animate: new Animated.Value(0) },
-  { id: 23, img: require(`../../assets/avatars/023.png`), animate: new Animated.Value(0) },
-  { id: 24, img: require(`../../assets/avatars/024.png`), animate: new Animated.Value(0) },
-  { id: 25, img: require(`../../assets/avatars/025.png`), animate: new Animated.Value(0) },
-  { id: 26, img: require(`../../assets/avatars/026.png`), animate: new Animated.Value(0) },
-  { id: 27, img: require(`../../assets/avatars/027.png`), animate: new Animated.Value(0) },
-  { id: 28, img: require(`../../assets/avatars/028.png`), animate: new Animated.Value(0) },
-  { id: 29, img: require(`../../assets/avatars/029.png`), animate: new Animated.Value(0) },
-  { id: 30, img: require(`../../assets/avatars/030.png`), animate: new Animated.Value(0) },
-  { id: 31, img: require(`../../assets/avatars/031.png`), animate: new Animated.Value(0) },
-  { id: 32, img: require(`../../assets/avatars/032.png`), animate: new Animated.Value(0) },
-  { id: 33, img: require(`../../assets/avatars/033.png`), animate: new Animated.Value(0) },
-];
 
 const Profile = ({ navigation }) => {
   const { username } = React.useContext(UsernameContext); // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
+  const [refreshing, setRefreshing] = React.useState(false);
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
@@ -74,13 +40,25 @@ const Profile = ({ navigation }) => {
     getConfessions(username, (data) => {
       setReportedPosts(data);
       setNotifsCount(data.length);
-      console.log('found reported');
     });
 
     // initialize and set cookies for notifications every 30k seconds
     // initializeCookies();
     refreshCookies();
   }, []);
+
+  React.useEffect(() => {
+    // update user data
+    getUser(username, (data) => {
+      setUserData(data);
+      setSpaceData(data.spaces_joined);
+      setCreated(data.spaces_created);
+    });
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, [refreshing]);
 
   React.useEffect(() => {
     clearInterval(refreshNotifications);
@@ -102,13 +80,8 @@ const Profile = ({ navigation }) => {
       <ScrollView
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
-        // refreshControl={
-        //   <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={onRefresh}
-        //     tintColor="#fff"
-        //   />
-        // }
+        bounces='false'
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileView}>
           {/* LOG OUT BUTTON */}
@@ -151,30 +124,30 @@ const Profile = ({ navigation }) => {
               size={100}
               rounded
               containerStyle={styles.avatar}
-              // source={require(`../../assets/avatar/00${userData.avatar}.png`)}
-              source={require(`../../assets/avatars/012.png`)}
+              source={images[userData.avatar - 1]}
             >
               {/* EDIT AVATAR */}
               {/* <Avatar.Accessory
                 size={24}
-                overlayContainerStyle	={{ boxShadow: 'none', backgroundColor: 'blue' }}
+                // overlayContainerStyle	={{ boxShadow: 'none', backgroundColor: 'blue', shadowOpacity: 0 }}
                 onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
               /> */}
             </Avatar>
+            <Icon
+              style={{ top: '25%', right: '38%', backgroundColor: `${colorTheme.beige}`, zIndex: 3 }}
+              size={15}
+              name='pencil'
+              type='font-awesome'
+              color={colorTheme.blue}
+              onPress={() => console.log('hello')} />
           </View>
+
           <View style={styles.userContainer}>
             {/* USERNAME */}
             <Text style={styles.username}>
               {userData.username}
             </Text>
-            {/* <Icon
-              style={{ paddingLeft: 8, top: 5 }}
-              size={15}
-              name='pencil'
-              type='font-awesome'
-              color={colorTheme.blue}
-              onPress={() => console.log('hello')} /> */}
-            </View>
+          </View>
         </View>
 
         {/* TABS */}
@@ -234,6 +207,8 @@ const Profile = ({ navigation }) => {
             spaceArray={spaceData}
             currentUser={userData.username}
             navigation={navigation}
+            refreshing={refreshing}
+            setRefreshing={setRefreshing}
           />
         </View>
       </ScrollView>
@@ -268,6 +243,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '25%',
     right: '38%',
+    width: 100,
+    height: 100,
   },
   userContainer: {
     flex: 0.2,

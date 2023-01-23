@@ -15,6 +15,8 @@ const Notifications = ({ route, navigation }) => {
     setViewedCookieCount,
   } = route.params;
 
+  const reportedConfessions = [];
+
   React.useEffect(() => {
     updateCookies(reportedPosts);
     setViewedCookieCount(reportedPosts.length);
@@ -31,19 +33,22 @@ const Notifications = ({ route, navigation }) => {
           reportedPosts.map((confession) => {
             if (!confession) return;
 
-            console.log('confession', confession);
+            console.log('reported confession found', confession);
+            console.log('notif confession: ', confession.confession_id);
 
             if (confession.reported.length > 0) {
-              if (reportedCookie) {
-                for (let i = 0; i < reportedCookie.length; i += 1) {
-                  console.log('reported cookie', reportedCookie[i]);
-                  if (reportedCookie[i].reportedUser === confession.created_by &&
-                    reportedCookie[i].confessionId === confession.confession_id &&
-                    !reportedCookie[i].commentId) {
-                    console.log('found banned confession');
-                    return;
-                  }
-                }
+              // if (reportedCookie) {
+              //   for (let i = 0; i < reportedCookie.length; i += 1) {
+              //     if (reportedCookie[i].reportedUser === confession.created_by
+              //       && reportedCookie[i].confessionId === confession.confession_id
+              //       && !reportedCookie[i].commentId) {
+              //       return;
+              //     }
+              //   }
+              // }
+
+              if (confession.comments.length > 0) {
+                reportedConfessions.push(confession.confession_id);
               }
 
               return (
@@ -63,18 +68,26 @@ const Notifications = ({ route, navigation }) => {
                 />
               );
             }
-            if (confession.comments.length > 0) {
+          })
+        }
+        { reportedConfessions.length > 0
+          && reportedPosts.map((confession) => {
+            if (reportedConfessions.indexOf(confession.confession_id) > -1) {
               confession.comments.map((comment) => {
-                if (reportedCookie) {
-                  for (let i = 0; i < reportedCookie.length; i += 1) {
-                    if (reportedCookie[i].reportedUser === comment.created_by &&
-                      reportedCookie[i].confessionId === confession.confession_id &&
-                      reportedCookie[i].commentId === comment.comment_id) {
-                      console.log('found banned comment');
-                      return;
-                    }
-                  }
-                }
+                // if (reportedCookie) {
+                //   for (let i = 0; i < reportedCookie.length; i += 1) {
+                //     if (reportedCookie[i].reportedUser === comment.created_by
+                //       && reportedCookie[i].confessionId === confession.confession_id
+                //       && reportedCookie[i].commentId === comment.comment_id) {
+                //       return;
+                //     }
+                //   }
+                // }
+                console.log('reported comment found', comment);
+                console.log('notif comment', comment.comment_id);
+                console.log('comment.created_by', comment.created_by);
+                console.log('comment.reported[0]', comment.reported[0]);
+                // console.log(comment.comment_id, confession.confession_id);
 
                 return (
                   <NotificationListing
@@ -95,7 +108,9 @@ const Notifications = ({ route, navigation }) => {
                 );
               });
             }
-          })
+          })}
+        {
+
         }
       </View>
     </SafeAreaView>

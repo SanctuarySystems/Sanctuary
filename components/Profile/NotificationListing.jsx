@@ -30,8 +30,12 @@ const NotificationListing = (props) => {
     // viewedCookieCount,
     // setViewedCookieCount,
   } = props;
+
+  console.log('notiflisting');
+  console.log(commentId, confessionId);
+
   const [isReported, setIsReported] = React.useState(false);
-  const name = reported === username ? 'Your' : `${username}'s`;
+  const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
 
   const [fontsLoaded] = useFonts({
@@ -73,7 +77,7 @@ const NotificationListing = (props) => {
             && (
               <Button
                 size="sm"
-                buttonStyle={styles.button}
+                buttonStyle={isReported? styles.buttonInactive : styles.button}
                 title={isReported ? "User banned" : "Ban reported"}
                 titleStyle={styles.buttonText}
                 onPress={() => console.log('Banning reported') || handleBan()}
@@ -83,7 +87,7 @@ const NotificationListing = (props) => {
         <View style={styles.buttonContainer}>
           <Button
             size="sm"
-            buttonStyle={styles.button}
+            buttonStyle={isReported? styles.buttonInactive : styles.button}
             title={`View ${post}`}
             titleStyle={styles.buttonText}
             onPress={() => navigation.navigate('Comments', {
@@ -129,6 +133,11 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
     backgroundColor: `${colorTheme.blue}`,
+    padding: 8,
+  },
+  buttonInactive: {
+    borderRadius: 10,
+    backgroundColor: `gray`,
     padding: 8,
   },
   buttonText: {

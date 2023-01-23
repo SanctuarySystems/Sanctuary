@@ -14,8 +14,11 @@ const Notifications = ({ route, navigation }) => {
     viewedCookieCount,
     setViewedCookieCount,
   } = route.params;
+<<<<<<< HEAD
 
   const reportedConfessions = [];
+=======
+>>>>>>> master
 
   React.useEffect(() => {
     updateCookies(reportedPosts);

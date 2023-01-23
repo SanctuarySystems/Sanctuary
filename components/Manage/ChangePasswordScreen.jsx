@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontFamily: "FuzzyBubbles",
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
 });
 

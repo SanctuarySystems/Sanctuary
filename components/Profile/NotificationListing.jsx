@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
+import { colorTheme } from './colorTheme';
 import { colorTheme } from './colorTheme';
 
 const storeData = async (value) => {
@@ -30,10 +32,6 @@ const NotificationListing = (props) => {
     // viewedCookieCount,
     // setViewedCookieCount,
   } = props;
-
-  console.log('notiflisting');
-  console.log(commentId, confessionId);
-
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
@@ -53,6 +51,8 @@ const NotificationListing = (props) => {
           reportedUser: reported,
           confessionId,
           commentId,
+          confessionId,
+          commentId,
         });
         storeData(temporaryCookie);
       })
@@ -62,6 +62,13 @@ const NotificationListing = (props) => {
   if (!fontsLoaded || !notifsCount) return;
 
   return (
+    <View style={styles.notificationContainer}>
+      <View style={styles.copyContainer}>
+        <Text style={styles.copyBold}>{name} </Text>
+        <Text style={styles.copy}>{post} in the </Text>
+        <Text style={styles.copyBold}>{spaceName} </Text>
+        <Text style={styles.copy}>space has been reported by </Text>
+        <Text style={styles.copyBold}>{reportedBy}.</Text>
     <View style={styles.notificationContainer}>
       <View style={styles.copyContainer}>
         <Text style={styles.copyBold}>{name} </Text>
@@ -85,10 +92,12 @@ const NotificationListing = (props) => {
             )}
         </View>
         <View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <Button
             size="sm"
             buttonStyle={isReported? styles.buttonInactive : styles.button}
             title={`View ${post}`}
+            titleStyle={styles.buttonText}
             titleStyle={styles.buttonText}
             onPress={() => navigation.navigate('Comments', {
               confession_id: confessionId,

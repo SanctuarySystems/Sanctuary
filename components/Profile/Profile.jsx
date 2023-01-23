@@ -6,8 +6,43 @@ import axios from 'axios';
 import { useFonts } from 'expo-font';
 import { UsernameContext } from '../../App';
 import { colorTheme } from './colorTheme';
-import { images } from './images';
 import SpacesList from './SpacesList';
+
+const images = [
+  { id: 1, img: require(`../../assets/avatars/001.png`), animate: new Animated.Value(0) },
+  { id: 2, img: require(`../../assets/avatars/002.png`), animate: new Animated.Value(0) },
+  { id: 3, img: require(`../../assets/avatars/003.png`), animate: new Animated.Value(0) },
+  { id: 4, img: require(`../../assets/avatars/004.png`), animate: new Animated.Value(0) },
+  { id: 5, img: require(`../../assets/avatars/005.png`), animate: new Animated.Value(0) },
+  { id: 6, img: require(`../../assets/avatars/006.png`), animate: new Animated.Value(0) },
+  { id: 7, img: require(`../../assets/avatars/007.png`), animate: new Animated.Value(0) },
+  { id: 8, img: require(`../../assets/avatars/008.png`), animate: new Animated.Value(0) },
+  { id: 9, img: require(`../../assets/avatars/009.png`), animate: new Animated.Value(0) },
+  { id: 10, img: require(`../../assets/avatars/010.png`), animate: new Animated.Value(0) },
+  { id: 11, img: require(`../../assets/avatars/011.png`), animate: new Animated.Value(0) },
+  { id: 12, img: require(`../../assets/avatars/012.png`), animate: new Animated.Value(0) },
+  { id: 13, img: require(`../../assets/avatars/013.png`), animate: new Animated.Value(0) },
+  { id: 14, img: require(`../../assets/avatars/014.png`), animate: new Animated.Value(0) },
+  { id: 15, img: require(`../../assets/avatars/015.png`), animate: new Animated.Value(0) },
+  { id: 16, img: require(`../../assets/avatars/016.png`), animate: new Animated.Value(0) },
+  { id: 17, img: require(`../../assets/avatars/017.png`), animate: new Animated.Value(0) },
+  { id: 18, img: require(`../../assets/avatars/018.png`), animate: new Animated.Value(0) },
+  { id: 19, img: require(`../../assets/avatars/019.png`), animate: new Animated.Value(0) },
+  { id: 20, img: require(`../../assets/avatars/020.png`), animate: new Animated.Value(0) },
+  { id: 21, img: require(`../../assets/avatars/021.png`), animate: new Animated.Value(0) },
+  { id: 22, img: require(`../../assets/avatars/022.png`), animate: new Animated.Value(0) },
+  { id: 23, img: require(`../../assets/avatars/023.png`), animate: new Animated.Value(0) },
+  { id: 24, img: require(`../../assets/avatars/024.png`), animate: new Animated.Value(0) },
+  { id: 25, img: require(`../../assets/avatars/025.png`), animate: new Animated.Value(0) },
+  { id: 26, img: require(`../../assets/avatars/026.png`), animate: new Animated.Value(0) },
+  { id: 27, img: require(`../../assets/avatars/027.png`), animate: new Animated.Value(0) },
+  { id: 28, img: require(`../../assets/avatars/028.png`), animate: new Animated.Value(0) },
+  { id: 29, img: require(`../../assets/avatars/029.png`), animate: new Animated.Value(0) },
+  { id: 30, img: require(`../../assets/avatars/030.png`), animate: new Animated.Value(0) },
+  { id: 31, img: require(`../../assets/avatars/031.png`), animate: new Animated.Value(0) },
+  { id: 32, img: require(`../../assets/avatars/032.png`), animate: new Animated.Value(0) },
+  { id: 33, img: require(`../../assets/avatars/033.png`), animate: new Animated.Value(0) },
+];
 
 const Profile = ({ navigation }) => {
   const { username } = React.useContext(UsernameContext); // username for get user call
@@ -77,6 +112,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <SafeAreaView contentContainerStyle={styles.container}>
+    <SafeAreaView contentContainerStyle={styles.container}>
       <ScrollView
         stickyHeaderIndices={[3]}
         automaticallyAdjustKeyboardInsets
@@ -84,10 +120,12 @@ const Profile = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileView}>
+        <View style={styles.profileView}>
           {/* LOG OUT BUTTON */}
           <Button
             title="Log out"
             type="clear"
+            titleStyle={styles.header}
             titleStyle={styles.header}
             onPress={() => navigation.navigate('Welcome Screen')}
           />
@@ -96,6 +134,7 @@ const Profile = ({ navigation }) => {
           <Button
             title="Notifications"
             type="clear"
+            titleStyle={styles.header}
             titleStyle={styles.header}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
@@ -109,6 +148,8 @@ const Profile = ({ navigation }) => {
           />
           {notifsCount > viewedCookieCount
             && (
+          {notifsCount > viewedCookieCount
+            && (
               <Badge
                 status="error"
                 value={notifsCount}
@@ -117,6 +158,8 @@ const Profile = ({ navigation }) => {
             )}
         </View>
 
+        <View style={styles.userView}>
+          <View style={styles.avatarView}>
         <View style={styles.userView}>
           <View style={styles.avatarView}>
             {/* AVATAR */}
@@ -153,6 +196,8 @@ const Profile = ({ navigation }) => {
         {/* TABS */}
         <View style={styles.tabsView}>
           <View style={styles.tabsContainer}>
+        <View style={styles.tabsView}>
+          <View style={styles.tabsContainer}>
             <View style={[currentTab === 'joined' ? styles.selectedTabView : styles.unselectedTabView]}>
               <Text
                 suppressHighlighting={true}
@@ -183,6 +228,8 @@ const Profile = ({ navigation }) => {
         <View>
           <SearchBar
             platform="ios"
+            containerStyle={styles.searchContainer}
+            inputContainerStyle={styles.searchInput}
             containerStyle={styles.searchContainer}
             inputContainerStyle={styles.searchInput}
             inputStyle={{}}

@@ -137,8 +137,8 @@ The account management component enables users to manage their existing account.
 
 
 * **Max Peterson - Product Manager**
-  * https://github.com/maxpeterson96
   * https://www.linkedin.com/in/maxpeterson-swe
+  * https://github.com/maxpeterson96
 * **Chad Fusco - Architecture Owner**
   * https://www.linkedin.com/in/chadfusco
   * https://github.com/ChadFusco
@@ -150,6 +150,6 @@ The account management component enables users to manage their existing account.
   * https://www.linkedin.com/in/warrensiu
   * https://github.com/warrensiu
 * **Sai Vemireddy**
-  * https://github.com/svemi
   * https://www.linkedin.com/in/sai-vemireddy
+  * https://github.com/svemi
 * **Justin Chong**

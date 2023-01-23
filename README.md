@@ -130,7 +130,7 @@ The account management component enables users to manage their existing account.
 
 3. Download the mobile application Expo Go
 	
-4. Open application by scanning the given QR code from your phone
+4. Open Sanctuary through Expo Go by scanning the given QR code from your phone
 
 
 ## Team

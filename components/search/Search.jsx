@@ -55,9 +55,8 @@ const Search = ({ navigation }) => {
         onCancel={() => console.log('cancelling')}
         value={query}
       />
-      {filteredSpaces.length !== 0 &&
-        <SpacesList filteredSpaces={filteredSpaces} navigation={navigation} />
-      }
+      {filteredSpaces.length !== 0
+        && <SpacesList filteredSpaces={filteredSpaces} navigation={navigation} />}
       <Button
         buttonStyle={{
           borderRadius: 30,

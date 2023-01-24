@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
-import { colorTheme } from './colorTheme';
 import { colorTheme } from './colorTheme';
 
 const storeData = async (value) => {
@@ -69,13 +67,6 @@ const NotificationListing = (props) => {
         <Text style={styles.copyBold}>{spaceName} </Text>
         <Text style={styles.copy}>space has been reported by </Text>
         <Text style={styles.copyBold}>{reportedBy}.</Text>
-    <View style={styles.notificationContainer}>
-      <View style={styles.copyContainer}>
-        <Text style={styles.copyBold}>{name} </Text>
-        <Text style={styles.copy}>{post} in the </Text>
-        <Text style={styles.copyBold}>{spaceName} </Text>
-        <Text style={styles.copy}>space has been reported by </Text>
-        <Text style={styles.copyBold}>{reportedBy}.</Text>
       </View>
 
       <View style={styles.buttonView}>
@@ -91,7 +82,6 @@ const NotificationListing = (props) => {
               />
             )}
         </View>
-        <View style={styles.buttonContainer}>
         <View style={styles.buttonContainer}>
           <Button
             size="sm"

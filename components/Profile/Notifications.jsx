@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
-import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colorTheme } from './colorTheme';
 import NotificationListing from './NotificationListing';

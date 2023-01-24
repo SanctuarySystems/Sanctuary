@@ -16,12 +16,12 @@ const SpacesList = ({ searchTerm, currentTab, spaceArray, currentUser, navigatio
         { spaceArray.length === 0
           && (
             <Text style={styles.emptyState}>
-              You have not {currentTab} any spaces!
+              You have not currently {currentTab} any spaces!
             </Text>
           )}
         { spaceArray.length > 0
           && <FlatList
-            // nestedScrollEnabled
+            nestedScrollEnabled
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

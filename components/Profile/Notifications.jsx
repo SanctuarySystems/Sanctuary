@@ -73,7 +73,7 @@ const Notifications = ({ route, navigation }) => {
         { reportedConfessions.length > 0
           && reportedPosts.map((confession) => {
             if (reportedConfessions.indexOf(confession.confession_id) > -1) {
-              confession.comments.map((comment) => {
+              return confession.comments.map((comment) => {
                 // if (reportedCookie) {
                 //   for (let i = 0; i < reportedCookie.length; i += 1) {
                 //     if (reportedCookie[i].reportedUser === comment.created_by

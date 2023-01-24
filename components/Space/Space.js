@@ -5,8 +5,9 @@ import ConfessionList from './../Confession/ConfessionList.js';
 import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
-import MemberInfo from './MemberInfo.js';
 import { useFonts } from 'expo-font';
+import MemberInfo from './MemberInfo.js';
+import SpaceHeader from './SpaceHeader.js';
 
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
@@ -150,7 +151,8 @@ const Space = ({route, navigation}) => {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
-      <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%', paddingTop: '2%'}}>
+      <SpaceHeader joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
+      {/* <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%', paddingTop: '2%'}}>
         <View>
           <Text style={{fontSize: '20%', fontFamily:'FuzzyBubblesBold'}}>{route.params.space_name}</Text>
           <Text style={{color: 'rgba(0,0,0,0.7)'}}>{numMembers} {'Member(s)'}</Text>
@@ -164,7 +166,7 @@ const Space = ({route, navigation}) => {
         {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
           <Text style={styles.leavejoinText}>edit</Text>
         </TouchableOpacity>}
-      </View>
+      </View> */}
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
         <Text style={{}}>{spaceDescription} </Text>
       </View>

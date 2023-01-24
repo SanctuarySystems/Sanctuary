@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 15,
-    backgroundColor: `${colorTheme.orange}`,
+    backgroundColor: colorTheme.orange,
     padding: 18,
   },
   listingContainer: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   adminFlag: {
     left: 7,
     top: 2,
-    color: `${colorTheme.beige}`,
+    color: colorTheme.beige,
     fontWeight: 'bold',
   },
   button: {

@@ -18,9 +18,10 @@ const Profile = ({ navigation }) => {
   const [created, setCreated] = React.useState([]); // created tabs to pass down to notifications
   const [searchTerm, setSearchTerm] = React.useState(''); // search term
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
-  const [notifsCount, setNotifsCount] = React.useState(null); // # of unread notifications
+  const [notifsNum, setNotifsNum] = React.useState(0); // total notifs
+  const [notifsRead, setNofitsRead] = React.useState(0); // total notifs read
+
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
-  const [viewedCookieCount, setViewedCookieCount] = React.useState(null); // viewedCookieCount stored via async storage
 
   let refreshNotifications;
 
@@ -35,15 +36,17 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
+      setNofitsRead(userData.reported_read);
     });
 
     getConfessions(username, (data) => {
       setReportedPosts(data);
-      setNotifsCount(data.length);
+
+      setNotifsNum(countReported(data));
     });
 
     // initialize and set cookies for notifications every 30k seconds
-    // initializeCookies();
+    initializeCookies();
     refreshCookies();
   }, []);
 
@@ -60,16 +63,10 @@ const Profile = ({ navigation }) => {
     }, 1000);
   }, [refreshing]);
 
-  React.useEffect(() => {
-    clearInterval(refreshNotifications);
-    refreshCookies();
-  }, [viewedCookieCount]);
-
   // grab viewedCookies for viewed notifications every 30k seconds
   const refreshCookies = () => {
     refreshNotifications = setInterval(() => {
       getCookies(setViewedCookies);
-      getCookieCount(setViewedCookieCount);
     }, 30000);
   };
 
@@ -100,18 +97,16 @@ const Profile = ({ navigation }) => {
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               viewedCookies,
-              notifsCount,
-              setNotifsCount,
+              notifsNum,
+              setNofitsRead,
               reportedPosts,
-              viewedCookieCount,
-              setViewedCookieCount,
             })}
           />
-          {notifsCount > viewedCookieCount
+          { notifsNum > notifsRead
             && (
               <Badge
                 status="error"
-                value={notifsCount}
+                value={notifsNum - notifsRead}
                 containerStyle={{ position: 'absolute', top: 6, right: 122 }}
               />
             )}
@@ -220,23 +215,23 @@ const Profile = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   profileView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 5,
     height: 50,
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
   },
   header: {
-    color: `${colorTheme.blue}`,
+    color: colorTheme.blue,
     fontWeight: 'bold',
   },
   userView: {
     flexDirection: 'column',
     height: 220,
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
   },
   avatarView: {
     flex: 0.7,
@@ -258,16 +253,16 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: `${colorTheme.darkblue}`,
+    color: colorTheme.darkblue,
     fontFamily: "FuzzyBubblesBold",
   },
   tabsView: {
     height: 40,
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
   },
   tabsContainer: {
     height: 40,
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
@@ -294,13 +289,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   searchContainer: {
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
   },
   searchInput: {
-    backgroundColor: `${colorTheme.yellow}`,
+    backgroundColor: colorTheme.yellow,
   },
   searchCancel: {
-    color: `${colorTheme.blue}`,
+    color: colorTheme.blue,
   }
 });
 
@@ -342,5 +337,19 @@ const getCookieCount = async (cb) => {
     console.log('get cookie count error', e);
   }
 };
+
+const countReported = (data) => {
+  let counter = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    counter += 1;
+
+    console.log('comments', data[i].comments);
+    if (data[i].comments.length > 0) {
+      counter += 1;
+    }
+  }
+  return counter;
+}
 
 export default Profile;

@@ -25,14 +25,13 @@ const NotificationListing = (props) => {
     confessionId,
     navigation,
     reportedCookie,
-    notifsCount,
-    // setNotifsCount,
-    // viewedCookieCount,
-    // setViewedCookieCount,
   } = props;
+
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
+
+  console.log(commentId, confessionId);
 
   const [fontsLoaded] = useFonts({
     FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
@@ -49,15 +48,13 @@ const NotificationListing = (props) => {
           reportedUser: reported,
           confessionId,
           commentId,
-          confessionId,
-          commentId,
         });
         storeData(temporaryCookie);
       })
       .catch((err) => console.log('axios error in profile', err));
   };
 
-  if (!fontsLoaded || !notifsCount) return;
+  if (!fontsLoaded) return;
 
   return (
     <View style={styles.notificationContainer}>
@@ -104,7 +101,8 @@ const styles = StyleSheet.create({
   notificationContainer: {
     borderRadius: 15,
     padding: 10,
-    backgroundColor: `${colorTheme.orange}`,
+    backgroundColor: colorTheme.orange,
+    marginBottom: 15,
   },
   copyContainer: {
     flexDirection: 'row',
@@ -112,7 +110,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   copyBold: {
-    color: `${colorTheme.beige}`,
+    color: colorTheme.beige,
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: "FuzzyBubblesBold",
@@ -131,7 +129,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    backgroundColor: `${colorTheme.blue}`,
+    backgroundColor: colorTheme.blue,
     padding: 8,
   },
   buttonInactive: {

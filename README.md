@@ -57,19 +57,15 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Spaces
 
-**User Spaces List**
+**Spaces List**
 
-<details><summary>Details</summary>
   
 - Renders links to spaces the user has created and joined.
 - Used Dimensions object to incorporate window-width into styling.
 - Used RefreshControl to refetch spaces from the database.
 
-</details>
 
-### Space
-
-<details><summary>Admin View</summary>
+**Admin View**
   
 - Edit Modal: allows user to change space description and guidelines
 - Members Tab: allows user to view list of users who've joined the space with member presence information
@@ -77,15 +73,13 @@ Comments display the username, the message, how long ago it was posted, an optio
   - Number of times the user was reported by another user
   - Number of times the user reported another user
 - Member Ban: Admin can ban members, and remove all of the user's comments and confessions from the space and prevent the banned user from accessing the space.
-</details>
 
-<details><summary>General User View</summary>
+**General User View**
   
 - Leave/Join: Users can leave and join spaces. Joining a space updates user’s home feed with confessions from the space and makes space more easily accessible in the Spaces Tab Screen
 - Write Confession Modal: Users can create confessions.
 - Feed Tab: renders confession module with a refresh control to refetch confessions from the database.
 
-</details>
 
 
 ## Profile 

@@ -1,54 +1,50 @@
 import React from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { colorTheme } from './colorTheme';
 import NotificationListing from './NotificationListing';
 
 const Notifications = ({ route, navigation }) => {
-  const { username, reportedCookie, notifsCount, setNotifsCount, reportedPosts,
-    viewedCookieCount, setViewedCookieCount } = route.params;
+  const {
+    username,
+    reportedCookie,
+    notifsNum,
+    setNofitsRead,
+    reportedPosts,
+  } = route.params;
+
+  const reportedConfessions = [];
 
   React.useEffect(() => {
+    setNofitsRead(notifsNum);
+
     updateCookies(reportedPosts);
-    console.log('set cookies for viewed notif count');
-
-    const getCookieCount = async () => {
-      try {
-        const count = await AsyncStorage.getItem('viewedCount');
-        console.log('getting cookie count in notifs', count);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    setViewedCookieCount(reportedPosts.length);
-
-    getCookieCount();
   }, []);
 
   if (reportedPosts.length === 0) {
-    return <Text style={{ alignSelf: 'center', padding: 20 }}>You are all caught up!</Text>;
+    return <Text style={styles.emptyState}>You are all caught up!</Text>;
   }
 
   return (
     <SafeAreaView>
-      <View style={{ padding: 15, backgroundColor: `${colorTheme.beige}`, height: '100%' }}>
+      <View style={styles.notificationsView}>
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
 
-            console.log('confession', confession);
-
             if (confession.reported.length > 0) {
-              if (reportedCookie) {
-                for (let i = 0; i < reportedCookie.length; i += 1) {
-                  console.log('reported cookie', reportedCookie[i]);
-                  if (reportedCookie[i].reportedUser === confession.created_by &&
-                    reportedCookie[i].confessionId === confession.confession_id &&
-                    !reportedCookie[i].commentId) {
-                    console.log('found banned confession');
-                    return;
-                  }
-                }
+              // if (reportedCookie) {
+              //   for (let i = 0; i < reportedCookie.length; i += 1) {
+              //     if (reportedCookie[i].reportedUser === confession.created_by
+              //       && reportedCookie[i].confessionId === confession.confession_id
+              //       && !reportedCookie[i].commentId) {
+              //       return;
+              //     }
+              //   }
+              // }
+
+              if (confession.comments.length > 0) {
+                reportedConfessions.push(confession.confession_id);
               }
 
               return (
@@ -61,25 +57,24 @@ const Notifications = ({ route, navigation }) => {
                   spaceName={confession.space_name}
                   confessionId={confession.confession_id}
                   reportedCookie={reportedCookie}
-                  notifsCount={notifsCount}
-                  setNotifsCount={setNotifsCount}
-                  viewedCookieCount={viewedCookieCount}
-                  setViewedCookieCount={setViewedCookieCount}
                 />
               );
             }
-            if (confession.comments.length > 0) {
-              confession.comments.map((comment) => {
-                if (reportedCookie) {
-                  for (let i = 0; i < reportedCookie.length; i += 1) {
-                    if (reportedCookie[i].reportedUser === comment.created_by &&
-                      reportedCookie[i].confessionId === confession.confession_id &&
-                      reportedCookie[i].commentId === comment.comment_id) {
-                      console.log('found banned comment');
-                      return;
-                    }
-                  }
-                }
+          })
+        }
+        { reportedConfessions.length > 0
+          && reportedPosts.map((confession) => {
+            if (reportedConfessions.indexOf(confession.confession_id) > -1) {
+              return confession.comments.map((comment) => {
+                // if (reportedCookie) {
+                //   for (let i = 0; i < reportedCookie.length; i += 1) {
+                //     if (reportedCookie[i].reportedUser === comment.created_by
+                //       && reportedCookie[i].confessionId === confession.confession_id
+                //       && reportedCookie[i].commentId === comment.comment_id) {
+                //       return;
+                //     }
+                //   }
+                // }
 
                 return (
                   <NotificationListing
@@ -92,35 +87,34 @@ const Notifications = ({ route, navigation }) => {
                     commentId={comment.comment_id}
                     confessionId={confession.confession_id}
                     reportedCookie={reportedCookie}
-                    notifsCount={notifsCount}
-                    setNotifsCount={setNotifsCount}
-                    viewedCookieCount={viewedCookieCount}
-                    setViewedCookieCount={setViewedCookieCount}
                   />
                 );
               });
             }
-          })
-        }
+          })}
       </View>
     </SafeAreaView>
   );
 };
 
-export default Notifications;
-
 const updateCookies = async (reportedPosts) => {
   try {
     await AsyncStorage.setItem('viewedCount', reportedPosts.length.toString());
-    console.log('set cookie to reportedPosts.length.toString()', reportedPosts.length.toString());
   } catch (e) {
-    console.log(e);
+    console.log('updating cookie error: ', e);
   }
 };
 
-const colorTheme = {
-  beige: '#FEF1E6',
-  yellow: '#F9D5A7',
-  orange: '#FFB085',
-  blue: '#90AACB',
-};
+const styles = StyleSheet.create({
+  emptyState: {
+    alignSelf: 'center',
+    padding: 20,
+  },
+  notificationsView: {
+    padding: 15,
+    backgroundColor: colorTheme.beige,
+    height: '100%',
+  },
+});
+
+export default Notifications;

@@ -8,7 +8,8 @@ import axios from 'axios';
 import { useFonts } from 'expo-font';
 import MemberInfo from './MemberInfo.js';
 import SpaceHeader from './SpaceHeader.js';
-import SpaceTabs from './SpaceTabs.js'
+import SpaceTabs from './SpaceTabs.js';
+import SpaceWindow from './SpaceWindow.js';
 
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
@@ -153,29 +154,11 @@ const Space = ({route, navigation}) => {
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
       <SpaceHeader leavejoin={leavejoin} isAdmin={isAdmin} joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
-      <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
+      <View style={styles.spaceDescription} >
         <Text style={{}}>{spaceDescription} </Text>
       </View>
       <SpaceTabs isAdmin={isAdmin} tab={tab} setTab={setTab}/>
-      <View style={{flex: 8, }}>
-        {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
-          <ScrollView showsVerticalScrollIndicator={false} refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            <ConfessionList allConfessions={confessions}isRoom={true} isHome={false}nav={navigation} />
-          </ScrollView>
-        </View>}
-        {tab === 1 && <View style={{ flex: 8, paddingTop: 9}}><Text style={{fontSize:18, padding:4, opacity: 0.7, fontFamily: 'FuzzyBubblesRegular'}}>{spaceGuidelines}</Text></View>}
-        {tab === 2 && <View style={{ flex: 8, paddingTop: 9, flexDirection:'column', alignItems: 'center', width:'100%'}} >
-          <ScrollView style={{paddingTop:'4%'}}>
-          {spaceMembers.map((member) => <MemberInfo isUser={member===route.params.username}banUser={banUser} space_name={route.params.space_name} username={member}/>)}
-          </ScrollView>
-          </View>}
-        {tab === 0 && <View style={{flex: 0.5, alignSelf:'flex-end', marginBottom:'2%', paddingRight: '3%', marginTop: '1%'}}>
-          <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-            <Icon name="md-create-outline" size='35%' color='rgba(49, 94, 153, 1)'/>
-          </TouchableOpacity>
-        </View>}
-      </View>
+      <SpaceWindow tab={tab} onRefresh={onRefresh} refreshing={refreshing} confessions={confessions} spaceGuidelines={spaceGuidelines} navigation={navigation} username={route.params.username} banUser={banUser} space_name={route.params.space_name} setModalVisible={setModalVisible} spaceMembers={spaceMembers}/>
 
       <Modal visible={modalVisible} animationType='slide' style={{flex:1, backgroundColor:'#fef1e6'}}>
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
@@ -238,6 +221,12 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '98%'
+  },
+  spaceDescription: {
+    flex: 0.5,
+    marginLeft:'1%',
+    marginRight:'1%',
+    paddingTop: '1%'
   },
   leavejoinContainer:{
     // backgroundColor: "#009688",

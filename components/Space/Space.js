@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useFonts } from 'expo-font';
 import MemberInfo from './MemberInfo.js';
 import SpaceHeader from './SpaceHeader.js';
+import SpaceTabs from './SpaceTabs.js'
 
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
@@ -151,33 +152,12 @@ const Space = ({route, navigation}) => {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
-      <SpaceHeader joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
-      {/* <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'space-between', marginLeft:'1%', marginRight:'1%', paddingTop: '2%'}}>
-        <View>
-          <Text style={{fontSize: '20%', fontFamily:'FuzzyBubblesBold'}}>{route.params.space_name}</Text>
-          <Text style={{color: 'rgba(0,0,0,0.7)'}}>{numMembers} {'Member(s)'}</Text>
-        </View>
-        {(leavejoin===0 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => joinSpace(route.params.username, route.params.space_name)}>
-          <Text style={styles.leavejoinText}>join</Text>
-        </TouchableOpacity>}
-        {(leavejoin===1 && !isAdmin) && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => leaveSpace(route.params.username, route.params.space_name)}>
-          <Text style={styles.leavejoinText}>leave</Text>
-        </TouchableOpacity>}
-        {isAdmin && <TouchableOpacity style={styles.leavejoinContainer} onPress={() => {setEditMode(true)}}>
-          <Text style={styles.leavejoinText}>edit</Text>
-        </TouchableOpacity>}
-      </View> */}
+      <SpaceHeader leavejoin={leavejoin} isAdmin={isAdmin} joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
       <View style={{flex: 0.5, marginLeft:'1%', marginRight:'1%', paddingTop: '1%'}} >
         <Text style={{}}>{spaceDescription} </Text>
       </View>
-      <View style={{flex: 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <View style={[tab !== 0? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 0? styles.unselectedTab: styles.selectedTab]} onPress={() => {setTab(0)}}>Feed</Text></View>
-        <View style={[tab !== 1? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 1? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(1)}}>Guidelines</Text></View>
-        {isAdmin && <View style={[tab !== 2? styles.unselectedTabView: styles.selectedTabView]}><Text style={[tab !== 2? styles.unselectedTab: styles.selectedTab]}onPress={() => {setTab(2)}}>Members</Text></View>}
-      </View >
-      {/* {tab === 0 && <View style={{ flex: 8, backgroundColor: 'red'}} />} */}
+      <SpaceTabs isAdmin={isAdmin} tab={tab} setTab={setTab}/>
       <View style={{flex: 8, }}>
-
         {tab === 0 && <View style={{ flex: 7.5, paddingTop: 9}} >
           <ScrollView showsVerticalScrollIndicator={false} refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
@@ -258,26 +238,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '98%'
-  },
-  selectedTab: {
-    fontSize:'18%',
-    textDecorationThickness: '2%',
-    color: 'rgba(49, 94, 153, 1)',
-    fontWeight: 'bold',
-  },
-  selectedTabView: {
-    borderBottomWidth: '3px',
-    borderBottomColor: 'rgba(49, 94, 153, 1)',
-    paddingBottom: 1,
-  },
-  unselectedTab: {
-    fontSize:'18%',
-    color: 'rgba(0,0,0,0.5)',
-
-  },
-  unselectedTabView: {
-    color: 'rgba(0,0,0,0.5)',
-    paddingBottom: 1,
   },
   leavejoinContainer:{
     // backgroundColor: "#009688",

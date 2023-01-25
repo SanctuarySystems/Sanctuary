@@ -41,18 +41,18 @@ const Rooms = ({navigation}) => {
     axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
       .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
       .catch((err) => console.log(err));
-  }, []);
+  }, [username, refreshing]);
 
-  React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
-      .catch((err) => console.log(err));
-  }, [refreshing]);
-  React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
-      .catch((err) => console.log(err));
-  }, [username]);
+  // React.useEffect(() => {
+  //   axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+  //     .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+  //     .catch((err) => console.log(err));
+  // }, [refreshing]);
+  // React.useEffect(() => {
+  //   axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+  //     .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+  //     .catch((err) => console.log(err));
+  // }, [username]);
 
   if (!fontsLoaded) {
     return (

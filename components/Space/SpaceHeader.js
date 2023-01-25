@@ -1,14 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, Modal, RefreshControl, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
-import Comments from './../Comments/Comments.js';
-import ConfessionList from './../Confession/ConfessionList.js';
-import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
-import MemberInfo from './MemberInfo.js';
 import { useFonts } from 'expo-font';
+import GlobalStyles from './../GlobalStyles.js';
 
-const SpaceHeader = ({joinSpace, leaveSpace, setEditMode, username, space_name, numMembers }) => {
+const SpaceHeader = ({joinSpace, leaveSpace, setEditMode, username, space_name, numMembers, leavejoin, isAdmin }) => {
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -40,6 +37,7 @@ const SpaceHeader = ({joinSpace, leaveSpace, setEditMode, username, space_name, 
         <Text style={styles.leavejoinText}>edit</Text>
       </TouchableOpacity>}
     </View>
+
   )
 }
 

@@ -47,6 +47,13 @@ The authentication component verifies new and existing users. Any user may
 
 Comments display the username, the message, how long ago it was posted, an options button that slides up a modal with additional features such as reporting, and the current vote count with the option to upvote or downvote a comment.
 
+**Comments Page Features**
+* Comments display information such as username, body text, how long it was posted, and vote count
+  * Time ago posted is updated live using the 'moment' module
+* Ability to upvote or downvote a comment once
+  * Comments under a confession are sorted by vote count from greatest to least, top to bottom
+* Comments have an options button that slides up a modal with additional features such as reporting
+  * Reported comments will send notifications to the owner of the space who will be able to view the comment and/or ban the user.
 * Utilized lazy loading with Flat List to improve app performance and increase comment load times
 
 
@@ -157,3 +164,5 @@ The account management component enables users to manage their existing account.
   * https://www.linkedin.com/in/sai-vemireddy
   * https://github.com/svemi
 * **Justin Chong**
+  * https://www.linkedin.com/in/justinjchong/
+  * https://github.com/justinjchong

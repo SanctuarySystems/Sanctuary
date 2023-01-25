@@ -90,7 +90,9 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Profile 
 
-**Profile Page Features**
+https://user-images.githubusercontent.com/37416800/214449270-e43a9e6b-08c8-496b-a32f-b414bc1bc42c.mp4
+
+From the **profile page**, users have the..
 * Ability to view account details (eg username, avatar)
 * Ability to view spaces the user has joined or created
   * If the user is viewing Joined Spaces, they will be able to see which spaces they are an admin for
@@ -103,8 +105,9 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Notifications
 
-**Notification Features**
-* Note: Notifications are accessible only from Profile page
+*Note: Notifications are accessible only from Profile page*
+
+From the **notification features**, users have the..
 * Ability to view the following types of notifications:
   * When the current user’s comment or confession has been reported by another user
   * When a comment or confession has been reported by a user within a space of which the current user is an admin of

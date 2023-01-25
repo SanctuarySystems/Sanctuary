@@ -31,12 +31,17 @@ const NotificationListing = (props) => {
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
 
+
   console.log(commentId, confessionId);
 
   const [fontsLoaded] = useFonts({
     FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
+
+  React.useEffect(() => {
+    markRead(confessionId, commentId);
+  }, []);
 
   const handleBan = () => {
     setIsReported(true);
@@ -51,7 +56,7 @@ const NotificationListing = (props) => {
         });
         storeData(temporaryCookie);
       })
-      .catch((err) => console.log('axios error in profile', err));
+      .catch((err) => console.log('ban endpoint error in profile', err));
   };
 
   if (!fontsLoaded) return;
@@ -142,5 +147,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+const markRead = (confessionId, commentId) => {
+  if (commentId) {
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/reported_read`)
+      .catch((err) => console.log('mark comment read error in profile', err));
+  } else {
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/reported_read`)
+      .catch((err) => console.log('mark confession read error in profile', err));
+  }
+};
 
 export default NotificationListing;

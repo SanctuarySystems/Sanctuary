@@ -36,7 +36,7 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
-      setNofitsRead(userData.reported_read);
+      //setNofitsRead(userData.reported_read);
     });
 
     getConfessions(username, (data) => {
@@ -329,14 +329,14 @@ const getCookies = async (cb) => {
   }
 };
 
-const getCookieCount = async (cb) => {
-  try {
-    const count = await AsyncStorage.getItem('viewedCount');
-    count ? cb(Number(count)) : cb(0);
-  } catch (e) {
-    console.log('get cookie count error', e);
-  }
-};
+// const getCookieCount = async (cb) => {
+//   try {
+//     const count = await AsyncStorage.getItem('viewedCount');
+//     count ? cb(Number(count)) : cb(0);
+//   } catch (e) {
+//     console.log('get cookie count error', e);
+//   }
+// };
 
 const countReported = (data) => {
   let counter = 0;

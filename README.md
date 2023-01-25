@@ -21,6 +21,10 @@ This application is written in JavaScript and uses:
 * Firebase
 * Axios
 
+## UX
+
+See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit)
+
 ## Authentication
 
 	
@@ -86,10 +90,7 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Profile 
 
-
-Below highlights the features of each page under Profile.
-
-**Profile Page**
+**Profile Page Features**
 * Ability to view account details (eg username, avatar)
 * Ability to view spaces the user has joined or created
   * If the user is viewing Joined Spaces, they will be able to see which spaces they are an admin for
@@ -100,7 +101,10 @@ Below highlights the features of each page under Profile.
 * Ability to log out of the account
 * Ability to see unread notifications and access their notifications page⋅⋅
 
-**Notifications**
+## Notifications
+
+**Notification Features**
+* Note: Notifications are accessible only from Profile page
 * Ability to view the following types of notifications:
   * When the current user’s comment or confession has been reported by another user
   * When a comment or confession has been reported by a user within a space of which the current user is an admin of

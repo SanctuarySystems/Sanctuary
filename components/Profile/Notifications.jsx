@@ -8,18 +8,17 @@ const Notifications = ({ route, navigation }) => {
   const {
     username,
     reportedCookie,
-    notifsCount,
-    setNotifsCount,
+    notifsNum,
+    setNofitsRead,
     reportedPosts,
-    viewedCookieCount,
-    setViewedCookieCount,
   } = route.params;
 
   const reportedConfessions = [];
 
   React.useEffect(() => {
+    setNofitsRead(notifsNum);
+
     updateCookies(reportedPosts);
-    setViewedCookieCount(reportedPosts.length);
   }, []);
 
   if (reportedPosts.length === 0) {
@@ -32,9 +31,6 @@ const Notifications = ({ route, navigation }) => {
         {
           reportedPosts.map((confession) => {
             if (!confession) return;
-
-            console.log('reported confession found', confession);
-            console.log('notif confession: ', confession.confession_id);
 
             if (confession.reported.length > 0) {
               // if (reportedCookie) {
@@ -61,10 +57,6 @@ const Notifications = ({ route, navigation }) => {
                   spaceName={confession.space_name}
                   confessionId={confession.confession_id}
                   reportedCookie={reportedCookie}
-                  notifsCount={notifsCount}
-                  setNotifsCount={setNotifsCount}
-                  viewedCookieCount={viewedCookieCount}
-                  setViewedCookieCount={setViewedCookieCount}
                 />
               );
             }
@@ -83,11 +75,6 @@ const Notifications = ({ route, navigation }) => {
                 //     }
                 //   }
                 // }
-                console.log('reported comment found', comment);
-                console.log('notif comment', comment.comment_id);
-                console.log('comment.created_by', comment.created_by);
-                console.log('comment.reported[0]', comment.reported[0]);
-                // console.log(comment.comment_id, confession.confession_id);
 
                 return (
                   <NotificationListing
@@ -100,10 +87,6 @@ const Notifications = ({ route, navigation }) => {
                     commentId={comment.comment_id}
                     confessionId={confession.confession_id}
                     reportedCookie={reportedCookie}
-                    notifsCount={notifsCount}
-                    setNotifsCount={setNotifsCount}
-                    viewedCookieCount={viewedCookieCount}
-                    setViewedCookieCount={setViewedCookieCount}
                   />
                 );
               });
@@ -129,7 +112,7 @@ const styles = StyleSheet.create({
   },
   notificationsView: {
     padding: 15,
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
     height: '100%',
   },
 });

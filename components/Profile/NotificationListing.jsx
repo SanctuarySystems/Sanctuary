@@ -25,19 +25,23 @@ const NotificationListing = (props) => {
     confessionId,
     navigation,
     reportedCookie,
-    notifsCount,
-    // setNotifsCount,
-    // viewedCookieCount,
-    // setViewedCookieCount,
   } = props;
+
   const [isReported, setIsReported] = React.useState(false);
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
+
+
+  console.log(commentId, confessionId);
 
   const [fontsLoaded] = useFonts({
     FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
+
+  React.useEffect(() => {
+    markRead(confessionId, commentId);
+  }, []);
 
   const handleBan = () => {
     setIsReported(true);
@@ -49,15 +53,13 @@ const NotificationListing = (props) => {
           reportedUser: reported,
           confessionId,
           commentId,
-          confessionId,
-          commentId,
         });
         storeData(temporaryCookie);
       })
-      .catch((err) => console.log('axios error in profile', err));
+      .catch((err) => console.log('ban endpoint error in profile', err));
   };
 
-  if (!fontsLoaded || !notifsCount) return;
+  if (!fontsLoaded) return;
 
   return (
     <View style={styles.notificationContainer}>
@@ -104,7 +106,8 @@ const styles = StyleSheet.create({
   notificationContainer: {
     borderRadius: 15,
     padding: 10,
-    backgroundColor: `${colorTheme.orange}`,
+    backgroundColor: colorTheme.orange,
+    marginBottom: 15,
   },
   copyContainer: {
     flexDirection: 'row',
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   copyBold: {
-    color: `${colorTheme.beige}`,
+    color: colorTheme.beige,
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: "FuzzyBubblesBold",
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    backgroundColor: `${colorTheme.blue}`,
+    backgroundColor: colorTheme.blue,
     padding: 8,
   },
   buttonInactive: {
@@ -144,5 +147,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+const markRead = (confessionId, commentId) => {
+  if (commentId) {
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/reported_read`)
+      .catch((err) => console.log('mark comment read error in profile', err));
+  } else {
+    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/reported_read`)
+      .catch((err) => console.log('mark confession read error in profile', err));
+  }
+};
 
 export default NotificationListing;

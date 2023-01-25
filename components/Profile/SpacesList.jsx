@@ -76,11 +76,12 @@ const SpacesList = ({ searchTerm, currentTab, spaceArray, currentUser, navigatio
 
 const styles = StyleSheet.create({
   listView: {
-    backgroundColor: `${colorTheme.beige}`,
+    backgroundColor: colorTheme.beige,
     height: '100%',
   },
   listContainer: {
     height: '100%',
+    padding: 10,
   },
   emptyState: {
     alignSelf: 'center',

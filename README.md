@@ -151,6 +151,8 @@ The account management component enables users to manage their existing account.
   * https://www.linkedin.com/in/chadfusco
   * https://github.com/ChadFusco
 * **Joseph Soto - UI Owner**
+  * https://www.linkedin.com/in/joseph-soto66/
+  * https://github.com/sotojn
 * **Kimberly Cheung**
   * https://www.linkedin.com/in/kimberlywycheung
   * https://github.com/kimberlywycheung

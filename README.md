@@ -23,7 +23,7 @@ This application is written in JavaScript and uses:
 
 ## UX
 
-See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit)
+See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit?usp=sharing)
 
 ## Authentication
 

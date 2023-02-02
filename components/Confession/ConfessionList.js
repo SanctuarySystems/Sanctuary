@@ -206,8 +206,9 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 22,
+    // fontWeight: 'bold',
+    fontFamily: 'FuzzyBubblesRegular',
     color: 'rgba(27, 52, 83, 1)',
 
   },

@@ -77,7 +77,7 @@ const SearchStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
-      <Stack.Screen name="My Space" component={Space} />
+      <Stack.Screen name="Space" component={Space} />
     </Stack.Navigator>
   );
 };

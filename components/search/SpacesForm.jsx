@@ -4,6 +4,7 @@ import { Button, Input } from '@rneui/themed';
 import axios from "axios";
 import { UsernameContext } from "../../App.js";
 import { useFonts } from 'expo-font';
+import { StackActions } from '@react-navigation/native';
 
 const SpacesForm = ({ navigation }) => {
   const { username } = useContext(UsernameContext);
@@ -29,14 +30,20 @@ const SpacesForm = ({ navigation }) => {
       const allGuidelines = guidelines.split(', ');
       obj.guidelines = allGuidelines;
 
+
+
       axios.post(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces`, obj)
         .then((response) => {
           // console.log(response);
-          navigation.navigate('Space', {
+          setSpaceName('');
+          setDescription('');
+          setGuidelines('');
+          navigation.dispatch(
+            StackActions.replace('Space', {
             space_name: spaceName,
             isAdmin: true,
             username,
-          });
+          }));
         })
         .catch((err) => {
           console.log(err);

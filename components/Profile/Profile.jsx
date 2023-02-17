@@ -8,6 +8,7 @@ import { UsernameContext } from '../../App';
 import { colorTheme } from './colorTheme';
 import { images } from './images';
 import SpacesList from './SpacesList';
+import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ({ navigation }) => {
   const { username } = React.useContext(UsernameContext); // username for get user call
@@ -22,6 +23,8 @@ const Profile = ({ navigation }) => {
   const [notifsRead, setNofitsRead] = React.useState(0); // total notifs read
 
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
+
+  const isFocused = useIsFocused(); // react hook for when tab is selected
 
   let refreshNotifications;
 
@@ -48,7 +51,7 @@ const Profile = ({ navigation }) => {
     // initialize and set cookies for notifications every 30k seconds
     initializeCookies();
     refreshCookies();
-  }, []);
+  }, [isFocused]);
 
   React.useEffect(() => {
     // update user data

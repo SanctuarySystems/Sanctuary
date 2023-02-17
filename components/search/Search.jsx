@@ -3,11 +3,13 @@ import { StyleSheet, ScrollView, RefreshControl } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
+import { useIsFocused } from '@react-navigation/native';
 
 const Search = ({ navigation }) => {
   const [allSpaces, setAllSpaces] = useState([]);
   const [query, setQuery] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const isFocused = useIsFocused();
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -17,14 +19,14 @@ const Search = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=20`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=200`)
       .then((data) => {
         setAllSpaces(data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [refreshing]);
+  }, [refreshing, isFocused]);
 
   const filteredSpaces = allSpaces.filter((space) => {
     return space.space_name.toLowerCase().includes(query.toLowerCase());

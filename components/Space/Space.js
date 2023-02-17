@@ -118,7 +118,7 @@ const Space = ({route, navigation}) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200`)
+    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200&exact=true`)
     .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
   }, [refreshing]);
 

@@ -9,7 +9,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { setUsername } = useContext(UsernameContext);
+  const { setUsername, setUserToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -19,8 +19,10 @@ const LoginScreen = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       await signInWithEmailAndPassword(authentication, email, password);
-      // setUsername(authentication.currentUser.username);
-      await setUsername(authentication.currentUser.displayName);
+      const user = authentication.currentUser;
+      const idToken = await user.getIdToken();
+      await setUsername(user.displayName);
+      await setUserToken(idToken);
       navigation.navigate('Home Screen');
     } catch (error) {
       setErrorMessage("Incorrect email or password, please try again");

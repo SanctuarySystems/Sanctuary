@@ -15,7 +15,7 @@ const SignUpScreen = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [goodUsername, setGoodUsername] = useState(false);
-  const { setUsername } = useContext(UsernameContext);
+  const { setUsername, setUserToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -45,7 +45,11 @@ const SignUpScreen = ({ navigation }) => {
       const user = auth.currentUser;
       await updateProfile(user, { displayName: newUsername });
       await sendEmailVerification(user);
+      const idToken = await user.getIdToken();
       await setUsername(newUsername);
+      await setUserToken(idToken);
+
+
       navigation.navigate('Select Icon Screen');
     } catch (error) {
       setErrorMessage("All fields are required");

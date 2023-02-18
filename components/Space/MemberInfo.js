@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, Modal, Dimensions, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 import Comments from './../Comments/Comments.js';
 import ConfessionList from './../Confession/ConfessionList.js';
@@ -6,6 +6,7 @@ import GlobalStyles from './../GlobalStyles.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -14,6 +15,7 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   const [reports, setReports] = React.useState(0);
   const [confessions, setConfessions] = React.useState(0);
   const [banModal, setBanModal] = React.useState(false);
+  const { userToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -22,10 +24,10 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   });
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}&username=${username}`)
+    axios.get(`${apiUrl}/confessions?space_name=${space_name}&username=${username}`)
       .then((data) => setConfessions(data.data.length)).catch((err) => console.log(err));
 
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+    axios.get(`${apiUrl}/users/${username}`)
       .then((data) => {
         if (data.data.reported.filter((space)=> space.space_name === space_name).length > 0) {
           setReported(data.data.reported

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, Modal, RefreshControl, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 import Comments from './../Comments/Comments.js';
 import ConfessionList from './../Confession/ConfessionList.js';
@@ -10,6 +10,7 @@ import MemberInfo from './MemberInfo.js';
 import SpaceHeader from './SpaceHeader.js';
 import SpaceTabs from './SpaceTabs.js';
 import SpaceWindow from './SpaceWindow.js';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const Space = ({route, navigation}) => {
   const [tab, setTab] = React.useState(0);
@@ -28,6 +29,7 @@ const Space = ({route, navigation}) => {
   const [disableEdit, setDisableEdit] = React.useState(true);
   const [confessions, setConfessions] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const { userToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -45,21 +47,21 @@ const Space = ({route, navigation}) => {
 
   const banUser = (user_name, space_name) => {
     //wrong url for banning
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${user_name}/ban`)
+    axios.patch(`${apiUrl}/spaces/${space_name}/${user_name}/ban`)
     .then(() => {
-      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space_name}`)
+      axios.get(`${apiUrl}/spaces?space_name=${space_name}`)
       .then((data) => {
         setNumMembers(data.data[0].members.length);
         setSpaceMembers(data.data[0].members);
       }).catch((err) => console.log(err));
-      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200`)
+      axios.get(`${apiUrl}/confessions?space_name=${route.params.space_name}&count=200`)
       .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
 
     }).catch((err) => console.log(err));
   }
 
   const leaveSpace = (username, space_name) => {
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/remove`)
+    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/remove`)
       .then(() => {
         setLeaveJoin(0);
         setNumMembers(numMembers-1);
@@ -68,7 +70,7 @@ const Space = ({route, navigation}) => {
   }
 
   const joinSpace = (username, space_name) => {
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${space_name}/${username}/add`)
+    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/add`)
       .then(() => {
         setLeaveJoin(1);
         setNumMembers(numMembers+1);
@@ -77,9 +79,9 @@ const Space = ({route, navigation}) => {
   }
 
   const createConfession = (username, text, space_name) => {
-    axios.post(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions`, {created_by: username, confession: text, space_name: space_name })
+    axios.post(`${apiUrl}/confessions`, {created_by: username, confession: text, space_name: space_name })
       .then(() => {
-        axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space_name}&count=200`)
+        axios.get(`${apiUrl}/confessions?space_name=${space_name}&count=200`)
         .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
         setModalVisible(false);
       })
@@ -87,11 +89,11 @@ const Space = ({route, navigation}) => {
   }
 
   const updateSpaceDetails = (description, guidelines) => {
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${route.params.space_name}`, {description: description, guidelines: guidelines})
+    axios.patch(`${apiUrl}/spaces/${route.params.space_name}`, {description: description, guidelines: guidelines})
       .then(() => {
         setEditMode(false);
         setDisableEdit(true);
-        axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${route.params.space_name}`)
+        axios.get(`${apiUrl}/spaces?space_name=${route.params.space_name}`)
         .then((data) => {setSpaceDescription(data.data[0].description);
           setEditSpaceDescription(data.data[0].description);
           setSpaceGuidelines(data.data[0].guidelines.join('\n'));
@@ -101,7 +103,7 @@ const Space = ({route, navigation}) => {
   }
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${route.params.space_name}`)
+    axios.get(`${apiUrl}/spaces?space_name=${route.params.space_name}`)
       .then((data) => {setSpaceDescription(data.data[0].description);
         setEditSpaceDescription(data.data[0].description);
         setSpaceGuidelines(data.data[0].guidelines.join('\n'));
@@ -118,7 +120,7 @@ const Space = ({route, navigation}) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${route.params.space_name}&count=200&exact=true`)
+    axios.get(`${apiUrl}/confessions?space_name=${route.params.space_name}&count=200&exact=true`)
     .then((data) => {setConfessions(data.data)}).catch((err) => console.log(err));
   }, [refreshing]);
 

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
 import { colorTheme } from './colorTheme';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const SpacesListing = ({ space, currentUser, navigation }) => {
   const [spaceData, setSpaceData] = React.useState({});
+  const { userToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
@@ -14,7 +16,7 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
   });
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?space_name=${space}&exact=true`)
+    axios.get(`${apiUrl}/spaces?space_name=${space}&exact=true`)
       .then(({ data }) => {
         setSpaceData(data[0]);
       })

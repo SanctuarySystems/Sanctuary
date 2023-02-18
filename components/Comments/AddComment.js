@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Text, Keyboard } from 'react-native';
 import axios from 'axios';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const AddComment = ({ add, username, confessionId }) => {
   const [comment, setComment] = useState({ created_by: username, pops: 1, comment: '' });
+  const { userToken } = useContext(UsernameContext);
 
   const handlePress = () => {
     if (comment.comment.length !== 0) {
@@ -13,7 +15,7 @@ const AddComment = ({ add, username, confessionId }) => {
       Keyboard.dismiss();
     }
 
-    axios.post('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/comments', {
+    axios.post(`${apiUrl}/comments`, {
       confession_id: confessionId,
       created_by: username,
       comment: comment.comment,

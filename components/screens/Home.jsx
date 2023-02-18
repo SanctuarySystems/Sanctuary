@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { StyleSheet, RefreshControl, ScrollView } from "react-native";
-import { UsernameContext } from "../../App.js";
+import { UsernameContext, apiUrl } from '../../App.js';
 import ConfessionList from "../Confession/ConfessionList.js";
 
 const Home = ({ navigation }) => {
-  const { username } = useContext(UsernameContext);
+  const { username, userToken } = useContext(UsernameContext);
   const [allConfessions, setAllConfessions] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -19,7 +19,7 @@ const Home = ({ navigation }) => {
   const getConfessions = () => {
     if (username) {
       console.log(username);
-      axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
+      axios.get(`${apiUrl}/users/${username}`)
         .then((data) => {
           const allSpaces = data.data.spaces_joined;
           // console.log('i am allSpace: ', allSpaces);
@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
             const concatArray = [];
             return Promise.all(
               allSpaces.map(async (space) => {
-                await axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?space_name=${space}`)
+                await axios.get(`${apiUrl}/confessions?space_name=${space}`)
                   .then((result) => {
                     concatArray.push(result.data);
                   })

@@ -4,14 +4,14 @@ import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
-import { UsernameContext } from '../../App';
+import { UsernameContext, apiUrl } from '../../App.js';
 import { colorTheme } from './colorTheme';
 import { images } from './images';
 import SpacesList from './SpacesList';
 import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ({ navigation }) => {
-  const { username } = React.useContext(UsernameContext); // username for get user call
+  const { username, userToken } = React.useContext(UsernameContext); // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
@@ -303,13 +303,13 @@ const styles = StyleSheet.create({
 });
 
 const getUser = (name, cb) => {
-  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
+  axios.get(`${apiUrl}/users/${name}`)
     .then(({ data }) => cb(data))
     .catch((err) => console.log('axios error for /users in profile', err));
 };
 
 const getConfessions = (name, cb) => {
-  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${name}&reported=true`)
+  axios.get(`${apiUrl}/confessions?&space_creator=${name}&reported=true`)
     .then(({ data }) => cb(data))
     .catch((err) => console.log('axios error for /confessions in profile', err));
 };

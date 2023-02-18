@@ -5,14 +5,14 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, Modal, TouchableOpacity
 import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
-import { UsernameContext } from '../../App.js';
+import { UsernameContext, apiUrl } from '../../App.js';
 import { useFonts } from 'expo-font';
 import moment from 'moment';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 
 const Comments = ({ route }) => {
   const { confession_id, item, images } = route.params;
-  const { username } = useContext(UsernameContext);
+  const { username, userToken } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
 
   const [fontsLoaded] = useFonts({
@@ -22,7 +22,7 @@ const Comments = ({ route }) => {
   });
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confession_id}`)
+    axios.get(`${apiUrl}/confessions/${confession_id}`)
       .then((res) => {
         setConfession(res.data);
       })
@@ -42,7 +42,7 @@ const Comments = ({ route }) => {
 
   const handleReport = () => {
     setShowModal(false);
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/1/2/report/${username}`)
+    axios.patch(`${apiUrl}/confessions/1/2/report/${username}`)
       .catch((error) => console.log(error));
   };
 

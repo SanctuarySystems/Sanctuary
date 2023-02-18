@@ -15,7 +15,7 @@ const SignUpScreen = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [goodUsername, setGoodUsername] = useState(false);
-  const { username, setUsername } = useContext(UsernameContext);
+  const { setUsername } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),

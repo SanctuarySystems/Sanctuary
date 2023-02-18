@@ -16,14 +16,15 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [username, setUsername] = useState('');
+  const [userToken, setUserToken] = useState('');
 
   return (
     <NavigationContainer>
-      <UsernameContext.Provider value={{ username, setUsername }}>
+      <UsernameContext.Provider value={{ username, setUsername, userToken, setUserToken }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
-          <Stack.Screen name="Login Screen" component={LoginScreen} setUsername={setUsername} />
-          <Stack.Screen name="Sign Up Screen" component={SignUpScreen} setUsername={setUsername} />
+          <Stack.Screen name="Login Screen" component={LoginScreen} />
+          <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
           <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
           <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
           <Stack.Screen name="Forgot Password Screen" component={ForgotPasswordScreen} />

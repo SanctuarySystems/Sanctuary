@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, ScrollView, RefreshControl } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
 import { useIsFocused } from '@react-navigation/native';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const Search = ({ navigation }) => {
   const [allSpaces, setAllSpaces] = useState([]);
   const [query, setQuery] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const { userToken } = React.useContext(UsernameContext);
+
   const isFocused = useIsFocused();
 
   const onRefresh = React.useCallback(() => {
@@ -19,7 +22,9 @@ const Search = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=200`)
+    axios.get(`${apiUrl}/spaces?count=200`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((data) => {
         setAllSpaces(data.data);
       })

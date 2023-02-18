@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, Input } from '@rneui/themed';
 import axios from "axios";
-import { UsernameContext } from "../../App.js";
+import { UsernameContext, apiUrl } from '../../App.js';
 import { useFonts } from 'expo-font';
 import { StackActions } from '@react-navigation/native';
 
 const SpacesForm = ({ navigation }) => {
-  const { username } = useContext(UsernameContext);
+  const { username, userToken } = useContext(UsernameContext);
   const [spaceName, setSpaceName] = useState('');
   const [description, setDescription] = useState('');
   const [guidelines, setGuidelines] = useState('');
@@ -30,9 +30,9 @@ const SpacesForm = ({ navigation }) => {
       const allGuidelines = guidelines.split(', ');
       obj.guidelines = allGuidelines;
 
-
-
-      axios.post(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces`, obj)
+      axios.post(`${apiUrl}/spaces`, obj, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .then((response) => {
           // console.log(response);
           setSpaceName('');
@@ -40,10 +40,11 @@ const SpacesForm = ({ navigation }) => {
           setGuidelines('');
           navigation.dispatch(
             StackActions.replace('Space', {
-            space_name: spaceName,
-            isAdmin: true,
-            username,
-          }));
+              space_name: spaceName,
+              isAdmin: true,
+              username,
+            }),
+          );
         })
         .catch((err) => {
           console.log(err);

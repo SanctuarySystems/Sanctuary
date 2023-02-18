@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, Modal, RefreshControl, SafeAreaView, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
 import { useFonts } from 'expo-font';
 import GlobalStyles from './../GlobalStyles.js';
 

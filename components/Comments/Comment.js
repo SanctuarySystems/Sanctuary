@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import moment from 'moment';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId, currentUser }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
+  const { userToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     BubbleBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
@@ -20,19 +22,27 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
       if (plopped === false) {
         setPopped(true);
         setPop(pop + 1);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
       } else {
         setPopped(true);
         setPlopped(false);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPop(pop + 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .catch((err) => console.error(err));
       setPopped(false);
       setPop(pop - 1);
@@ -42,21 +52,29 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const handlePlop = () => {
     if (plopped === false) {
       if (popped === false) {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPlopped(true);
         setPop(pop - 1);
       } else {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPlopped(true);
         setPopped(false);
         setPop(pop - 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .catch((err) => console.error(err));
       setPlopped(false);
       setPop(pop + 1);

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
-import { UsernameContext } from "../../App.js";
+import { UsernameContext, apiUrl } from '../../App.js';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import axios from "axios";
@@ -9,6 +9,7 @@ import moment from 'moment';
 
 const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
   const [idList, setIdList] = useState({});
+  const { username, userToken } = useContext(UsernameContext);
 
   const saveData = async (data) => {
     try {
@@ -50,7 +51,6 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
     'FuzzyBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
-  const { username } = useContext(UsernameContext);
   const images = [
     require(`../../assets/avatars/001.png`),
     require(`../../assets/avatars/002.png`),
@@ -108,7 +108,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
   function addHug(id) {
 
 
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${id}/hug`)
+    axios.patch(`${apiUrl}/confessions/${id}/hug`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
     .then(() => {
       var newObj = {...idList}
       newObj[id] = id;

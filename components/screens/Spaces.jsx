@@ -3,13 +3,13 @@ import { Button, StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl 
 import axios from 'axios';
 import { useFonts } from 'expo-font';
 import { useIsFocused } from '@react-navigation/native';
-import { UsernameContext } from "../../App.js";
+import { UsernameContext, apiUrl } from '../../App.js';
 
 
 const windowWidth = Dimensions.get('window').width;
 
-const Rooms = ({navigation}) => {
-  const {username, setUsername } = React.useContext(UsernameContext);
+const Rooms = ({ navigation }) => {
+  const { username, userToken } = React.useContext(UsernameContext);
   const [spaces, setSpaces] = React.useState(['space1', 'space2']);
   const [adminSpaces, setAdminSpaces] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -41,8 +41,12 @@ const Rooms = ({navigation}) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+    axios.get(`${apiUrl}/users/${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .then((data) => {
+        setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);
+      })
       .catch((err) => console.log(err));
   }, [username, refreshing, isFocused]);
 

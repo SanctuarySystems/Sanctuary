@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, Text, TextInput, Button, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import * as firebase from 'firebase/app';
-import { authentication } from "../Authenticate/firebase.js";
 import { useFonts } from 'expo-font';
+import authentication from "../Authenticate/firebase.js";
 
 const ChangePasswordScreen = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');

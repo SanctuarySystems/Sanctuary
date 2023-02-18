@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import { colorTheme } from './colorTheme';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const storeData = async (value) => {
   try {
@@ -28,6 +29,7 @@ const NotificationListing = (props) => {
   } = props;
 
   const [isReported, setIsReported] = React.useState(false);
+  const { userToken } = useContext(UsernameContext);
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
 
@@ -40,15 +42,17 @@ const NotificationListing = (props) => {
   });
 
   React.useEffect(() => {
-    markRead(confessionId, commentId);
+    markRead(confessionId, commentId, userToken);
   }, []);
 
   const handleBan = () => {
     setIsReported(true);
 
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces/${spaceName}/${reported}/ban`)
+    axios.patch(`${apiUrl}/spaces/${spaceName}/${reported}/ban`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then(() => {
-        let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
+        const temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
         temporaryCookie.push({
           reportedUser: reported,
           confessionId,
@@ -148,12 +152,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const markRead = (confessionId, commentId) => {
+const markRead = (confessionId, commentId, userToken) => {
   if (commentId) {
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/reported_read`)
+    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((err) => console.log('mark comment read error in profile', err));
   } else {
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/reported_read`)
+    axios.patch(`${apiUrl}/confessions/${confessionId}/reported_read`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((err) => console.log('mark confession read error in profile', err));
   }
 };

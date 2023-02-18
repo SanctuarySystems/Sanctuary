@@ -24,10 +24,14 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   });
 
   React.useEffect(() => {
-    axios.get(`${apiUrl}/confessions?space_name=${space_name}&username=${username}`)
+    axios.get(`${apiUrl}/confessions?space_name=${space_name}&username=${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((data) => setConfessions(data.data.length)).catch((err) => console.log(err));
 
-    axios.get(`${apiUrl}/users/${username}`)
+    axios.get(`${apiUrl}/users/${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((data) => {
         if (data.data.reported.filter((space)=> space.space_name === space_name).length > 0) {
           setReported(data.data.reported

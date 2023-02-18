@@ -19,6 +19,8 @@ const AddComment = ({ add, username, confessionId }) => {
       confession_id: confessionId,
       created_by: username,
       comment: comment.comment,
+    }, {
+      headers: { Authorization: `Bearer ${userToken}` },
     });
   };
 

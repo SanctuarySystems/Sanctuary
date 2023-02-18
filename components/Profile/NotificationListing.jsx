@@ -42,15 +42,17 @@ const NotificationListing = (props) => {
   });
 
   React.useEffect(() => {
-    markRead(confessionId, commentId);
+    markRead(confessionId, commentId, userToken);
   }, []);
 
   const handleBan = () => {
     setIsReported(true);
 
-    axios.patch(`${apiUrl}/spaces/${spaceName}/${reported}/ban`)
+    axios.patch(`${apiUrl}/spaces/${spaceName}/${reported}/ban`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then(() => {
-        let temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
+        const temporaryCookie = reportedCookie ? reportedCookie.slice() : [];
         temporaryCookie.push({
           reportedUser: reported,
           confessionId,
@@ -150,12 +152,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const markRead = (confessionId, commentId) => {
+const markRead = (confessionId, commentId, userToken) => {
   if (commentId) {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`)
+    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((err) => console.log('mark comment read error in profile', err));
   } else {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/reported_read`)
+    axios.patch(`${apiUrl}/confessions/${confessionId}/reported_read`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((err) => console.log('mark confession read error in profile', err));
   }
 };

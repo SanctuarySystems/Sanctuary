@@ -22,7 +22,9 @@ const Comments = ({ route }) => {
   });
 
   useEffect(() => {
-    axios.get(`${apiUrl}/confessions/${confession_id}`)
+    axios.get(`${apiUrl}/confessions/${confession_id}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((res) => {
         setConfession(res.data);
       })
@@ -42,7 +44,9 @@ const Comments = ({ route }) => {
 
   const handleReport = () => {
     setShowModal(false);
-    axios.patch(`${apiUrl}/confessions/1/2/report/${username}`)
+    axios.patch(`${apiUrl}/confessions/1/2/report/${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((error) => console.log(error));
   };
 

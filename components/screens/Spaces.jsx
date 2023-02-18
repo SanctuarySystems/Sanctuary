@@ -41,8 +41,12 @@ const Rooms = ({ navigation }) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`${apiUrl}/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+    axios.get(`${apiUrl}/users/${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .then((data) => {
+        setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);
+      })
       .catch((err) => console.log(err));
   }, [username, refreshing, isFocused]);
 

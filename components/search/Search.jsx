@@ -22,7 +22,9 @@ const Search = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/spaces?count=200`)
+    axios.get(`${apiUrl}/spaces?count=200`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((data) => {
         setAllSpaces(data.data);
       })

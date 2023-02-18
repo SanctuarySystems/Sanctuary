@@ -30,9 +30,9 @@ const SpacesForm = ({ navigation }) => {
       const allGuidelines = guidelines.split(', ');
       obj.guidelines = allGuidelines;
 
-
-
-      axios.post(`${apiUrl}/spaces`, obj)
+      axios.post(`${apiUrl}/spaces`, obj, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .then((response) => {
           // console.log(response);
           setSpaceName('');
@@ -40,10 +40,11 @@ const SpacesForm = ({ navigation }) => {
           setGuidelines('');
           navigation.dispatch(
             StackActions.replace('Space', {
-            space_name: spaceName,
-            isAdmin: true,
-            username,
-          }));
+              space_name: spaceName,
+              isAdmin: true,
+              username,
+            }),
+          );
         })
         .catch((err) => {
           console.log(err);

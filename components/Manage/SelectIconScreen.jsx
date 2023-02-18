@@ -98,6 +98,8 @@ const SelectIconScreen = ({ navigation }) => {
     axios.post(`${apiUrl}/users`, {
       username,
       avatar: currentSelect,
+    }, {
+      headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
         console.log('success');

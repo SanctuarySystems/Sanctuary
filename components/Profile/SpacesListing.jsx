@@ -16,7 +16,9 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
   });
 
   React.useEffect(() => {
-    axios.get(`${apiUrl}/spaces?space_name=${space}&exact=true`)
+    axios.get(`${apiUrl}/spaces?space_name=${space}&exact=true`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then(({ data }) => {
         setSpaceData(data[0]);
       })

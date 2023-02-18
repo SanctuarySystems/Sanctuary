@@ -19,7 +19,9 @@ const Home = ({ navigation }) => {
   const getConfessions = () => {
     if (username) {
       console.log(username);
-      axios.get(`${apiUrl}/users/${username}`)
+      axios.get(`${apiUrl}/users/${username}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .then((data) => {
           const allSpaces = data.data.spaces_joined;
           // console.log('i am allSpace: ', allSpaces);
@@ -29,7 +31,9 @@ const Home = ({ navigation }) => {
             const concatArray = [];
             return Promise.all(
               allSpaces.map(async (space) => {
-                await axios.get(`${apiUrl}/confessions?space_name=${space}`)
+                await axios.get(`${apiUrl}/confessions?space_name=${space}`, {
+                  headers: { Authorization: `Bearer ${userToken}` },
+                })
                   .then((result) => {
                     concatArray.push(result.data);
                   })

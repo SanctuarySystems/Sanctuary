@@ -2,10 +2,9 @@ import React, { useState, useContext } from 'react';
 import { SafeAreaView, View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import axios from 'axios';
-import { authentication } from "./firebase.js";
+import { useFonts } from 'expo-font';
 import GlobalStyles from '../GlobalStyles.js';
 import { UsernameContext } from '../../App.js';
-import { useFonts } from 'expo-font';
 
 const auth = getAuth();
 

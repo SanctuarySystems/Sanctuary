@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "./firebase.js";
-import { UsernameContext } from '../../App.js';
 import { useFonts } from 'expo-font';
+import authentication from "./firebase.js";
+import { UsernameContext } from '../../App.js';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');

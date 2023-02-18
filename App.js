@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts } from 'expo-font';
 import HomeScreen from './components/navigation/HomeScreen.jsx';
 import WelcomeScreen from './components/Authenticate/WelcomeScreen.jsx';
 import LoginScreen from "./components/Authenticate/LoginScreen.jsx";
@@ -11,8 +10,9 @@ import SelectIconScreen from "./components/Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "./components/Manage/ChangePasswordScreen.jsx";
 import ForgotPasswordScreen from "./components/Manage/ForgotPasswordScreen.jsx";
 
-export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
-export const UsernameContext = React.createContext();
+// export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
+export const apiUrl = 'http://127.0.0.1';
+export const UsernameContext = createContext();
 const Stack = createNativeStackNavigator();
 
 const App = () => {

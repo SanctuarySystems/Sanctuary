@@ -48,8 +48,6 @@ const SignUpScreen = ({ navigation }) => {
       const idToken = await user.getIdToken();
       await setUsername(newUsername);
       await setUserToken(idToken);
-
-
       navigation.navigate('Select Icon Screen');
     } catch (error) {
       setErrorMessage("All fields are required");

@@ -44,10 +44,9 @@ const Space = ({ route, navigation }) => {
     }, 1000);
   }, []);
 
-
   const banUser = (user_name, space_name) => {
     //wrong url for banning
-    axios.patch(`${apiUrl}/spaces/${space_name}/${user_name}/ban`, {
+    axios.patch(`${apiUrl}/spaces/${space_name}/${user_name}/ban`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
@@ -64,10 +63,10 @@ const Space = ({ route, navigation }) => {
           .then((data) => { setConfessions(data.data); }).catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   const leaveSpace = (username, space_name) => {
-    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/remove`, {
+    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/remove`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
@@ -75,10 +74,10 @@ const Space = ({ route, navigation }) => {
         setNumMembers(numMembers - 1);
         // route.params.onLeaveJoin(-1, space_name);
       }).catch((err) => console.log('leaveSPACE', err));
-  }
+  };
 
   const joinSpace = (username, space_name) => {
-    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/add`, {
+    axios.patch(`${apiUrl}/spaces/${space_name}/${username}/add`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
@@ -103,7 +102,7 @@ const Space = ({ route, navigation }) => {
   };
 
   const updateSpaceDetails = (description, guidelines) => {
-    axios.patch(`${apiUrl}/spaces/${route.params.space_name}`, { description, guidelines }, {
+    axios.patch(`${apiUrl}/spaces/${route.params.space_name}`, {}, { description, guidelines }, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {

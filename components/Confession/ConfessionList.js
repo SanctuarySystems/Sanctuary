@@ -108,7 +108,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
   function addHug(id) {
 
 
-    axios.patch(`${apiUrl}/confessions/${id}/hug`, {
+    axios.patch(`${apiUrl}/confessions/${id}/hug`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
     .then(() => {

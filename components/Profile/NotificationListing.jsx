@@ -48,7 +48,7 @@ const NotificationListing = (props) => {
   const handleBan = () => {
     setIsReported(true);
 
-    axios.patch(`${apiUrl}/spaces/${spaceName}/${reported}/ban`, {
+    axios.patch(`${apiUrl}/spaces/${spaceName}/${reported}/ban`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
@@ -154,12 +154,12 @@ const styles = StyleSheet.create({
 
 const markRead = (confessionId, commentId, userToken) => {
   if (commentId) {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`, {
+    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((err) => console.log('mark comment read error in profile', err));
   } else {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/reported_read`, {
+    axios.patch(`${apiUrl}/confessions/${confessionId}/reported_read`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((err) => console.log('mark confession read error in profile', err));

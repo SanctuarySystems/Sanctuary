@@ -22,25 +22,25 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
       if (plopped === false) {
         setPopped(true);
         setPop(pop + 1);
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
       } else {
         setPopped(true);
         setPlopped(false);
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
         setPop(pop + 2);
       }
     } else {
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
         headers: { Authorization: `Bearer ${userToken}` },
       })
         .catch((err) => console.error(err));
@@ -52,18 +52,18 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const handlePlop = () => {
     if (plopped === false) {
       if (popped === false) {
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
         setPlopped(true);
         setPop(pop - 1);
       } else {
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
@@ -72,7 +72,7 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
         setPop(pop - 2);
       }
     } else {
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
         headers: { Authorization: `Bearer ${userToken}` },
       })
         .catch((err) => console.error(err));

@@ -101,7 +101,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
       } else {
         isAdmin = false;
       }
-      nav.navigate('Home Space', {username: username, admin: isAdmin, space_name: spaceName});
+      nav.navigate('Space', {username: username, admin: isAdmin, space_name: spaceName});
     }
   }
 
@@ -181,7 +181,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
                   <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Confession Comments', {confession_id: item.confession_id, item: item, images: images})}>
+                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, images: images})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
                 <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity>}

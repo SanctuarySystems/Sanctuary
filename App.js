@@ -10,8 +10,8 @@ import SelectIconScreen from "./components/Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "./components/Manage/ChangePasswordScreen.jsx";
 import ForgotPasswordScreen from "./components/Manage/ForgotPasswordScreen.jsx";
 
-// export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
-export const apiUrl = 'http://127.0.0.1';
+export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
+// export const apiUrl = 'http://127.0.0.1';
 export const UsernameContext = createContext();
 const Stack = createNativeStackNavigator();
 

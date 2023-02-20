@@ -10,6 +10,7 @@ import MemberInfo from './MemberInfo.js';
 import SpaceHeader from './SpaceHeader.js';
 import SpaceTabs from './SpaceTabs.js';
 import SpaceWindow from './SpaceWindow.js';
+import WriteConfessionModal from './WriteConfessionModal.js';
 import { UsernameContext, apiUrl } from '../../App.js';
 
 const Space = ({ route, navigation }) => {
@@ -185,27 +186,7 @@ const Space = ({ route, navigation }) => {
       </View>
       <SpaceTabs isAdmin={isAdmin} tab={tab} setTab={setTab}/>
       <SpaceWindow tab={tab} onRefresh={onRefresh} refreshing={refreshing} confessions={confessions} spaceGuidelines={spaceGuidelines} navigation={navigation} username={route.params.username} banUser={banUser} space_name={route.params.space_name} setModalVisible={setModalVisible} spaceMembers={spaceMembers}/>
-
-      <Modal visible={modalVisible} animationType='slide' style={{flex:1, backgroundColor:'#fef1e6'}}>
-        <SafeAreaView style={GlobalStyles.droidSafeArea}>
-          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', backgroundColor:'#fef1e6', paddingRight:'2%', paddingLeft: '2%'}}>
-            <TouchableOpacity onPress={() => {setModalVisible(false)}}>
-            <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
-            </TouchableOpacity>
-            {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            <Text style={{fontSize: 18, fontWeight:'bold', color: 'rgba(49, 94, 153, 1)'}}>Write a confession.</Text>
-            <TouchableOpacity disabled={disablePost} style={[disablePost ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() => createConfession(route.params.username, writeConfession, route.params.space_name )}>
-              <Text style={styles.leavejoinText}>post</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{flex: 10}}>
-            <TextInput placeholder="Write your confession here." style={{padding:10,
-        borderTopColor: 'rgba(49, 94, 153, 1)',
-        fontFamily: 'FuzzyBubblesRegular',
-        borderTopWidth: 2, fontSize:20}} multiline onChangeText={text => {changeWriteConfession(text)}} value={writeConfession} />
-          </View>
-        </SafeAreaView>
-      </Modal>
+      <WriteConfessionModal modalVisible={modalVisible} setModalVisible={setModalVisible} disablePost={disablePost} writeConfession={writeConfession} changeWriteConfession={changeWriteConfession} createConfession={createConfession} username={route.params.username} space_name={route.params.space_name}/>
       <Modal visible={editMode} animationType='slide' style={{flex:1}}>
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
           <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginLeft: '2%', marginRight: '2%'}}>

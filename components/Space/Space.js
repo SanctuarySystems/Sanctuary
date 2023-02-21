@@ -181,42 +181,14 @@ const Space = ({ route, navigation }) => {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea} >
       <View style={styles.container}>
-      <SpaceHeader leavejoin={leavejoin} isAdmin={isAdmin} joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
-        <View style={styles.spaceDescription} >
+        <SpaceHeader leavejoin={leavejoin} isAdmin={isAdmin} joinSpace={joinSpace} leaveSpace={leaveSpace} setEditMode={setEditMode} numMembers={numMembers} username={route.params.username} space_name={route.params.space_name}/>
+        <View style={styles.spaceDescription}>
           <Text style={{}}>{spaceDescription} </Text>
         </View>
         <SpaceTabs isAdmin={isAdmin} tab={tab} setTab={setTab}/>
         <SpaceWindow tab={tab} onRefresh={onRefresh} refreshing={refreshing} confessions={confessions} spaceGuidelines={spaceGuidelines} navigation={navigation} username={route.params.username} banUser={banUser} space_name={route.params.space_name} setModalVisible={setModalVisible} spaceMembers={spaceMembers}/>
         <WriteConfessionModal modalVisible={modalVisible} setModalVisible={setModalVisible} disablePost={disablePost} writeConfession={writeConfession} changeWriteConfession={changeWriteConfession} createConfession={createConfession} username={route.params.username} space_name={route.params.space_name}/>
         <EditSpaceInfoModal editMode={editMode} setEditMode={setEditMode} disableEdit={disableEdit} updateSpaceDetails={updateSpaceDetails} editSpaceDescription={editSpaceDescription} editSpaceGuidelines={editSpaceGuidelines} setEditSpaceDescription={setEditSpaceDescription} setEditSpaceGuidelines={setEditSpaceGuidelines} />
-
-      {/* <Modal visible={editMode} animationType='slide' style={{flex:1}}>
-        <SafeAreaView style={GlobalStyles.droidSafeArea}>
-          <View style={{ flex:1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginLeft: '2%', marginRight: '2%'}}>
-            <TouchableOpacity onPress={() => {setEditMode(false)}}>
-            <Icon name="md-close" size='35%' color='rgba(49, 94, 153, 1)'/>
-            </TouchableOpacity>
-            {/* <Button title='close'onPress={()=>{setModalVisible(false)}}/> */}
-            {/* <Text style={{fontSize: 18, fontWeight:'bold', color: 'rgba(49, 94, 153, 1)'}}>Edit Space Information</Text>
-            <TouchableOpacity disabled={disableEdit} style={[disableEdit ?styles.leavejoinContainerOpaque:styles.leavejoinContainer]} onPress={() =>  updateSpaceDetails(editSpaceDescription, editSpaceGuidelines.split('\n'))}>
-              <Text style={styles.leavejoinText}>update</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{flex: 2}}>
-            <Text style={{fontSize: 20, color: 'rgba(49, 94, 153, 1)', paddingLeft:'4%'}}>Edit Description:</Text>
-            <TextInput style={{padding:10, fontSize:16, paddingLeft: '5%',
-        borderTopColor: 'rgba(49, 94, 153, 1)',
-        borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceDescription(text)} value={editSpaceDescription} />
-          </View>
-          <View style={{flex:11}}>
-            <Text style={{fontSize:20, color: 'rgba(49, 94, 153, 1)', paddingLeft:'4%'}}>Edit Guidelines:</Text>
-            <TextInput style={{padding:10, fontSize:18, paddingLeft: '5%', fontFamily: 'FuzzyBubblesRegular',
-        borderTopColor: 'rgba(49, 94, 153, 1)',
-        borderTopWidth: 1,}} multiline onChangeText={text => setEditSpaceGuidelines(text)} value={editSpaceGuidelines} />
-          </View>
-        </SafeAreaView>
-      </Modal>  */}
-
       </View>
     </SafeAreaView>
   );
@@ -231,43 +203,14 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '98%'
+    width: '98%',
   },
   spaceDescription: {
     flex: 0.5,
-    marginLeft:'1%',
-    marginRight:'1%',
-    paddingTop: '1%'
+    marginLeft: '1%',
+    marginRight: '1%',
+    paddingTop: '1%',
   },
-  leavejoinContainer:{
-    // backgroundColor: "#009688",
-    borderWidth:'1px',
-    borderColor: "rgba(49, 94, 153, 1)",
-    borderRadius: 10,
-    paddingVertical: 7,
-    marginTop: 2,
-    // paddingHorizontal: 11,
-    width:'20%'
-  },
-  leavejoinText: {
-    fontSize: 14,
-    color: "rgba(49, 94, 153, 1)",
-    // fontWeight: "bold",
-    alignSelf: "center",
-    alignItems:'center'
-  },
-  leavejoinContainerOpaque:{
-    // backgroundColor: "#009688",
-    borderWidth:'1px',
-    borderColor: "rgba(49, 94, 153, 1)",
-    borderRadius: 10,
-    paddingVertical: 7,
-    marginTop: 2,
-    // paddingHorizontal: 11,
-    width:'20%',
-    opacity: 0.5
-  },
-
 });
 
 export default Space;

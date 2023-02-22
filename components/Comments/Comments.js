@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 
 const Comments = ({ route }) => {
-  const { confession_id, item, images } = route.params;
+  const { confession_id, item, image } = route.params;
   const { username, userToken } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
 
@@ -88,7 +88,7 @@ const Comments = ({ route }) => {
                   </View>
 
                 <View style={styles.imgUserContainer}>
-                <Image source={images[1]} style={styles.image}/>
+                <Image source={image} style={styles.image}/>
                 <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
                 </View>
                   <Text style={styles.bodyText}>{item.confession}</Text>

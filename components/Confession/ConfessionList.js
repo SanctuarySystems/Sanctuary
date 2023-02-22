@@ -176,12 +176,12 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
-                  onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, images: images})}>
+                  onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
                   <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
-                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, images: images})}>
+                onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
                 <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
                 </TouchableOpacity>}

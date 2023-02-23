@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { UsernameContext, apiUrl } from '../../App.js';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, AsyncStorage, Modal, SafeAreaView } from 'react-native';
 import axios from "axios";
 import moment from 'moment';
 
@@ -10,6 +10,7 @@ import moment from 'moment';
 const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
   const [idList, setIdList] = useState({});
   const { username, userToken } = useContext(UsernameContext);
+  const [showModal, setShowModal] = useState(false);
 
   const saveData = async (data) => {
     try {
@@ -37,6 +38,14 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
     }
   };
 
+  const handleReport = (confession_id, user) => {
+    setShowModal(false);
+    axios.patch(`${apiUrl}/confessions/${confession_id}/report/${user}`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
 
     ///Add line below to reset local storage
@@ -47,8 +56,8 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   const [fontsLoaded] = useFonts({
     'Virgil': require('../../assets/fonts/Virgil.ttf'),
-    'FuzzyReg': require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
-    'FuzzyBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    'FuzzyBubblesRegular': require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    'FuzzyBubblesBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   const images = [
@@ -153,7 +162,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
                   <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                 </View>
                 <View style={{ width: '10%' }}>
-                  <Entypo name="dots-three-horizontal" size={20} color="black" />
+                  <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
                 </View>
               </View>
 
@@ -167,30 +176,41 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
                 {idList[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} />{' ' + item.hugs}</Text>
-                  <Text style={{fontFamily: 'FuzzyBold'}}>Hug</Text>
+                  <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Hug</Text>
                 </TouchableOpacity>}
                 {idList[item.confession_id] !== undefined && <View>
                   <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
-                  <Text style={{fontFamily: 'FuzzyBold', color: 'rgba(49, 94, 153, 1)', textAlign: 'center'}}>Hugged!</Text>
+                  <Text style={{fontFamily: 'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)', textAlign: 'center'}}>Hugged!</Text>
                   </View>}
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
                   onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
-                  <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
+                  <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Comments</Text>
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
                 onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
                 <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
-                <Text style={{fontFamily: 'FuzzyBold'}}>Comments</Text>
+                <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Comments</Text>
                 </TouchableOpacity>}
               </View>
               </View>
             </View>
+            <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+        <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+          <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+            <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport(item.confession_id, username)}>
+              <Text style={styles.reportText}>Report</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        </TouchableOpacity>
+      </Modal>
           </View>
         )}
+
       />}
+
 
     </View>
   );
@@ -312,13 +332,47 @@ const styles = StyleSheet.create({
   //  color: 'rgba(49, 94, 153, 1)',
     fontSize: 18,
     padding: '3%',
-    fontFamily: 'FuzzyReg'
+    fontFamily: 'FuzzyBubblesRegular'
   },
-
   threeDots: {
     fontSize: 20,
     textAlign: 'right'
-  }
+  },
+  viewModal: {
+    marginTop: 'auto',
+    backgroundColor: 'transparent',
+    height: '100%',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  modal: {
+    backgroundColor: 'red',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  report: {
+    width: '100%',
+    marginTop: 'auto',
+    height: '20%',
+    backgroundColor: '#EDF6F9',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  reportButton: {
+    marginTop: 10,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '4%',
+    backgroundColor: '#C44536',
+    borderRadius: 10,
+    alignItems: 'center',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 });
 
 

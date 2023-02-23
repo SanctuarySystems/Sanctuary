@@ -44,7 +44,7 @@ const Comments = ({ route }) => {
 
   const handleReport = () => {
     setShowModal(false);
-    axios.patch(`${apiUrl}/confessions/1/2/report/${username}`, {}, {
+    axios.patch(`${apiUrl}/confessions/${confession_id}/report/${username}`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((error) => console.log(error));

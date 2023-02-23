@@ -53,7 +53,7 @@ const MainStackNavigator = ({ setUsername }) => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Comments" component={Comments} />
-      <Stack.Screen name="Home Space" component={Space} />
+      <Stack.Screen name="Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
@@ -67,7 +67,7 @@ const SpaceStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} options={{ username: 'lookingforpeace' }} />
       <Stack.Screen name="Space" component={Space} />
-      <Stack.Screen name="Confession Comments" component={Comments} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

@@ -82,8 +82,8 @@ const Comments = ({ route }) => {
                       >{item.space_name + ' '}</Text>
                       <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                     </View>
-                    <View style={{ width: '10%' }}>
-                      <Entypo name="dots-three-horizontal" size={20} color="black" />
+                    <View style={{ width: '10%' }} onPress={() => setShowModal(true)} >
+                      <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
                     </View>
                   </View>
 

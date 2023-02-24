@@ -50,6 +50,14 @@ const Comments = ({ route }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleCommentReport = (commentID, user) => {
+    setShowModal(false);
+    axios.patch(`${apiUrl}/confessions/${commentID}/report/${user}`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .catch((error) => console.log(error));
+  };
+
   if (!fontsLoaded) {
     return (
       <View>
@@ -82,9 +90,9 @@ const Comments = ({ route }) => {
                       >{item.space_name + ' '}</Text>
                       <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                     </View>
-                    <View style={{ width: '10%' }}>
-                      <Entypo name="dots-three-horizontal" size={20} color="black" />
-                    </View>
+                    <TouchableOpacity style={{ width: '10%' }} onPress={() => setShowModal(true)} >
+                      <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
+                    </TouchableOpacity>
                   </View>
 
                 <View style={styles.imgUserContainer}>
@@ -111,7 +119,7 @@ const Comments = ({ route }) => {
             )}
             keyExtractor={(comment) => comment.id}
             data={confession.comments.sort((a, b) => b.pops - a.pops)}
-            renderItem={({ item }) => <Comment currentUser={username} handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
+            renderItem={({ item }) => <Comment currentUser={username} handleCommentReport={handleCommentReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
           />
           <AddComment add={add} username={username} confessionId={confession_id} />
         </>

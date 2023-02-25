@@ -111,7 +111,7 @@ const Comments = ({ route }) => {
             )}
             keyExtractor={(comment) => comment.id}
             data={confession.comments.sort((a, b) => b.pops - a.pops)}
-            renderItem={({ item }) => <Comment currentUser={username} handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
+            renderItem={({ item }) => <Comment currentUser={username} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} confessionId={confession.confession_id} commentId={item.comment_id} />}
           />
           <AddComment add={add} username={username} confessionId={confession_id} />
         </>

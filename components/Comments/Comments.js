@@ -59,7 +59,9 @@ const Comments = ({ route }) => {
   } else {
     return (
       <View style={styles.screen}>
+
         <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
           <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
             <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
               <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
@@ -82,8 +84,8 @@ const Comments = ({ route }) => {
                       >{item.space_name + ' '}</Text>
                       <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                     </View>
-                    <View style={{ width: '10%' }}>
-                      <Entypo name="dots-three-horizontal" size={20} color="black" />
+                    <View style={{ width: '10%' }} onPress={() => setShowModal(true)} >
+                      <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
                     </View>
                   </View>
 
@@ -111,7 +113,7 @@ const Comments = ({ route }) => {
             )}
             keyExtractor={(comment) => comment.id}
             data={confession.comments.sort((a, b) => b.pops - a.pops)}
-            renderItem={({ item }) => <Comment currentUser={username} handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
+            renderItem={({ item }) => <Comment currentUser={username} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} confessionId={confession.confession_id} commentId={item.comment_id} />}
           />
           <AddComment add={add} username={username} confessionId={confession_id} />
         </>
@@ -133,17 +135,20 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'red',
     fontFamily: 'BubbleRegular',
+    flex: 1,
+    height: '100%',
   },
   viewModal: {
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
     fontFamily: 'BubbleRegular',
+    flex: 0.2,
   },
   report: {
     width: '100%',
     marginTop: 'auto',
-    height: '20%',
+    height: '100%',
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
@@ -159,6 +164,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     fontFamily: 'BubbleRegular',
+  },
+  closeModalArea: {
+    flex: 0.8,
   },
   container: {
     flex: 1,

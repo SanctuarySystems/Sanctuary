@@ -59,15 +59,6 @@ const Comments = ({ route }) => {
   } else {
     return (
       <View style={styles.screen}>
-        {/* <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
-          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
-            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-              <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
-                <Text style={styles.reportText}>Report</Text>
-              </TouchableOpacity>
-            </SafeAreaView>
-          </TouchableOpacity>
-        </Modal> */}
 
         <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
           <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />

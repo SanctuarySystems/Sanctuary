@@ -59,7 +59,18 @@ const Comments = ({ route }) => {
   } else {
     return (
       <View style={styles.screen}>
+        {/* <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+              <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
+                <Text style={styles.reportText}>Report</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </TouchableOpacity>
+        </Modal> */}
+
         <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
           <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
             <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
               <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
@@ -133,17 +144,20 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'red',
     fontFamily: 'BubbleRegular',
+    flex: 1,
+    height: '100%',
   },
   viewModal: {
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
     fontFamily: 'BubbleRegular',
+    flex: 0.2,
   },
   report: {
     width: '100%',
     marginTop: 'auto',
-    height: '20%',
+    height: '100%',
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
@@ -159,6 +173,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     fontFamily: 'BubbleRegular',
+  },
+  closeModalArea: {
+    flex: 0.8,
   },
   container: {
     flex: 1,

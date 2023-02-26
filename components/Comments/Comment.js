@@ -113,7 +113,7 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
             <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        {viewModal && (
+        {/* {viewModal && (
           <View style={styles.modalViewContainer}>
             <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
               <TouchableOpacity style={styles.closeModalArea} onPress={() => setViewModal(false)} />
@@ -126,7 +126,18 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
               </TouchableOpacity>
             </Modal>
           </View>
-        )}
+        )} */}
+
+            <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
+              <TouchableOpacity style={styles.closeModalArea} onPress={() => setViewModal(false)} />
+              <TouchableOpacity style={styles.viewModal} onPress={() => setViewModal(false)}>
+                <SafeAreaView style={styles.report} onPress={() => setViewModal(false)}>
+                  <TouchableOpacity style={styles.reportButton} onPressOut={() => handleCommentReport()}>
+                    <Text style={styles.reportText}>Report</Text>
+                  </TouchableOpacity>
+                </SafeAreaView>
+              </TouchableOpacity>
+            </Modal>
           {/* <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
             <TouchableOpacity style={styles.viewModal} onPress={() => setViewModal(false)}>
               <SafeAreaView style={styles.report} onPress={() => setViewModal(false)}>
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     fontFamily: 'FuzzyBubblesRegular',
     height: '100%',
-    // flex: 1,
+    flex: 1,
     // justifyContent: 'flex-end',
   },
   viewModal: {
@@ -241,7 +252,6 @@ const styles = StyleSheet.create({
   },
   closeModalArea: {
     flex: 0.8,
-
   }
 });
 

@@ -27,14 +27,14 @@ See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZ
 
 ## Authentication
 
-	
+
 The authentication component verifies new and existing users. Any user may
 * Create a new account with their email and password
 * Choose their own account username and icon
 * Log into an existing account
 * Reset their password from the login screen
 
-	
+
 ## Home Page
 
 
@@ -66,14 +66,14 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 **Spaces List**
 
-  
+
 - Renders links to spaces the user has created and joined.
 - Used Dimensions object to incorporate window-width into styling.
 - Used RefreshControl to refetch spaces from the database.
 
 
 **Admin View**
-  
+
 - Edit Modal: allows user to change space description and guidelines
 - Members Tab: allows user to view list of users who've joined the space with member presence information
   - Number of confessions the user made in the space
@@ -82,14 +82,14 @@ Comments display the username, the message, how long ago it was posted, an optio
 - Member Ban: Admin can ban members, and remove all of the user's comments and confessions from the space and prevent the banned user from accessing the space.
 
 **General User View**
-  
+
 - Leave/Join: Users can leave and join spaces. Joining a space updates user’s home feed with confessions from the space and makes space more easily accessible in the Spaces Tab Screen
 - Write Confession Modal: Users can create confessions.
 - Feed Tab: renders confession module with a refresh control to refetch confessions from the database.
 
 
 
-## Profile 
+## Profile
 
 https://user-images.githubusercontent.com/37416800/214449270-e43a9e6b-08c8-496b-a32f-b414bc1bc42c.mp4
 
@@ -131,13 +131,13 @@ The account management component enables users to manage their existing account.
 1. Install packages using the following command
 
 	`npm install`
-	
+
 2. Initialize the application
 
 	`npm start`
 
 3. Download the mobile application Expo Go
-	
+
 4. Open Sanctuary through Expo Go by scanning the given QR code from your phone
 
 
@@ -147,10 +147,10 @@ The account management component enables users to manage their existing account.
 * **Max Peterson - Product Manager**
   * https://www.linkedin.com/in/maxpeterson-swe
   * https://github.com/maxpeterson96
-* **Chad Fusco - Architecture Owner**
+* **Chad Fusco - Software Architect**
   * https://www.linkedin.com/in/chadfusco
   * https://github.com/ChadFusco
-* **Joseph Soto - UI Owner**
+* **Joseph Soto - UI Design**
   * https://www.linkedin.com/in/joseph-soto66/
   * https://github.com/sotojn
 * **Kimberly Cheung**

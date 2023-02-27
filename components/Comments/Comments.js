@@ -99,8 +99,8 @@ const Comments = ({ route }) => {
                 <View style={styles.buttonContainer}>
                   <View style={styles.buttonStyleHug}>
                     <View>
-                      <Text style={{textAlign: 'center', color: '#90AACB'}}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
-                      <Text style={{fontFamily: 'BubbleRegular', color: '#90AACB'}}>Hugs</Text>
+                      <Text style={{ textAlign: 'center', color: '#90AACB' }}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
+                      <Text style={{ fontFamily: 'BubbleRegular', color: '#90AACB' }}>Hugs</Text>
                     </View>
                   </View>
                   <View style={styles.buttonStyleComment}>
@@ -118,7 +118,7 @@ const Comments = ({ route }) => {
           )}
           keyExtractor={(comment) => comment.id}
           data={confession.comments.sort((a, b) => b.pops - a.pops)}
-          renderItem={({ item }) => <Comment currentUser={username} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} confessionId={confession.confession_id} commentId={item.comment_id} />}
+          renderItem={({ comment }) => <Comment currentUser={username} username={comment.created_by} body={comment.comment} pops={comment.pops} date={comment.createdAt} confessionId={confession.confession_id} commentId={comment.comment_id} />}
         />
         <AddComment add={add} username={username} confessionId={confession_id} />
       </>

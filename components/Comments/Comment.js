@@ -20,15 +20,14 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
 
   const handlePop = () => {
     if (popped === false) {
+      setPopped(true);
       if (plopped === false) {
-        setPopped(true);
         setPop(pop + 1);
         axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
           .catch((err) => console.error(err));
       } else {
-        setPopped(true);
         setPlopped(false);
         axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
           headers: { Authorization: `Bearer ${userToken}` },

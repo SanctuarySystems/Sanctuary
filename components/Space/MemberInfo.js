@@ -15,6 +15,7 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
   const [reports, setReports] = React.useState(0);
   const [confessions, setConfessions] = React.useState(0);
   const [banModal, setBanModal] = React.useState(false);
+  const [deleteModal, setDeleteModal] = React.useState(false);
   const { userToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
@@ -73,7 +74,7 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
             <Text style={styles.leavejoinText}>ban</Text>
           </TouchableOpacity>}
           {isUser &&
-           <TouchableOpacity disabled={true}style={styles.leavejoinContainerAdmin}>
+           <TouchableOpacity onPress={() => setDeleteModal(true)}style={styles.leavejoinContainerAdmin}>
            <Text style={styles.leavejoinTextAdmin}>admin</Text>
           </TouchableOpacity>}
       </View>
@@ -92,6 +93,24 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
               </TouchableOpacity>
               <TouchableOpacity style={styles.leavejoinContainerBan} onPress={() => {banUser(username, space_name); setBanModal(false);}}>
                 <Text style={styles.leavejoinTextBan}>Ban</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal visible={deleteModal} transparent={true} animationType='slide'>
+        <View style={{ flex: 1, marginTop: '70%', alignItems:'center' }}>
+          <View style={styles.modal}>
+            <View style={{alignItems:'center', paddingBottom:'5%'}}>
+              <Text style={{ fontSize:16}}>Delete space</Text>
+              <Text style={{fontFamily:'FuzzyBubblesBold', fontSize: 19}}>{space_name} ?</Text>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+              <TouchableOpacity style={styles.leavejoinContainerNo} onPress={()=>setDeleteModal(false)}>
+                <Text style={styles.leavejoinTextNo}>No</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.leavejoinContainerBan} onPress={() => {setDeleteModal(false);}}>
+                <Text style={styles.leavejoinTextBan}>Delete</Text>
               </TouchableOpacity>
             </View>
           </View>

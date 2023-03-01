@@ -79,9 +79,10 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
           </TouchableOpacity>}
       </View>
       <Modal visible={banModal} transparent={true} animationType='slide'>
-        <View style={{ flex: 1, marginTop: '70%', alignItems:'center' }}>
+        <View style={styles.banModalContainer}>
+          <TouchableOpacity onPress={() => setBanModal(false)} style={styles.topTouchable} />
           <View style={styles.modal}>
-            <View style={{alignItems:'center', paddingBottom:'5%'}}>
+            <View style={{alignItems:'center', paddingBottom:'6%'}}>
               <Text style={{ fontSize:16}}>Ban user </Text>
               <Text style={{fontFamily:"FuzzyBubblesBold", fontSize: 19}}>{username}</Text>
               <Text style={{fontSize: 16}}>from space </Text>
@@ -96,11 +97,13 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
               </TouchableOpacity>
             </View>
           </View>
+          <TouchableOpacity onPress={() => setBanModal(false)} style={styles.bottomTouchable} />
         </View>
       </Modal>
       <Modal visible={deleteModal} transparent={true} animationType='slide'>
-        <View style={{ flex: 1, marginTop: '70%', alignItems:'center' }}>
-          <View style={styles.modal}>
+        <View style={styles.banModalContainer}>
+          <TouchableOpacity onPress={() => setDeleteModal(false)} style={styles.deleteTopTouchable} />
+          <View style={styles.deleteModal}>
             <View style={{alignItems:'center', paddingBottom:'5%'}}>
               <Text style={{ fontSize:16}}>Delete space</Text>
               <Text style={{fontFamily:'FuzzyBubblesBold', fontSize: 19}}>{space_name} ?</Text>
@@ -114,6 +117,7 @@ const MemberInfo = ({ space_name, username, banUser, isUser }) => {
               </TouchableOpacity>
             </View>
           </View>
+          <TouchableOpacity onPress={() => setDeleteModal(false)} style={styles.deleteBottomTouchable} />
         </View>
       </Modal>
     </View>
@@ -140,6 +144,63 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.25,
     // shadowRadius: 4,
     // elevation: 5,
+  },
+  topTouchable: {
+    flex: 0.4,
+    width: '100%',
+  },
+  bottomTouchable: {
+    flex: 0.5,
+    width: '100%',
+  },
+  deleteTopTouchable: {
+    flex: 0.4,
+    width: '100%',
+  },
+  deleteBottomTouchable: {
+    flex: 0.45,
+    width: '100%',
+  },
+  banModalContainer: {
+    flex: 1,
+    alignItems:'center',
+  },
+  modal: {
+    width: windowWidth-10,
+    // margin: 12,
+    backgroundColor: '#fff',
+    flex: 0.2,
+    borderRadius: 20,
+    padding: 14,
+    // height: '100%',s
+    // alignItems: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
+  },
+  deleteModal: {
+    width: windowWidth-10,
+    // margin: 12,
+    backgroundColor: '#fff',
+    flex: 0.15,
+    borderRadius: 20,
+    padding: 14,
+    // height: '100%',s
+    // alignItems: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
+    paddingBottom: 0,
   },
   username: {
     fontSize: 16,
@@ -210,22 +271,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     alignItems:'center',
-  },
-  modal: {
-    width: windowWidth-10,
-    // margin: 12,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 14,
-    // alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 5,
   },
 });
 

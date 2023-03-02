@@ -1,5 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import Home from "../screens/Home.jsx";
 import Spaces from "../screens/Spaces.jsx";
@@ -14,7 +16,7 @@ import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
 import { useFonts } from 'expo-font';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import Space from '../Space/Space.js';
 
 const Stack = createNativeStackNavigator();
@@ -100,6 +102,7 @@ const screenOptionStyle = StyleSheet.create({
     backgroundColor: '#F9D5A7',
     fontWeight: 'bold',
     fontSize: 65,
+    // flex: 1,
   },
   headerTitleStyle: {
     color: "rgba(49, 94, 153, 1)",

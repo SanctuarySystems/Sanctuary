@@ -64,18 +64,16 @@ const Home = ({ navigation }) => {
   }, [refreshing]);
 
   return (
-    // <SafeAreaView>
-      <ScrollView contentContainerStyle={styles.container}
-        style={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        {allConfessions &&
-          <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true}/>
-        }
-      </ScrollView>
-    // </SafeAreaView>
+    <ScrollView contentContainerStyle={styles.container}
+      style={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      {allConfessions &&
+        <ConfessionList allConfessions={allConfessions} nav={navigation} isRoom={false} isHome={true}/>
+      }
+    </ScrollView>
   );
 };
 

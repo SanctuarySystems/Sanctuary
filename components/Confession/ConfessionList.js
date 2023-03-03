@@ -143,9 +143,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   return (
     <View style={styles.container}>
-      {allConfessions === 'none' && <Text style={styles.errorText}>My confessionList Never got data pushed in. Please fix that.</Text>}
-      {allConfessions.length === 0 && isRoom === false && <Text style={styles.errorText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
-      {allConfessions.length === 0 && isRoom === true && <Text style={styles.errorText}>There are no confessions in this room. Be the first to post!</Text>}
+      {allConfessions === 'none' && <Text style={styles.noConfText}>My confessionList Never got data pushed in. Please fix that.</Text>}
+      {allConfessions.length === 0 && isRoom === false && <Text style={styles.noConfText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
+      {allConfessions.length === 0 && isRoom === true && <Text style={styles.noConfText}>There are no confessions in this room. Be the first to post!</Text>}
       {allConfessions !== 'none' && allConfessions.length !== 0 && <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -234,6 +234,11 @@ const styles = StyleSheet.create({
     fontFamily: 'FuzzyBubblesRegular',
     color: 'rgba(27, 52, 83, 1)',
 
+  },
+  noConfText: {
+    padding: 19,
+    fontSize: 19,
+    fontFamily:"FuzzyBubblesRegular",
   },
   containerConfess: {
     borderWidth: 0,

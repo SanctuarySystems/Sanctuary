@@ -66,7 +66,7 @@ const Rooms = ({ navigation }) => {
       && (
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-        <Text style={{padding: 5,fontSize: 19, fontFamily:"FuzzyBubblesRegular"}}>Looks like you haven't joined any spaces! Pull down to refresh.</Text>
+        <Text style={styles.noSpaceText}>Looks like you haven't joined any spaces! Pull down to refresh.</Text>
       </ScrollView>
       )}
       {(spaces && spaces.length > 0)
@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'rgba(0,0,0,0.7)',
     fontFamily: 'FuzzyBubblesBold',
+  },
+  noSpaceText: {
+    padding: 5,
+    fontSize: 19,
+    fontFamily:"FuzzyBubblesRegular",
   }
 })
 

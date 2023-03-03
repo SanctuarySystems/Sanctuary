@@ -97,7 +97,7 @@ const Space = ({ route, navigation }) => {
         axios.get(`${apiUrl}/confessions?space_name=${space_name}&count=200`, {
           headers: { Authorization: `Bearer ${userToken}` },
         })
-          .then((data) => { setConfessions(data.data); }).catch((err) => console.log(err));
+          .then((data) => { setConfessions(data.data.reverse()); }).catch((err) => console.log(err));
         setModalVisible(false);
       })
       .catch((err) => console.log(err));
@@ -147,7 +147,7 @@ const Space = ({ route, navigation }) => {
     axios.get(`${apiUrl}/confessions?space_name=${route.params.space_name}&count=200&exact=true`, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
-      .then((data) => { setConfessions(data.data); })
+      .then((data) => { setConfessions(data.data.reverse()); })
       .catch((err) => console.log(err));
   }, [refreshing]);
 

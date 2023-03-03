@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { StyleSheet, RefreshControl, ScrollView } from "react-native";
-import { UsernameContext, apiUrl } from '../../App.js';
 import ConfessionList from "../Confession/ConfessionList.js";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const Home = ({ navigation }) => {
   const { username, userToken } = useContext(UsernameContext);

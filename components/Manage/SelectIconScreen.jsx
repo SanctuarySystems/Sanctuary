@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity, Button, StyleSheet, FlatList, Animated, Text } from 'react-native';
 import axios from 'axios';
-import { UsernameContext } from "../../App.js";
+import { UsernameContext, apiUrl } from '../../App.js';
 import { useFonts } from 'expo-font';
 
 const SelectIconScreen = ({ navigation }) => {
   const [selected, setSelected] = useState(null);
-  const { username, setUsername } = useContext(UsernameContext);
+  const { username, setUsername, userToken } = useContext(UsernameContext);
   let currentSelect = 1;
 
   const [fontsLoaded] = useFonts({
@@ -95,9 +95,11 @@ const SelectIconScreen = ({ navigation }) => {
       currentSelect = `0${currentSelect}`;
     }
     console.log('hello', currentSelect);
-    axios.post('http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users', {
+    axios.post(`${apiUrl}/users`, {
       username,
       avatar: currentSelect,
+    }, {
+      headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
         console.log('success');

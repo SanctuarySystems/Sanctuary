@@ -1,5 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import Home from "../screens/Home.jsx";
 import Spaces from "../screens/Spaces.jsx";
@@ -14,7 +16,7 @@ import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
 import { useFonts } from 'expo-font';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import Space from '../Space/Space.js';
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +55,7 @@ const MainStackNavigator = ({ setUsername }) => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Comments" component={Comments} />
-      <Stack.Screen name="Home Space" component={Space} />
+      <Stack.Screen name="Space" component={Space} />
       <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
       <Stack.Screen name="Select Icon Screen" component={SelectIconScreen} />
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
@@ -67,7 +69,7 @@ const SpaceStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Spaces" component={Spaces} options={{ username: 'lookingforpeace' }} />
       <Stack.Screen name="Space" component={Space} />
-      <Stack.Screen name="Confession Comments" component={Comments} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };
@@ -77,7 +79,7 @@ const SearchStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Search Spaces" component={Search} />
       <Stack.Screen name="Spaces Form" component={SpacesForm} />
-      <Stack.Screen name="My Space" component={Space} />
+      <Stack.Screen name="Space" component={Space} />
     </Stack.Navigator>
   );
 };
@@ -100,6 +102,7 @@ const screenOptionStyle = StyleSheet.create({
     backgroundColor: '#F9D5A7',
     fontWeight: 'bold',
     fontSize: 65,
+    // flex: 1,
   },
   headerTitleStyle: {
     color: "rgba(49, 94, 153, 1)",

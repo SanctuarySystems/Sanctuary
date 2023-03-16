@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, RefreshControl } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, ScrollView, RefreshControl, View, Dimensions } from "react-native";
 import { Button, SearchBar } from '@rneui/themed';
 import axios from "axios";
 import SpacesList from "./SpacesList.jsx";
+import { useIsFocused } from '@react-navigation/native';
+import { UsernameContext, apiUrl } from '../../App.js';
+
+
+const windowWidth = Dimensions.get('window').width;
 
 const Search = ({ navigation }) => {
   const [allSpaces, setAllSpaces] = useState([]);
   const [query, setQuery] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const { userToken } = React.useContext(UsernameContext);
+
+  const isFocused = useIsFocused();
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -17,26 +25,24 @@ const Search = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/spaces?count=20`)
+    axios.get(`${apiUrl}/spaces?count=200`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((data) => {
         setAllSpaces(data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [refreshing]);
+  }, [refreshing, isFocused]);
 
   const filteredSpaces = allSpaces.filter((space) => {
     return space.space_name.toLowerCase().includes(query.toLowerCase());
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}
-      style={styles.scrollView}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
+    <View style={styles.container}>
+
       <SearchBar
         platform="ios"
         containerStyle={{ backgroundColor: '#FEF1E6' }}
@@ -55,23 +61,33 @@ const Search = ({ navigation }) => {
         onCancel={() => console.log('cancelling')}
         value={query}
       />
-      {filteredSpaces.length !== 0
-        && <SpacesList filteredSpaces={filteredSpaces} navigation={navigation} />}
-      <Button
-        buttonStyle={{
-          borderRadius: 30,
-        }}
-        titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-        containerStyle={{
-          marginHorizontal: 50,
-          height: 50,
-          width: 350,
-          marginVertical: 10,
-        }}
-        title="CREATE ROOM +"
-        onPress={() => navigation.navigate('Spaces Form')}
-      />
-    </ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        horizontal={false}
+        style={styles.scrollView}
+        contentContainerStyle={{ alignItems:'center' }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {filteredSpaces.length !== 0
+          && <SpacesList filteredSpaces={filteredSpaces} navigation={navigation} />}
+        <Button
+          buttonStyle={{
+            borderRadius: 30,
+          }}
+          titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+          containerStyle={{
+            marginHorizontal: 50,
+            height: 50,
+            width: 350,
+            marginVertical: 10,
+          }}
+          title="CREATE ROOM +"
+          onPress={() => navigation.navigate('Spaces Form')}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -79,9 +95,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FEF1E6',
     alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    width: '100%',
+
   },
   scrollView: {
     paddingBottom: 300,
+    overflowX: 'hidden',
+    width: '100%',
   },
 });
 

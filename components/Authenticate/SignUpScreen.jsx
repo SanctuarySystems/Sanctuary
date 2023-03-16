@@ -2,10 +2,9 @@ import React, { useState, useContext } from 'react';
 import { SafeAreaView, View, TextInput, Button, Text, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import axios from 'axios';
-import { authentication } from "./firebase.js";
-import GlobalStyles from '../GlobalStyles.js';
-import { UsernameContext } from '../../App.js';
 import { useFonts } from 'expo-font';
+import GlobalStyles from '../GlobalStyles.js';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 const auth = getAuth();
 
@@ -16,7 +15,7 @@ const SignUpScreen = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [goodUsername, setGoodUsername] = useState(false);
-  const { username, setUsername } = useContext(UsernameContext);
+  const { setUsername, userToken, setUserToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -25,7 +24,9 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleUsername = () => {
     console.log('in handle username');
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${newUsername}`)
+    axios.get(`${apiUrl}/users/${newUsername}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then(({ data }) => {
         if (data.length === 0) {
           setGoodUsername(true);
@@ -46,7 +47,9 @@ const SignUpScreen = ({ navigation }) => {
       const user = auth.currentUser;
       await updateProfile(user, { displayName: newUsername });
       await sendEmailVerification(user);
+      const idToken = await user.getIdToken();
       await setUsername(newUsername);
+      await setUserToken(idToken);
       navigation.navigate('Select Icon Screen');
     } catch (error) {
       setErrorMessage("All fields are required");

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { sendPasswordResetEmail } from "firebase/auth";
-import { authentication } from "../Authenticate/firebase.js";
 import { useFonts } from 'expo-font';
+import authentication from "../Authenticate/firebase.js";
 
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');

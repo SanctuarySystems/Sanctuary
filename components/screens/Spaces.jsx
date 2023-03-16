@@ -1,21 +1,24 @@
 import React from "react";
 import { Button, StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl } from "react-native";
 import axios from 'axios';
-import { UsernameContext } from "../../App.js";
 import { useFonts } from 'expo-font';
+import { useIsFocused } from '@react-navigation/native';
+import { UsernameContext, apiUrl } from '../../App.js';
 
 
 const windowWidth = Dimensions.get('window').width;
 
-const Rooms = ({navigation}) => {
-  const {username, setUsername } = React.useContext(UsernameContext);
+const Rooms = ({ navigation }) => {
+  const { username, userToken } = React.useContext(UsernameContext);
   const [spaces, setSpaces] = React.useState(['space1', 'space2']);
   const [adminSpaces, setAdminSpaces] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const isFocused = useIsFocused();
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
-    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf')
+    FuzzyBubblesRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBubblesBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   // const onLeaveJoin = (leavejoin, spacename) => {
@@ -38,21 +41,15 @@ const Rooms = ({navigation}) => {
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
+    axios.get(`${apiUrl}/users/${username}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .then((data) => {
+        setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [username, refreshing, isFocused]);
 
-  React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
-      .catch((err) => console.log(err));
-  }, [refreshing]);
-  React.useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${username}`)
-      .then((data)=>{setSpaces(data.data.spaces_joined); setAdminSpaces(data.data.spaces_created);})
-      .catch((err) => console.log(err));
-  }, [username]);
 
   if (!fontsLoaded) {
     return (
@@ -69,7 +66,7 @@ const Rooms = ({navigation}) => {
       && (
       <ScrollView showsVerticalScrollIndicator={false} refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-        <Text style={{padding: 5,fontSize: 19, fontFamily:"FuzzyBubblesRegular"}}>Looks like you haven't joined any spaces! Pull down to refresh.</Text>
+        <Text style={styles.noSpaceText}>Looks like you haven't joined any spaces! Pull down to refresh.</Text>
       </ScrollView>
       )}
       {(spaces && spaces.length > 0)
@@ -98,6 +95,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'rgba(0,0,0,0.7)',
     fontFamily: 'FuzzyBubblesBold',
+  },
+  noSpaceText: {
+    padding: 5,
+    fontSize: 19,
+    fontFamily:"FuzzyBubblesRegular",
   }
 })
 

@@ -23,7 +23,7 @@ This application is written in JavaScript and uses:
 
 ## UX
 
-See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit)
+See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit?usp=sharing)
 
 ## Authentication
 
@@ -47,6 +47,13 @@ The authentication component verifies new and existing users. Any user may
 
 Comments display the username, the message, how long ago it was posted, an options button that slides up a modal with additional features such as reporting, and the current vote count with the option to upvote or downvote a comment.
 
+**Comments Page Features**
+* Comments display information such as username, body text, how long it was posted, and vote count
+  * Time ago posted is updated live using the 'moment' module
+* Ability to upvote or downvote a comment once
+  * Comments under a confession are sorted by vote count from greatest to least, top to bottom
+* Comments have an options button that slides up a modal with additional features such as reporting
+  * Reported comments will send notifications to the owner of the space who will be able to view the comment and/or ban the user.
 * Utilized lazy loading with Flat List to improve app performance and increase comment load times
 
 
@@ -57,19 +64,15 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Spaces
 
-**User Spaces List**
+**Spaces List**
 
-<details><summary>Details</summary>
   
 - Renders links to spaces the user has created and joined.
 - Used Dimensions object to incorporate window-width into styling.
 - Used RefreshControl to refetch spaces from the database.
 
-</details>
 
-### Space
-
-<details><summary>Admin View</summary>
+**Admin View**
   
 - Edit Modal: allows user to change space description and guidelines
 - Members Tab: allows user to view list of users who've joined the space with member presence information
@@ -77,20 +80,20 @@ Comments display the username, the message, how long ago it was posted, an optio
   - Number of times the user was reported by another user
   - Number of times the user reported another user
 - Member Ban: Admin can ban members, and remove all of the user's comments and confessions from the space and prevent the banned user from accessing the space.
-</details>
 
-<details><summary>General User View</summary>
+**General User View**
   
 - Leave/Join: Users can leave and join spaces. Joining a space updates user’s home feed with confessions from the space and makes space more easily accessible in the Spaces Tab Screen
 - Write Confession Modal: Users can create confessions.
 - Feed Tab: renders confession module with a refresh control to refetch confessions from the database.
 
-</details>
 
 
 ## Profile 
 
-**Profile Page Features**
+https://user-images.githubusercontent.com/37416800/214449270-e43a9e6b-08c8-496b-a32f-b414bc1bc42c.mp4
+
+From the **profile page**, users have the..
 * Ability to view account details (eg username, avatar)
 * Ability to view spaces the user has joined or created
   * If the user is viewing Joined Spaces, they will be able to see which spaces they are an admin for
@@ -103,8 +106,9 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 ## Notifications
 
-**Notification Features**
-* Note: Notifications are accessible only from Profile page
+*Note: Notifications are accessible only from Profile page*
+
+From the **notification features**, users have the..
 * Ability to view the following types of notifications:
   * When the current user’s comment or confession has been reported by another user
   * When a comment or confession has been reported by a user within a space of which the current user is an admin of
@@ -147,6 +151,8 @@ The account management component enables users to manage their existing account.
   * https://www.linkedin.com/in/chadfusco
   * https://github.com/ChadFusco
 * **Joseph Soto - UI Owner**
+  * https://www.linkedin.com/in/joseph-soto66/
+  * https://github.com/sotojn
 * **Kimberly Cheung**
   * https://www.linkedin.com/in/kimberlywycheung
   * https://github.com/kimberlywycheung
@@ -157,3 +163,5 @@ The account management component enables users to manage their existing account.
   * https://www.linkedin.com/in/sai-vemireddy
   * https://github.com/svemi
 * **Justin Chong**
+  * https://www.linkedin.com/in/justinjchong/
+  * https://github.com/justinjchong

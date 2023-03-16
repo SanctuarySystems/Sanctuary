@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "./firebase.js";
-import { UsernameContext } from '../../App.js';
 import { useFonts } from 'expo-font';
+import authentication from "./firebase.js";
+import { UsernameContext } from '../../App.js';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { username, setUsername } = useContext(UsernameContext);
+  const { setUsername, setUserToken } = useContext(UsernameContext);
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
@@ -19,8 +19,10 @@ const LoginScreen = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       await signInWithEmailAndPassword(authentication, email, password);
-      // setUsername(authentication.currentUser.username);
-      await setUsername(authentication.currentUser.displayName);
+      const user = authentication.currentUser;
+      const idToken = await user.getIdToken();
+      await setUsername(user.displayName);
+      await setUserToken(idToken);
       navigation.navigate('Home Screen');
     } catch (error) {
       setErrorMessage("Incorrect email or password, please try again");

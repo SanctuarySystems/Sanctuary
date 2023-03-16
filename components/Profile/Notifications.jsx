@@ -17,7 +17,6 @@ const Notifications = ({ route, navigation }) => {
 
   React.useEffect(() => {
     setNofitsRead(notifsNum);
-
     updateCookies(reportedPosts);
   }, []);
 
@@ -30,9 +29,8 @@ const Notifications = ({ route, navigation }) => {
       <View style={styles.notificationsView}>
         {
           reportedPosts.map((confession) => {
-            if (!confession) return;
-
             if (confession.reported.length > 0) {
+              console.log('reported conf found', confession);
               // if (reportedCookie) {
               //   for (let i = 0; i < reportedCookie.length; i += 1) {
               //     if (reportedCookie[i].reportedUser === confession.created_by
@@ -65,6 +63,7 @@ const Notifications = ({ route, navigation }) => {
         { reportedConfessions.length > 0
           && reportedPosts.map((confession) => {
             if (reportedConfessions.indexOf(confession.confession_id) > -1) {
+              console.log('reported comments found');
               return confession.comments.map((comment) => {
                 // if (reportedCookie) {
                 //   for (let i = 0; i < reportedCookie.length; i += 1) {

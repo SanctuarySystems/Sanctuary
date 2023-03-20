@@ -97,28 +97,7 @@ const Profile = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileView}>
-          <View style={styles.headerView}>
-          {/* LOG OUT BUTTON */}
-          {/* <Button
-            title="Log out"
-            type="clear"
-            titleStyle={styles.header}
-            onPress={() => navigation.navigate('Welcome Screen')}
-          /> */}
-
           {/* NOTIFICATIONS */}
-          {/* <Button
-            title="Notifications"
-            type="clear"
-            titleStyle={styles.header}
-            onPress={() => navigation.navigate('Notifications', {
-              username: userData.username,
-              viewedCookies,
-              notifsNum,
-              setNofitsRead,
-              reportedPosts,
-            })}
-          /> */}
           <Icon
             name='bell'
             type='feather'
@@ -132,6 +111,16 @@ const Profile = ({ navigation }) => {
               reportedPosts,
             })}
           />
+          { notifsNum > notifsRead
+            && (
+              <Badge
+                status="error"
+                value={notifsNum - notifsRead}
+                containerStyle={{ position: 'absolute', top: 6, right: 66 }}
+              />
+            )}
+
+          {/* SETTINGS */}
           <Icon
             name='settings'
             type='feather'
@@ -139,15 +128,6 @@ const Profile = ({ navigation }) => {
             containerStyle={styles.header}
             onPress={() => setShowModal(true)}
           />
-          { notifsNum > notifsRead
-            && (
-              <Badge
-                status="error"
-                value={notifsNum - notifsRead}
-                containerStyle={{ position: 'absolute', top: 6, right: 122 }}
-              />
-            )}
-            </View>
         </View>
 
         <View style={styles.userView}>
@@ -158,28 +138,12 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={styles.avatar}
               source={images[userData.avatar - 1]}
-            >
-              {/* EDIT AVATAR */}
-              {/* <Avatar.Accessory
-                size={24}
-                // overlayContainerStyle	={{ boxShadow: 'none', backgroundColor: 'blue', shadowOpacity: 0 }}
-                onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
-              /> */}
-            </Avatar>
-            {/* <Icon
-              style={{ top: '25%', right: '38%', backgroundColor: `${colorTheme.beige}`, zIndex: 3 }}
-              size={15}
-              name='pencil'
-              type='font-awesome'
-              color={colorTheme.blue}
-              onPress={() => console.log('hello')} /> */}
+            />
           </View>
 
           <View style={styles.userContainer}>
             {/* USERNAME */}
-            <Text style={styles.username}>
-              {userData.username}
-            </Text>
+            <Text style={styles.username}> {userData.username} </Text>
           </View>
         </View>
 
@@ -247,10 +211,12 @@ const Profile = ({ navigation }) => {
           />
         </View>
       </ScrollView>
+
       <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
           <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
           <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
             <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+              {/* CHANGE AVATAR */}
               <TouchableOpacity
                 style={styles.reportButton}
                 onPressOut={() => {
@@ -260,6 +226,7 @@ const Profile = ({ navigation }) => {
               >
                 <Text style={styles.reportText}>Edit Avatar</Text>
               </TouchableOpacity>
+              {/* CHANGE PW */}
               <TouchableOpacity
                 style={styles.reportButton}
                 onPressOut={() => {
@@ -269,6 +236,7 @@ const Profile = ({ navigation }) => {
               >
                 <Text style={styles.reportText}>Update Password</Text>
               </TouchableOpacity>
+              {/* LOG OUT BUTTON */}
               <TouchableOpacity
                 style={styles.reportButton}
                 onPressOut={() => {
@@ -291,14 +259,10 @@ const styles = StyleSheet.create({
   },
   profileView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     padding: 5,
     height: 50,
     backgroundColor: colorTheme.beige,
-  },
-  headerView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
   },
   header: {
     padding: 8,

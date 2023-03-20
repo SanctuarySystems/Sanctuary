@@ -1,5 +1,17 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item, RefreshControl } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+  Animated,
+  Image,
+  Item,
+  RefreshControl,
+  Modal,
+  TouchableOpacity
+} from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -21,6 +33,7 @@ const Profile = ({ navigation }) => {
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
   const [notifsNum, setNotifsNum] = React.useState(0); // total notifs
   const [notifsRead, setNofitsRead] = React.useState(0); // total notifs read
+  const [showModal, setShowModal] = React.useState(false); // settings modal
 
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
 
@@ -84,16 +97,17 @@ const Profile = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileView}>
+          <View style={styles.headerView}>
           {/* LOG OUT BUTTON */}
-          <Button
+          {/* <Button
             title="Log out"
             type="clear"
             titleStyle={styles.header}
             onPress={() => navigation.navigate('Welcome Screen')}
-          />
+          /> */}
 
           {/* NOTIFICATIONS */}
-          <Button
+          {/* <Button
             title="Notifications"
             type="clear"
             titleStyle={styles.header}
@@ -104,6 +118,26 @@ const Profile = ({ navigation }) => {
               setNofitsRead,
               reportedPosts,
             })}
+          /> */}
+          <Icon
+            name='bell'
+            type='feather'
+            color={colorTheme.blue}
+            containerStyle={styles.header}
+            onPress={() => navigation.navigate('Notifications', {
+              username: userData.username,
+              viewedCookies,
+              notifsNum,
+              setNofitsRead,
+              reportedPosts,
+            })}
+          />
+          <Icon
+            name='settings'
+            type='feather'
+            color={colorTheme.blue}
+            containerStyle={styles.header}
+            onPress={() => setShowModal(true)}
           />
           { notifsNum > notifsRead
             && (
@@ -113,6 +147,7 @@ const Profile = ({ navigation }) => {
                 containerStyle={{ position: 'absolute', top: 6, right: 122 }}
               />
             )}
+            </View>
         </View>
 
         <View style={styles.userView}>
@@ -212,6 +247,40 @@ const Profile = ({ navigation }) => {
           />
         </View>
       </ScrollView>
+      <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
+          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('editing avatar') || navigation.navigate('Select Icon Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Edit Avatar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('changing PW') || navigation.navigate('Change Password Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Update Password</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('logging out') || navigation.navigate('Welcome Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Log Out</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -227,9 +296,12 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: colorTheme.beige,
   },
+  headerView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   header: {
-    color: colorTheme.blue,
-    fontWeight: 'bold',
+    padding: 8,
   },
   userView: {
     flexDirection: 'column',
@@ -299,7 +371,44 @@ const styles = StyleSheet.create({
   },
   searchCancel: {
     color: colorTheme.blue,
-  }
+  },
+  modal: {
+    backgroundColor: 'red',
+    flex: 1,
+    height: '100%',
+  },
+  viewModal: {
+    marginTop: 'auto',
+    backgroundColor: 'transparent',
+    height: '100%',
+    flex: 0.27,
+  },
+  closeModalArea: {
+    flex: 0.75,
+  },
+  report: {
+    width: '100%',
+    marginTop: 'auto',
+    height: '100%',
+    backgroundColor: colorTheme.beige,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+  },
+  reportButton: {
+    marginTop: 10,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '4%',
+    backgroundColor: colorTheme.blue,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 const getUser = (name, cb, userToken) => {

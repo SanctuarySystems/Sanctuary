@@ -116,6 +116,7 @@ const Profile = ({ navigation }) => {
               <Badge
                 status="error"
                 value={notifsNum - notifsRead}
+                value='1'
                 containerStyle={{ position: 'absolute', top: 6, right: 66 }}
               />
             )}

@@ -91,7 +91,7 @@ const NotificationListing = (props) => {
         <View style={styles.buttonContainer}>
           <Button
             size="sm"
-            buttonStyle={isReported? styles.buttonInactive : styles.button}
+            buttonStyle={styles.button}
             title={`View ${post}`}
             titleStyle={styles.buttonText}
             titleStyle={styles.buttonText}

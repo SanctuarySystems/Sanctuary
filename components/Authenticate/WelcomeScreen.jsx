@@ -15,7 +15,7 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 2000,
+      duration: 2300,
       useNativeDriver: true,
     }).start();
   }, []);

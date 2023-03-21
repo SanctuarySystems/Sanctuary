@@ -10,39 +10,22 @@ import SignUpScreen from "./components/Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "./components/Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "./components/Manage/ChangePasswordScreen.jsx";
 import ForgotPasswordScreen from "./components/Manage/ForgotPasswordScreen.jsx";
-import DebugScreen from './components/Authenticate/DebugScreen.jsx';
+import DebugScreen from './components/Authenticate/DebugScreen.jsx'
 
 export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
 // export const apiUrl = 'http://127.0.0.1';
 export const UsernameContext = createContext();
 const Stack = createNativeStackNavigator();
 
-const fadeInterpolator = ({ current }) => ({
-  cardStyle: {
-    opacity: current.progress,
-  },
-  overlayStyle: {
-    opacity: current.progress,
-    backgroundColor: 'black',
-  },
-});
-
 const App = () => {
   const [username, setUsername] = useState('');
   const [userToken, setUserToken] = useState('');
 
   return (
+    // <SafeAreaProvider>
     <NavigationContainer>
       <UsernameContext.Provider value={{ username, setUsername, userToken, setUserToken }}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            cardStyle: { backgroundColor: 'transparent' },
-            cardStyleInterpolator: fadeInterpolator,
-            gestureEnabled: false,
-            gestureDirection: 'horizontal'
-          }}
-        >
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Debug Screen" component={DebugScreen} />
           <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
           <Stack.Screen name="Login Screen" component={LoginScreen} />
@@ -54,6 +37,7 @@ const App = () => {
         </Stack.Navigator>
       </UsernameContext.Provider>
     </NavigationContainer>
+    // </SafeAreaProvider>
   );
 };
 

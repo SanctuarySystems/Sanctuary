@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Animated, ImageBackground } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -27,7 +27,11 @@ const WelcomeScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('../../assets/images/texture.png')}
+      style={styles.container}
+    >
+      <View style={styles.overlay} />
       <Animated.View style={{ ...styles.headerContainer, opacity: fadeAnim }}>
         <Text style={styles.header}>Sanctuary</Text>
       </Animated.View>
@@ -53,13 +57,14 @@ const WelcomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-    </View>
+    </ImageBackground>
   );
+
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FEF1E6',
+    backgroundColor: '#fef1e6',
     flex: 1,
     alignItems: 'center',
   },
@@ -71,12 +76,20 @@ const styles = StyleSheet.create({
     fontSize: 72,
     color: 'rgba(49, 94, 153, 1)',
   },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255)', // Adjust the alpha value to control the opacity
+  },
   logoContainer: {
-    marginTop: -225, // Adjust this value to move the logo
+    marginTop: -240, // Adjust this value to move the logo
   },
   logo: {
-    width: 825,
-    height: 825,
+    width: 850,
+    height: 850,
     resizeMode: 'contain',
   },
   bottomContainer: {
@@ -103,13 +116,13 @@ const styles = StyleSheet.create({
   },
   signupText: {
     fontFamily: 'FuzzyBubbles',
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
   },
   signupLink: {
     fontFamily: 'FuzzyBubbles',
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     color: 'rgba(49, 94, 153, 1)',
     marginLeft: 5,

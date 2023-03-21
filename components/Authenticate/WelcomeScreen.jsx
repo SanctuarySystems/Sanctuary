@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Animated } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -8,6 +8,16 @@ const WelcomeScreen = ({ navigation }) => {
     FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   if (!fontsLoaded) {
     return (
       <View>
@@ -15,18 +25,19 @@ const WelcomeScreen = ({ navigation }) => {
       </View>
     );
   }
+
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
+      <Animated.View style={{ ...styles.headerContainer, opacity: fadeAnim }}>
         <Text style={styles.header}>Sanctuary</Text>
-      </View>
+      </Animated.View>
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
           source={require('../../assets/images/logo.png')}
         />
       </View>
-      <View style={styles.bottomContainer}>
+      <Animated.View style={{ ...styles.bottomContainer, opacity: fadeAnim }}>
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => navigation.navigate('Login Screen')}
@@ -41,7 +52,7 @@ const WelcomeScreen = ({ navigation }) => {
             <Text style={styles.signupLink}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -58,15 +69,14 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Virgil',
     fontSize: 72,
-    fontWeight: 'bold',
     color: 'rgba(49, 94, 153, 1)',
   },
   logoContainer: {
-    marginTop: -210, // Adjust this value to move the logo
+    marginTop: -225, // Adjust this value to move the logo
   },
   logo: {
-    width: 800,
-    height: 800,
+    width: 825,
+    height: 825,
     resizeMode: 'contain',
   },
   bottomContainer: {
@@ -77,13 +87,13 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
     paddingHorizontal: 100,
-    paddingVertical: 20,
+    paddingVertical: 17,
     borderRadius: 15,
     marginBottom: 15,
   },
   loginButtonText: {
     fontFamily: 'FuzzyBubbles',
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     color: '#FEF1E6',
   },
@@ -93,13 +103,13 @@ const styles = StyleSheet.create({
   },
   signupText: {
     fontFamily: 'FuzzyBubbles',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
   },
   signupLink: {
     fontFamily: 'FuzzyBubbles',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: 'rgba(49, 94, 153, 1)',
     marginLeft: 5,

@@ -16,15 +16,32 @@ export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:30
 export const UsernameContext = createContext();
 const Stack = createNativeStackNavigator();
 
+const fadeInterpolator = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+  overlayStyle: {
+    opacity: current.progress,
+    backgroundColor: 'black',
+  },
+});
+
 const App = () => {
   const [username, setUsername] = useState('');
   const [userToken, setUserToken] = useState('');
 
   return (
-    // <SafeAreaProvider>
     <NavigationContainer>
       <UsernameContext.Provider value={{ username, setUsername, userToken, setUserToken }}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyle: { backgroundColor: 'transparent' },
+            cardStyleInterpolator: fadeInterpolator,
+            gestureEnabled: false,
+            gestureDirection: 'horizontal'
+          }}
+        >
           <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
           <Stack.Screen name="Login Screen" component={LoginScreen} />
           <Stack.Screen name="Sign Up Screen" component={SignUpScreen} />
@@ -35,7 +52,6 @@ const App = () => {
         </Stack.Navigator>
       </UsernameContext.Provider>
     </NavigationContainer>
-    // </SafeAreaProvider>
   );
 };
 

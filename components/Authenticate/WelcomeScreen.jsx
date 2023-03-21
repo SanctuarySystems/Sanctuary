@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 75,
+    fontSize: 68,
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {
@@ -86,11 +86,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -305,
+    marginTop: -270,
   },
   logo: {
-    width: 1000,
-    height: 1000,
+    width: 900,
+    height: 900,
     resizeMode: 'contain',
   },
   bottomContainer: {

@@ -5,8 +5,9 @@ import { useFonts } from 'expo-font';
 const WelcomeScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
-    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Fuzzy: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-ExtraBold.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -69,11 +70,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 140, // Adjust this value to move the header
+    marginTop: 140,
   },
   header: {
-    fontFamily: 'Virgil',
-    fontSize: 78,
+    fontFamily: 'Merienda',
+    fontSize: 77,
+    fontWeight: 'ExtraBold 800',
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {
@@ -82,10 +84,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255)', // Adjust the alpha value to control the opacity
+    backgroundColor: 'rgba(255, 255, 255, .4)',
   },
   logoContainer: {
-    marginTop: -285, // Adjust this value to move the logo
+    marginTop: -285,
   },
   logo: {
     width: 950,

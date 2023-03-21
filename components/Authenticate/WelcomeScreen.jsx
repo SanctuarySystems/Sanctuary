@@ -70,27 +70,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 155,
+    marginTop: 150,
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 74,
+    fontSize: 75,
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {
-    position: 'absolute',
+    position: 'relative',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, .3)',
+    backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
     marginTop: -305,
   },
   logo: {
-    width: 990,
-    height: 990,
+    width: 1000,
+    height: 1000,
     resizeMode: 'contain',
   },
   bottomContainer: {

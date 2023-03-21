@@ -74,9 +74,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Merienda',
     fontSize: 68,
     color: 'rgba(49, 94, 153, 1)',
-    textShadowColor: 'rgba(49, 94, 153, 0.5)',
+    textShadowColor: 'rgba(49, 94, 153, .5)',
     textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 5,
+    textShadowRadius: 3,
   },
   overlay: {
     position: 'relative',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
     paddingHorizontal: 115,
-    paddingVertical: 12,
+    paddingVertical: 15,
     borderRadius: 15,
     marginBottom: 12,
   },
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(49, 94, 153, 1)',
     backgroundColor: '#fef1e6',
     borderWidth: 2,
-    paddingHorizontal: 95,
-    paddingVertical: 12,
+    paddingHorizontal: 102,
+    paddingVertical: 13,
     borderRadius: 15,
   },
   registerButtonText: {

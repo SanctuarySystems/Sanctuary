@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 78,
+    fontSize: 74,
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {

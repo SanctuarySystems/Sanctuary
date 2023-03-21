@@ -94,8 +94,8 @@ const ProfileStackNavigator = () => {
   );
 };
 
-const screenOptionStyle = StyleSheet.create({
-
+const screenOptionStyle = {
+  animation: 'fade',
   headerStyle: {
     backgroundColor: '#F9D5A7',
     fontWeight: 'bold',
@@ -109,7 +109,7 @@ const screenOptionStyle = StyleSheet.create({
     fontFamily: 'FuzzyBold',
   },
 
-});
+};
 
 export {
   MainStackNavigator,

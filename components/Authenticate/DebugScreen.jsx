@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import authentication from "./firebase.js";
+import { UsernameContext } from '../../App.js';
+import { DEFAULT_EMAIL, DEFAULT_PASSWORD } from '@env';
 
 const DebugScreen = ({ navigation }) => {
+
+  const { setUsername, setUserToken } = useContext(UsernameContext);
+
+  const signInWithDefaultUser = async () => {
+    try {
+      await signInWithEmailAndPassword(authentication, DEFAULT_EMAIL, DEFAULT_PASSWORD);
+      const user = authentication.currentUser;
+      const idToken = await user.getIdToken();
+      await setUsername(user.displayName);
+      await setUserToken(idToken);
+      navigation.navigate('Home Screen');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -12,7 +32,7 @@ const DebugScreen = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Home Screen')}
+        onPress={signInWithDefaultUser}
       >
         <Text style={styles.buttonText}>Skip to Home Screen</Text>
       </TouchableOpacity>

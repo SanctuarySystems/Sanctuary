@@ -6,6 +6,7 @@ const WelcomeScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
     FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -99,13 +100,13 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
     paddingHorizontal: 100,
-    paddingVertical: 17,
+    paddingVertical: 15,
     borderRadius: 15,
     marginBottom: 15,
   },
   loginButtonText: {
-    fontFamily: 'FuzzyBubbles',
-    fontSize: 26,
+    fontFamily: 'FuzzyBold',
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#FEF1E6',
   },
@@ -114,13 +115,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupText: {
-    fontFamily: 'FuzzyBubbles',
+    fontFamily: 'FuzzyBold',
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
   },
   signupLink: {
-    fontFamily: 'FuzzyBubbles',
+    fontFamily: 'FuzzyBold',
     fontSize: 24,
     fontWeight: 'bold',
     color: 'rgba(49, 94, 153, 1)',

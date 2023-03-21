@@ -174,8 +174,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               <View style={styles.buttonStyleHug}>
                 {idList[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
-                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} />{' ' + item.hugs}</Text>
-                  <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Hug</Text>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={26} />{' ' + item.hugs}</Text>
                 </TouchableOpacity>}
                 {idList[item.confession_id] !== undefined && <View>
                   <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={26} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>

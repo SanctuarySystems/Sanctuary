@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 170, // Adjust this value to move the header
+    marginTop: 140, // Adjust this value to move the header
   },
   header: {
     fontFamily: 'Virgil',
-    fontSize: 72,
+    fontSize: 78,
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255)', // Adjust the alpha value to control the opacity
   },
   logoContainer: {
-    marginTop: -240, // Adjust this value to move the logo
+    marginTop: -285, // Adjust this value to move the logo
   },
   logo: {
-    width: 850,
-    height: 850,
+    width: 950,
+    height: 950,
     resizeMode: 'contain',
   },
   bottomContainer: {

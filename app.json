@@ -3,6 +3,9 @@
     "name": "Sanctuary",
     "slug": "Sanctuary",
     "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.sanctuarysystems.sanctuary"
+    },
     "assetBundlePatterns": [
       "**/*"
     ]

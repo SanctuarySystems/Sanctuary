@@ -7,7 +7,7 @@ const WelcomeScreen = ({ navigation }) => {
     Virgil: require('../../assets/fonts/Virgil.ttf'),
     Fuzzy: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
-    Merienda: require('../../assets/fonts/Merienda-ExtraBold.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-Black.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   overlay: {
-    position: 'relative',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,

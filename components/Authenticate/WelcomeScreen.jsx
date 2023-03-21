@@ -7,7 +7,7 @@ const WelcomeScreen = ({ navigation }) => {
     Virgil: require('../../assets/fonts/Virgil.ttf'),
     Fuzzy: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
-    Merienda: require('../../assets/fonts/Merienda-Bold.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-ExtraBold.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -15,7 +15,7 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 2300,
+      duration: 2000,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 135,
+    marginTop: 155,
   },
   header: {
     fontFamily: 'Merienda',
@@ -83,32 +83,31 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0)',
+    backgroundColor: 'rgba(255, 255, 255, .3)',
   },
   logoContainer: {
-    marginTop: -290,
+    marginTop: -305,
   },
   logo: {
-    width: 960,
-    height: 960,
+    width: 990,
+    height: 990,
     resizeMode: 'contain',
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 28,
     alignItems: 'center',
   },
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
-    paddingHorizontal: 100,
-    paddingVertical: 15,
+    paddingHorizontal: 105,
+    paddingVertical: 13,
     borderRadius: 15,
-    marginBottom: 15,
+    marginBottom: 12,
   },
   loginButtonText: {
     fontFamily: 'FuzzyBold',
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 30,
     color: '#FEF1E6',
   },
   signupContainer: {

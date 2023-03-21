@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { useFonts } from 'expo-font';
+import { StyleSheet, Text, View } from 'react-native';
 import Home from "../screens/Home.jsx";
 import Spaces from "../screens/Spaces.jsx";
 import Search from "../search/Search.jsx";
@@ -15,12 +17,9 @@ import LoginScreen from "../Authenticate/LoginScreen.jsx";
 import SignUpScreen from "../Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "../Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "../Manage/ChangePasswordScreen.jsx";
-import { useFonts } from 'expo-font';
-import { StyleSheet, Text, View} from 'react-native';
 import Space from '../Space/Space.js';
 
 const Stack = createNativeStackNavigator();
-
 
 // const screenOptionStyle = {
 //   headerStyle: {
@@ -41,16 +40,15 @@ const Stack = createNativeStackNavigator();
 // };
 
 const MainStackNavigator = ({ setUsername }) => {
-
   const [fontsLoaded] = useFonts({
-    'Virgil': require('../../assets/fonts/Virgil.ttf'),
-    'FuzzyReg': require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
-    'FuzzyBold': require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Virgil: require('../../assets/fonts/Virgil.ttf'),
+    FuzzyReg: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
-    return (<View><Text>Fonts Loading</Text></View>)
-  } else {
+    return (<View><Text>Fonts Loading</Text></View>);
+  }
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="Home" component={Home} />
@@ -61,7 +59,6 @@ const MainStackNavigator = ({ setUsername }) => {
       <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} />
     </Stack.Navigator>
   );
-  }
 };
 
 const SpaceStackNavigator = () => {
@@ -102,14 +99,14 @@ const screenOptionStyle = StyleSheet.create({
   headerStyle: {
     backgroundColor: '#F9D5A7',
     fontWeight: 'bold',
-    fontSize: 65,
+    fontSize: 80,
     // flex: 1,
   },
   headerTitleStyle: {
     color: "rgba(49, 94, 153, 1)",
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: 'bold',
-    fontFamily: 'Virgil'
+    fontFamily: 'FuzzyBold',
   },
 
 });

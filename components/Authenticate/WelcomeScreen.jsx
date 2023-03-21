@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -17,22 +17,30 @@ const WelcomeScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        Sanctuary
-      </Text>
-      <View style={styles.buttonContainer}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Sanctuary</Text>
+      </View>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../assets/images/logo.png')}
+        />
+      </View>
+      <View style={styles.bottomContainer}>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Sign Up Screen')}
-        >
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
+          style={styles.loginButton}
           onPress={() => navigation.navigate('Login Screen')}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.loginButtonText}>Log In</Text>
         </TouchableOpacity>
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>First time here?</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Sign Up Screen')}
+          >
+            <Text style={styles.signupLink}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -43,41 +51,59 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF1E6',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  headerContainer: {
+    marginTop: 170, // Adjust this value to move the header
   },
   header: {
     fontFamily: 'Virgil',
-    fontSize: 65,
+    fontSize: 72,
     fontWeight: 'bold',
     color: 'rgba(49, 94, 153, 1)',
-    marginBottom: 135,
   },
-  buttonContainer: {
+  logoContainer: {
+    marginTop: -210, // Adjust this value to move the logo
+  },
+  logo: {
+    width: 800,
+    height: 800,
+    resizeMode: 'contain',
+  },
+  bottomContainer: {
+    position: 'absolute',
+    bottom: 50,
+    alignItems: 'center',
+  },
+  loginButton: {
+    backgroundColor: 'rgba(49, 94, 153, 1)',
+    paddingHorizontal: 100,
+    paddingVertical: 20,
+    borderRadius: 15,
+    marginBottom: 15,
+  },
+  loginButtonText: {
+    fontFamily: 'FuzzyBubbles',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FEF1E6',
+  },
+  signupContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
   },
-  button: {
-    backgroundColor: "#FFB085",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginHorizontal: 10,
-  },
-  buttonText: {
-    fontFamily: "FuzzyBubbles",
-    fontSize: 15,
+  signupText: {
+    fontFamily: 'FuzzyBubbles',
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
+  },
+  signupLink: {
+    fontFamily: 'FuzzyBubbles',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'rgba(49, 94, 153, 1)',
+    marginLeft: 5,
   },
 });
 
 export default WelcomeScreen;
-
-/* <View style={styles.buttonContainer}>
-  <Button
-    title="Change Password"
-    onPress={() => navigation.navigate('Change Password Screen')}
-    style={styles.button}
-    color='#90AACB'
-  />
-</View>; */

@@ -43,7 +43,7 @@ const HomeScreen = () => {
           fontWeight: 'bold',
         },
         tabBarItemStyle: {
-          padding: 4,
+          padding: 4.5,
         },
       }}
       tabBarOptions={{

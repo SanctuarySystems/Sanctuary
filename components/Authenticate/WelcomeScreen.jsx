@@ -74,6 +74,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Merienda',
     fontSize: 68,
     color: 'rgba(49, 94, 153, 1)',
+    textShadowColor: 'rgba(49, 94, 153, 0.5)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 5,
   },
   overlay: {
     position: 'relative',

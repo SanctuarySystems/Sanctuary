@@ -5,14 +5,14 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, Modal, TouchableOpacity
 import Comment from './Comment';
 import DetailedConfession from './DetailedConfession';
 import AddComment from './AddComment';
-import { UsernameContext } from '../../App.js';
+import { UsernameContext, apiUrl } from '../../App.js';
 import { useFonts } from 'expo-font';
 import moment from 'moment';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 
 const Comments = ({ route }) => {
-  const { confession_id, item, images } = route.params;
-  const { username } = useContext(UsernameContext);
+  const { confession_id, item, image } = route.params;
+  const { username, userToken } = useContext(UsernameContext);
   const [confession, setConfession] = useState();
 
   const [fontsLoaded] = useFonts({
@@ -22,7 +22,9 @@ const Comments = ({ route }) => {
   });
 
   useEffect(() => {
-    axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confession_id}`)
+    axios.get(`${apiUrl}/confessions/${confession_id}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .then((res) => {
         setConfession(res.data);
       })
@@ -42,7 +44,9 @@ const Comments = ({ route }) => {
 
   const handleReport = () => {
     setShowModal(false);
-    axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/1/2/report/${username}`)
+    axios.patch(`${apiUrl}/confessions/${confession_id}/report/${username}`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
       .catch((error) => console.log(error));
   };
 
@@ -52,71 +56,75 @@ const Comments = ({ route }) => {
         <Text>Still loading font</Text>
       </View>
     );
-  } else {
-    return (
-      <View style={styles.screen}>
-        <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
-          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
-            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-              <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
-                <Text style={styles.reportText}>Report</Text>
-              </TouchableOpacity>
-            </SafeAreaView>
-          </TouchableOpacity>
-        </Modal>
-        {typeof confession === 'object' && (
-        <>
-          <FlatList
-            nestedScrollEnabled
-            ListHeaderComponent={(
-              <View style={styles.containerConfess}>
-                <View style={styles.containerPost}>
-                  <View style={styles.roomDateContainer}>
-                    <View style={{ width: '90%', flexDirection: 'row' }}>
-                      <Text style={styles.roomNameStyle}
-                        onPress={() => spaceNav(item.space_name, item.space_creator)}
-                      >{item.space_name + ' '}</Text>
-                      <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
-                    </View>
-                    <View style={{ width: '10%' }}>
-                      <Entypo name="dots-three-horizontal" size={20} color="black" />
-                    </View>
+  }
+  return (
+    <View style={styles.screen}>
+
+      <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+        <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
+        <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+          <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+            <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport()}>
+              <Text style={styles.reportText}>Report</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        </TouchableOpacity>
+      </Modal>
+      {typeof confession === 'object' && (
+      <>
+        <FlatList
+          nestedScrollEnabled
+          ListHeaderComponent={(
+            <View style={styles.containerConfess}>
+              <View style={styles.containerPost}>
+                <View style={styles.roomDateContainer}>
+                  <View style={{ width: '90%', flexDirection: 'row' }}>
+                    <Text style={styles.roomNameStyle}
+                      onPress={() => spaceNav(item.space_name, item.space_creator)}
+                    >
+                      {item.space_name + ' '}
+                    </Text>
+                    <Text style={styles.dateStyle}>{moment(item.createdAt).fromNow()}</Text>
                   </View>
+                  <View style={{ width: '10%' }} onPress={() => setShowModal(true)} >
+                    <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
+                  </View>
+                </View>
 
                 <View style={styles.imgUserContainer}>
-                <Image source={images[1]} style={styles.image}/>
-                <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
+                  <Image source={image} style={styles.image}/>
+                  <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
                 </View>
-                  <Text style={styles.bodyText}>{item.confession}</Text>
+                <Text style={styles.bodyText}>{item.confession}</Text>
                 <View style={styles.buttonContainer}>
                   <View style={styles.buttonStyleHug}>
-                    {<View>
-                      <Text style={{textAlign: 'center', color: '#90AACB'}}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
-                      <Text style={{fontFamily: 'BubbleRegular', color: '#90AACB'}}>Hugs</Text>
-                      </View>}
+                    <View>
+                      <Text style={{ textAlign: 'center', color: '#90AACB' }}><FontAwesome5 name="hands-helping" size={20} color="#90AACB" />{' ' + (item.hugs + 1)}</Text>
+                      <Text style={{ fontFamily: 'BubbleRegular', color: '#90AACB' }}>Hugs</Text>
+                    </View>
                   </View>
                   <View style={styles.buttonStyleComment}>
-                    {<TouchableOpacity>
-                    <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />{' ' + item.comments.length}</Text>
-                    <Text style={{fontFamily: 'BubbleRegular'}}>Comments</Text>
-                    </TouchableOpacity>}
-                  </View>
+                    <TouchableOpacity>
+                      <Text style={{ textAlign: 'center' }}>
+                        <FontAwesome5 name="comments" size={20} color="rgba(27, 52, 83, 1)" />
+                        {' ' + item.comments.length}
+                      </Text>
+                      <Text style={{ fontFamily: 'BubbleRegular' }}>Comments</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
-            )}
-            keyExtractor={(comment) => comment.id}
-            data={confession.comments.sort((a, b) => b.pops - a.pops)}
-            renderItem={({ item }) => <Comment currentUser={username} handleReport={handleReport} username={item.created_by} body={item.comment} pops={item.pops} date={item.createdAt} setShowModal={setShowModal} confessionId={confession.confession_id} commentId={item.comment_id} />}
-          />
-          <AddComment add={add} username={username} confessionId={confession_id} />
-        </>
-        )}
-      </View>
-    );
-
-  }
-
+            </View>
+          )}
+          keyExtractor={(comment) => comment.id}
+          data={confession.comments.sort((a, b) => b.pops - a.pops)}
+          renderItem={({ comment }) => <Comment currentUser={username} username={comment.created_by} body={comment.comment} pops={comment.pops} date={comment.createdAt} confessionId={confession.confession_id} commentId={comment.comment_id} />}
+        />
+        <AddComment add={add} username={username} confessionId={confession_id} />
+      </>
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -129,17 +137,20 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'red',
     fontFamily: 'BubbleRegular',
+    flex: 1,
+    height: '100%',
   },
   viewModal: {
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
     fontFamily: 'BubbleRegular',
+    flex: 0.2,
   },
   report: {
     width: '100%',
     marginTop: 'auto',
-    height: '20%',
+    height: '100%',
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
@@ -155,6 +166,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     fontFamily: 'BubbleRegular',
+  },
+  closeModalArea: {
+    flex: 0.8,
   },
   container: {
     flex: 1,
@@ -190,18 +204,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
 
   buttonContainer: {
     flexDirection: 'row',
     paddingTop: '2%',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
 
   roomDateContainer: {
     flexDirection: 'row',
-   // backgroundColor: 'rgba(27, 52, 83, .08)',
+    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     fontFamily: 'BubbleRegular',
@@ -210,14 +224,14 @@ const styles = StyleSheet.create({
   imgUserContainer: {
     flexDirection: 'row',
     borderWidth: 0,
-  //  backgroundColor: 'rgba(27, 52, 83, .08)',
+    //  backgroundColor: 'rgba(27, 52, 83, .08)',
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
   image: {
     width: 20,
-    height: 20
+    height: 20,
   },
   buttonStyleHug: {
     borderWidth: 0,
@@ -229,7 +243,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
     paddingTop: '1%',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
 
   buttonStyleComment: {
@@ -239,21 +253,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
     paddingTop: '1%',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
 
   roomNameStyle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
     color: 'rgba(27, 52, 83, 1)',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
 
   dateStyle: {
@@ -267,7 +281,7 @@ const styles = StyleSheet.create({
     color: 'rgba(49, 94, 153, 1)',
     fontSize: 18,
     padding: '3%',
-    fontFamily: 'BubbleRegular'
+    fontFamily: 'BubbleRegular',
   },
   reportText: {
     color: 'white',

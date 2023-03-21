@@ -1,16 +1,29 @@
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet, Animated, Image, Item, RefreshControl } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+  Animated,
+  Image,
+  Item,
+  RefreshControl,
+  Modal,
+  TouchableOpacity
+} from 'react-native';
 import { Button, Avatar, Tab, Badge, SearchBar, Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
-import { UsernameContext } from '../../App';
+import { UsernameContext, apiUrl } from '../../App.js';
 import { colorTheme } from './colorTheme';
 import { images } from './images';
 import SpacesList from './SpacesList';
+import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ({ navigation }) => {
-  const { username } = React.useContext(UsernameContext); // username for get user call
+  const { username, userToken } = React.useContext(UsernameContext); // username for get user call
   const [currentTab, setCurrentTab] = React.useState('joined'); // joined, created
   const [userData, setUserData] = React.useState({}); // userdata to be passed down
   const [spaceData, setSpaceData] = React.useState([]); // current data for joined/created tabs
@@ -20,8 +33,11 @@ const Profile = ({ navigation }) => {
   const [reportedPosts, setReportedPosts] = React.useState([]); // reportedPosts from confessions endpoint
   const [notifsNum, setNotifsNum] = React.useState(0); // total notifs
   const [notifsRead, setNofitsRead] = React.useState(0); // total notifs read
+  const [showModal, setShowModal] = React.useState(false); // settings modal
 
   const [viewedCookies, setViewedCookies] = React.useState([]); // viewedCookies stored via async storage
+
+  const isFocused = useIsFocused(); // react hook for when tab is selected
 
   let refreshNotifications;
 
@@ -37,18 +53,18 @@ const Profile = ({ navigation }) => {
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
       //setNofitsRead(userData.reported_read);
-    });
+    }, userToken);
 
     getConfessions(username, (data) => {
       setReportedPosts(data);
 
       setNotifsNum(countReported(data));
-    });
+    }, userToken);
 
     // initialize and set cookies for notifications every 30k seconds
     initializeCookies();
     refreshCookies();
-  }, []);
+  }, [isFocused]);
 
   React.useEffect(() => {
     // update user data
@@ -56,7 +72,7 @@ const Profile = ({ navigation }) => {
       setUserData(data);
       setSpaceData(data.spaces_joined);
       setCreated(data.spaces_created);
-    });
+    }, userToken);
 
     setTimeout(() => {
       setRefreshing(false);
@@ -81,19 +97,12 @@ const Profile = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileView}>
-          {/* LOG OUT BUTTON */}
-          <Button
-            title="Log out"
-            type="clear"
-            titleStyle={styles.header}
-            onPress={() => navigation.navigate('Welcome Screen')}
-          />
-
           {/* NOTIFICATIONS */}
-          <Button
-            title="Notifications"
-            type="clear"
-            titleStyle={styles.header}
+          <Icon
+            name='bell'
+            type='feather'
+            color={colorTheme.blue}
+            containerStyle={styles.header}
             onPress={() => navigation.navigate('Notifications', {
               username: userData.username,
               viewedCookies,
@@ -107,9 +116,19 @@ const Profile = ({ navigation }) => {
               <Badge
                 status="error"
                 value={notifsNum - notifsRead}
-                containerStyle={{ position: 'absolute', top: 6, right: 122 }}
+                value='1'
+                containerStyle={{ position: 'absolute', top: 6, right: 66 }}
               />
             )}
+
+          {/* SETTINGS */}
+          <Icon
+            name='settings'
+            type='feather'
+            color={colorTheme.blue}
+            containerStyle={styles.header}
+            onPress={() => setShowModal(true)}
+          />
         </View>
 
         <View style={styles.userView}>
@@ -120,28 +139,12 @@ const Profile = ({ navigation }) => {
               rounded
               containerStyle={styles.avatar}
               source={images[userData.avatar - 1]}
-            >
-              {/* EDIT AVATAR */}
-              {/* <Avatar.Accessory
-                size={24}
-                // overlayContainerStyle	={{ boxShadow: 'none', backgroundColor: 'blue', shadowOpacity: 0 }}
-                onPress={() => console.log('editing avatar') || navigation.navigate('Select Icon Screen')}
-              /> */}
-            </Avatar>
-            {/* <Icon
-              style={{ top: '25%', right: '38%', backgroundColor: `${colorTheme.beige}`, zIndex: 3 }}
-              size={15}
-              name='pencil'
-              type='font-awesome'
-              color={colorTheme.blue}
-              onPress={() => console.log('hello')} /> */}
+            />
           </View>
 
           <View style={styles.userContainer}>
             {/* USERNAME */}
-            <Text style={styles.username}>
-              {userData.username}
-            </Text>
+            <Text style={styles.username}> {userData.username} </Text>
           </View>
         </View>
 
@@ -209,6 +212,44 @@ const Profile = ({ navigation }) => {
           />
         </View>
       </ScrollView>
+
+      <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
+          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
+          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+              {/* CHANGE AVATAR */}
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('editing avatar') || navigation.navigate('Select Icon Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Edit Avatar</Text>
+              </TouchableOpacity>
+              {/* CHANGE PW */}
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('changing PW') || navigation.navigate('Change Password Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Update Password</Text>
+              </TouchableOpacity>
+              {/* LOG OUT BUTTON */}
+              <TouchableOpacity
+                style={styles.reportButton}
+                onPressOut={() => {
+                  setShowModal(false);
+                  console.log('logging out') || navigation.navigate('Welcome Screen');
+                }}
+              >
+                <Text style={styles.reportText}>Log Out</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -219,14 +260,13 @@ const styles = StyleSheet.create({
   },
   profileView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     padding: 5,
     height: 50,
     backgroundColor: colorTheme.beige,
   },
   header: {
-    color: colorTheme.blue,
-    fontWeight: 'bold',
+    padding: 8,
   },
   userView: {
     flexDirection: 'column',
@@ -296,17 +336,58 @@ const styles = StyleSheet.create({
   },
   searchCancel: {
     color: colorTheme.blue,
-  }
+  },
+  modal: {
+    backgroundColor: 'red',
+    flex: 1,
+    height: '100%',
+  },
+  viewModal: {
+    marginTop: 'auto',
+    backgroundColor: 'transparent',
+    height: '100%',
+    flex: 0.27,
+  },
+  closeModalArea: {
+    flex: 0.75,
+  },
+  report: {
+    width: '100%',
+    marginTop: 'auto',
+    height: '100%',
+    backgroundColor: colorTheme.beige,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+  },
+  reportButton: {
+    marginTop: 10,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '4%',
+    backgroundColor: colorTheme.blue,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
-const getUser = (name, cb) => {
-  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/users/${name}`)
+const getUser = (name, cb, userToken) => {
+  axios.get(`${apiUrl}/users/${name}`, {
+    headers: { Authorization: `Bearer ${userToken}` },
+  })
     .then(({ data }) => cb(data))
     .catch((err) => console.log('axios error for /users in profile', err));
 };
 
-const getConfessions = (name, cb) => {
-  axios.get(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions?&space_creator=${name}&reported=true`)
+const getConfessions = (name, cb, userToken) => {
+  axios.get(`${apiUrl}/confessions?&space_creator=${name}&reported=true`, {
+    headers: { Authorization: `Bearer ${userToken}` },
+  })
     .then(({ data }) => cb(data))
     .catch((err) => console.log('axios error for /confessions in profile', err));
 };

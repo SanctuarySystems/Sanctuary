@@ -33,13 +33,14 @@ const HomeScreen = () => {
         headerShown: false,
         tabBarInactiveBackgroundColor: '#F9D5A7',
         tabBarActiveBackgroundColor: '#F9D5A7',
+        tabBarStyle: { backgroundColor: '#F9D5A7' },
       }}
       tabBarOptions={{
         safeAreaInsets: {
           bottom: 0,
         },
         style: {
-          backgroundColor: 'orange',
+          backgroundColor: 'white',
         },
       }}
     >

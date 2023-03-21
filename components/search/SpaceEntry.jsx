@@ -26,9 +26,9 @@ const SpaceEntry = ({ navigation, space }) => {
         titleStyle={styles.title}
         containerStyle={styles.container}
         title={space.space_name}
-        onPress={() => navigation.navigate('My Space', {
+        onPress={() => navigation.navigate('Space', {
           space_name: space.space_name,
-          admin: true,
+          isAdmin: space.created_by === username,
           username,
         })}
       />

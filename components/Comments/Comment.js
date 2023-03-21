@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import moment from 'moment';
 import axios from 'axios';
 import { useFonts } from 'expo-font';
+import { UsernameContext, apiUrl } from '../../App.js';
 
-const Comment = ({ username, body, pops, setShowModal, date, commentId, confessionId, currentUser }) => {
+const Comment = ({ username, body, pops, date, commentId, confessionId, currentUser }) => {
   const [pop, setPop] = useState(pops);
   const [popped, setPopped] = useState(false);
   const [plopped, setPlopped] = useState(false);
+  const { userToken } = useContext(UsernameContext);
+  const [viewModal, setViewModal] = useState(false);
 
   const [fontsLoaded] = useFonts({
     BubbleBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
@@ -17,22 +20,29 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
 
   const handlePop = () => {
     if (popped === false) {
+      setPopped(true);
       if (plopped === false) {
-        setPopped(true);
         setPop(pop + 1);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
       } else {
-        setPopped(true);
         setPlopped(false);
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/pop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPop(pop + 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .catch((err) => console.error(err));
       setPopped(false);
       setPop(pop - 1);
@@ -42,25 +52,41 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
   const handlePlop = () => {
     if (plopped === false) {
       if (popped === false) {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPlopped(true);
         setPop(pop - 1);
       } else {
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
-        axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
           .catch((err) => console.error(err));
         setPlopped(true);
         setPopped(false);
         setPop(pop - 2);
       }
     } else {
-      axios.patch(`http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000/confessions/${confessionId}/${commentId}/plop/${currentUser}`)
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
         .catch((err) => console.error(err));
       setPlopped(false);
       setPop(pop + 1);
     }
+  };
+
+  const handleCommentReport = () => {
+    setViewModal(false);
+    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/report/${currentUser}`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .catch((error) => console.log(error));
   };
 
   if (!fontsLoaded) {
@@ -74,8 +100,8 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
           <Entypo name="dot-single" size={24} color="black" />
           <Text style={{fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)'}}>{moment(date).fromNow()}</Text>
         </View>
-        <TouchableOpacity style={styles.dots} onPress={() => setShowModal(true)}>
-          <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setShowModal(true)} />
+        <TouchableOpacity style={styles.dots} onPress={() => setViewModal(true)}>
+          <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setViewModal(true)} />
         </TouchableOpacity>
         <View style={styles.vote}>
           <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
@@ -86,6 +112,18 @@ const Comment = ({ username, body, pops, setShowModal, date, commentId, confessi
             <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
           </TouchableOpacity>
         </View>
+
+            <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
+              <TouchableOpacity style={styles.closeModalArea} onPress={() => setViewModal(false)} />
+              <TouchableOpacity style={styles.viewModal} onPress={() => setViewModal(false)}>
+                <SafeAreaView style={styles.report} onPress={() => setViewModal(false)}>
+                  <TouchableOpacity style={styles.reportButton} onPressOut={() => handleCommentReport()}>
+                    <Text style={styles.reportText}>Report</Text>
+                  </TouchableOpacity>
+                </SafeAreaView>
+              </TouchableOpacity>
+            </Modal>
+
       </View>
     );
   }
@@ -144,6 +182,54 @@ const styles = StyleSheet.create({
   popCount: {
     fontFamily: 'BubbleRegular',
   },
+  modal: {
+    backgroundColor: 'red',
+    fontFamily: 'FuzzyBubblesRegular',
+    height: '100%',
+    flex: 1,
+    // justifyContent: 'flex-end',
+  },
+  viewModal: {
+    marginTop: 'auto',
+    backgroundColor: 'transparent',
+    flex: 0.2,
+    fontFamily: 'BubbleRegular',
+  },
+  report: {
+    width: '100%',
+    marginTop: 'auto',
+    height: '100%',
+    backgroundColor: '#EDF6F9',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  reportButton: {
+    marginTop: 10,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '4%',
+    backgroundColor: '#C44536',
+    borderRadius: 10,
+    alignItems: 'center',
+    fontFamily: 'FuzzyBubblesRegular',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  modalViewContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FEF1E6',
+    fontFamily: 'BubbleRegular',
+  },
+  closeModalArea: {
+    flex: 0.8,
+  }
 });
 
 export default Comment;

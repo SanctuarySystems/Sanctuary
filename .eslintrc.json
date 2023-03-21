@@ -29,7 +29,7 @@
         "react-native/no-single-element-style-arrays": 2,
         "import/no-extraneous-dependencies": "off",
         "no-use-before-define": "off",
-
+        "camelcase": "off",
         "react/jsx-filename-extension": [
             1,
             {

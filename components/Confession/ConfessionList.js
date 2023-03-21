@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from 'moment';
 
 
-const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
+const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
   const [idList, setIdList] = useState({});
   const { username, userToken } = useContext(UsernameContext);
   const [showModal, setShowModal] = useState(false);

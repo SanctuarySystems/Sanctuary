@@ -35,15 +35,15 @@ const HomeScreen = () => {
         tabBarActiveBackgroundColor: '#F9D5A7',
         tabBarStyle: {
           backgroundColor: '#F9D5A7',
-          height: 78,
-          paddingBottom: 10,
+          height: 76,
+          paddingBottom: 14,
         },
         tabBarLabelStyle: {
           fontSize: 15,
           fontWeight: 'bold',
         },
         tabBarItemStyle: {
-          padding: 8,
+          padding: 4,
         },
       }}
       tabBarOptions={{

@@ -37,8 +37,7 @@ const SpacesListing = ({ space, currentUser, navigation }) => {
             {spaceData.space_name}
           </Text>
           <Text>
-            {spaceData.members.length}
-            members
+            {spaceData.members.length} members
           </Text>
         </View>
         <View>

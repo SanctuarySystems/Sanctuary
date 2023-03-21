@@ -143,9 +143,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
 
   return (
     <View style={styles.container}>
-      {allConfessions === 'none' && <Text style={styles.errorText}>My confessionList Never got data pushed in. Please fix that.</Text>}
-      {allConfessions.length === 0 && isRoom === false && <Text style={styles.errorText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
-      {allConfessions.length === 0 && isRoom === true && <Text style={styles.errorText}>There are no confessions in this room. Be the first to post!</Text>}
+      {allConfessions === 'none' && <Text style={styles.noConfText}>My confessionList Never got data pushed in. Please fix that.</Text>}
+      {allConfessions.length === 0 && isRoom === false && <Text style={styles.noConfText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
+      {allConfessions.length === 0 && isRoom === true && <Text style={styles.noConfText}>There are no confessions in this room. Be the first to post!</Text>}
       {allConfessions !== 'none' && allConfessions.length !== 0 && <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -198,14 +198,15 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome}) => {
               </View>
             </View>
             <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
-        <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
-          <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-            <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport(item.confession_id, username)}>
-              <Text style={styles.reportText}>Report</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
-        </TouchableOpacity>
-      </Modal>
+          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
+          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+              <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport(item.confession_id, username)}>
+                <Text style={styles.reportText}>Report</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </TouchableOpacity>
+        </Modal>
           </View>
         )}
 
@@ -233,6 +234,11 @@ const styles = StyleSheet.create({
     fontFamily: 'FuzzyBubblesRegular',
     color: 'rgba(27, 52, 83, 1)',
 
+  },
+  noConfText: {
+    padding: 19,
+    fontSize: 19,
+    fontFamily:"FuzzyBubblesRegular",
   },
   containerConfess: {
     borderWidth: 0,
@@ -338,24 +344,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'right'
   },
+  modal: {
+    backgroundColor: 'red',
+    fontFamily: 'BubbleRegular',
+    flex: 1,
+    height: '100%',
+  },
   viewModal: {
     marginTop: 'auto',
     backgroundColor: 'transparent',
     height: '100%',
-    fontFamily: 'FuzzyBubblesRegular',
-  },
-  modal: {
-    backgroundColor: 'red',
-    fontFamily: 'FuzzyBubblesRegular',
+    fontFamily: 'BubbleRegular',
+    flex: 0.2,
   },
   report: {
     width: '100%',
     marginTop: 'auto',
-    height: '20%',
+    height: '100%',
     backgroundColor: '#EDF6F9',
     borderWidth: 1,
     borderColor: 'lightgrey',
-    fontFamily: 'FuzzyBubblesRegular',
+    fontFamily: 'BubbleRegular',
   },
   reportButton: {
     marginTop: 10,
@@ -366,7 +375,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#C44536',
     borderRadius: 10,
     alignItems: 'center',
-    fontFamily: 'FuzzyBubblesRegular',
+    fontFamily: 'BubbleRegular',
+  },
+  closeModalArea: {
+    flex: 0.8,
   },
   reportText: {
     color: 'white',

@@ -1,5 +1,4 @@
 import React, { useState, createContext } from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
@@ -22,7 +21,6 @@ const App = () => {
   const [userToken, setUserToken] = useState('');
 
   return (
-    // <SafeAreaProvider>
     <NavigationContainer>
       <UsernameContext.Provider value={{ username, setUsername, userToken, setUserToken }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -37,7 +35,6 @@ const App = () => {
         </Stack.Navigator>
       </UsernameContext.Provider>
     </NavigationContainer>
-    // </SafeAreaProvider>
   );
 };
 

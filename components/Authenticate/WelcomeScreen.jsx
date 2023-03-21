@@ -59,7 +59,6 @@ const WelcomeScreen = ({ navigation }) => {
       </Animated.View>
     </ImageBackground>
   );
-
 };
 
 const styles = StyleSheet.create({

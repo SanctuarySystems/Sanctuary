@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 140,
+    marginTop: 135,
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 77,
+    fontSize: 78,
     color: 'rgba(49, 94, 153, 1)',
   },
   overlay: {
@@ -86,11 +86,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -285,
+    marginTop: -290,
   },
   logo: {
-    width: 950,
-    height: 950,
+    width: 960,
+    height: 960,
     resizeMode: 'contain',
   },
   bottomContainer: {

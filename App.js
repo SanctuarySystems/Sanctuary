@@ -9,7 +9,7 @@ import SignUpScreen from "./components/Authenticate/SignUpScreen.jsx";
 import SelectIconScreen from "./components/Manage/SelectIconScreen.jsx";
 import ChangePasswordScreen from "./components/Manage/ChangePasswordScreen.jsx";
 import ForgotPasswordScreen from "./components/Manage/ForgotPasswordScreen.jsx";
-import DebugScreen from './components/Authenticate/DebugScreen.jsx'
+import DebugScreen from './components/Authenticate/DebugScreen.jsx';
 
 export const apiUrl = 'http://ec2-52-33-56-56.us-west-2.compute.amazonaws.com:3000';
 // export const apiUrl = 'http://127.0.0.1';
@@ -23,7 +23,12 @@ const App = () => {
   return (
     <NavigationContainer>
       <UsernameContext.Provider value={{ username, setUsername, userToken, setUserToken }}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            stackAnimation: 'fade',
+          }}
+        >
           <Stack.Screen name="Debug Screen" component={DebugScreen} />
           <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
           <Stack.Screen name="Login Screen" component={LoginScreen} />

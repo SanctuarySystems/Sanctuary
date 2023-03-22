@@ -9,6 +9,8 @@ const DebugScreen = ({ navigation }) => {
 
   const { setUsername, setUserToken } = useContext(UsernameContext);
 
+  // set username and password in .env to use debug screen
+
   const signInWithDefaultUser = async () => {
     try {
       await signInWithEmailAndPassword(authentication, DEFAULT_EMAIL, DEFAULT_PASSWORD);

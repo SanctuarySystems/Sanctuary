@@ -4,19 +4,19 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator, ProfileStackNavigator, SearchStackNavigator, SpaceStackNavigator } from './StackNavigator.jsx';
 
 const renderHome = ({ focused }) => {
-  return focused ? <MaterialCommunityIcons name="home" size={30} color="#90AACB" /> : <MaterialCommunityIcons name="home" size={30} color="rgba(49, 94, 153, 1)" />;
+  return focused ? <MaterialCommunityIcons name="home" size={34} color="#90AACB" /> : <MaterialCommunityIcons name="home" size={32} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderSpaces = ({ focused }) => {
-  return focused ? <MaterialCommunityIcons name="google-classroom" size={25} color="#90AACB" /> : <MaterialCommunityIcons name="google-classroom" size={25} color="rgba(49, 94, 153, 1)" />;
+  return focused ? <MaterialCommunityIcons name="google-classroom" size={28} color="#90AACB" /> : <MaterialCommunityIcons name="google-classroom" size={26} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderSearch = ({ focused }) => {
-  return focused ? <Ionicons name="search" size={25} color="#90AACB" /> : <Ionicons name="search" size={25} color="rgba(49, 94, 153, 1)" />;
+  return focused ? <Ionicons name="search" size={28} color="#90AACB" /> : <Ionicons name="search" size={26} color="rgba(49, 94, 153, 1)" />;
 };
 
 const renderProfile = ({ focused }) => {
-  return focused ? <MaterialCommunityIcons name="account" size={30} color="#90AACB" /> : <MaterialCommunityIcons name="account" size={30} color="rgba(49, 94, 153, 1)" />;
+  return focused ? <MaterialCommunityIcons name="account" size={34} color="#90AACB" /> : <MaterialCommunityIcons name="account" size={32} color="rgba(49, 94, 153, 1)" />;
 };
 
 // const Stack = createNativeStackNavigator();
@@ -33,7 +33,18 @@ const HomeScreen = () => {
         headerShown: false,
         tabBarInactiveBackgroundColor: '#F9D5A7',
         tabBarActiveBackgroundColor: '#F9D5A7',
-        tabBarStyle: { backgroundColor: '#F9D5A7' },
+        tabBarStyle: {
+          backgroundColor: '#F9D5A7',
+          height: 72,
+          paddingBottom: 16,
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          fontWeight: 'bold',
+        },
+        tabBarItemStyle: {
+          padding: 3,
+        },
       }}
       tabBarOptions={{
         safeAreaInsets: {

@@ -47,7 +47,6 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
   };
 
   useEffect(() => {
-
     ///Add line below to reset local storage
     //saveData({});
      getData();
@@ -175,24 +174,22 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               <View style={styles.buttonStyleHug}>
                 {idList[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
-                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={20} />{' ' + item.hugs}</Text>
-                  <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Hug</Text>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={26} />{' ' + item.hugs}</Text>
                 </TouchableOpacity>}
                 {idList[item.confession_id] !== undefined && <View>
-                  <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={20} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
-                  <Text style={{fontFamily: 'FuzzyBubblesBold', color: 'rgba(49, 94, 153, 1)', textAlign: 'center'}}>Hugged!</Text>
+                  <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={26} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
+
                   </View>}
               </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
                   onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
-                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
-                  <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Comments</Text>
+                  <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={26} />{' ' + item.comments.length}</Text>
+
                 </TouchableOpacity> }
                 {isRoom && <TouchableOpacity
                 onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
-                <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={20} />{' ' + item.comments.length}</Text>
-                <Text style={{fontFamily: 'FuzzyBubblesBold'}}>Comments</Text>
+                <Text style={{textAlign: 'center'}}><FontAwesome5 name="comments" size={26} />{' ' + item.comments.length}</Text>
                 </TouchableOpacity>}
               </View>
               </View>
@@ -211,8 +208,6 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
         )}
 
       />}
-
-
     </View>
   );
   }
@@ -261,13 +256,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-
-  buttonContainer: {
-    flexDirection: 'row',
-    paddingTop: '2%',
-    fontFamily: 'Virgil'
-  },
-
   roomDateContainer: {
     flexDirection: 'row',
    // backgroundColor: 'rgba(27, 52, 83, .08)',
@@ -288,27 +276,26 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    paddingTop: '1%',
+    justifyContent: 'space-between',
+    fontFamily: 'Virgil'
+  },
   buttonStyleHug: {
     borderWidth: 0,
-    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    borderRightWidth: 1,
-    borderTopWidth: 1,
     borderColor: 'rgba(27, 52, 83, .1)',
-    paddingTop: '1%',
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
+    paddingLeft: 100,
   },
-
   buttonStyleComment: {
     borderWidth: 0,
-    width: '50%',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: 'rgba(27, 52, 83, .1)',
-    paddingTop: '1%',
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
+    paddingRight: 100,
   },
 
   roomNameStyle: {
@@ -335,14 +322,15 @@ const styles = StyleSheet.create({
     //fontFamily: 'Times New Roman'
   },
   bodyText: {
-  //  color: 'rgba(49, 94, 153, 1)',
-    fontSize: 18,
+    color: 'black',
+    fontSize: 20,
     padding: '3%',
-    fontFamily: 'FuzzyBubblesRegular'
+    fontFamily: 'FuzzyBubblesRegular',
+    flexWrap: 'wrap',
   },
   threeDots: {
     fontSize: 20,
-    textAlign: 'right'
+    textAlign: 'right',
   },
   modal: {
     backgroundColor: 'red',

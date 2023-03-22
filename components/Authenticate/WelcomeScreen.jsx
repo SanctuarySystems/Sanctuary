@@ -5,7 +5,9 @@ import { useFonts } from 'expo-font';
 const WelcomeScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
-    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Fuzzy: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
+    FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-Black.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -48,14 +50,12 @@ const WelcomeScreen = ({ navigation }) => {
         >
           <Text style={styles.loginButtonText}>Log In</Text>
         </TouchableOpacity>
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>First time here?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Sign Up Screen')}
-          >
-            <Text style={styles.signupLink}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={() => navigation.navigate('Sign Up Screen')}
+        >
+          <Text style={styles.registerButtonText}>Register</Text>
+        </TouchableOpacity>
       </Animated.View>
     </ImageBackground>
   );
@@ -68,12 +68,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 140, // Adjust this value to move the header
+    marginTop: 150,
   },
   header: {
-    fontFamily: 'Virgil',
-    fontSize: 78,
+    fontFamily: 'Merienda',
+    fontSize: 68,
     color: 'rgba(49, 94, 153, 1)',
+    textShadowColor: 'rgba(49, 94, 153, .5)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 3,
   },
   overlay: {
     position: 'absolute',
@@ -81,51 +84,45 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255)', // Adjust the alpha value to control the opacity
+    backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -285, // Adjust this value to move the logo
+    marginTop: -265,
   },
   logo: {
-    width: 950,
-    height: 950,
+    width: 900,
+    height: 900,
     resizeMode: 'contain',
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 28,
     alignItems: 'center',
   },
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
-    paddingHorizontal: 100,
-    paddingVertical: 17,
+    paddingHorizontal: 115,
+    paddingVertical: 15,
     borderRadius: 15,
-    marginBottom: 15,
+    marginBottom: 12,
   },
   loginButtonText: {
-    fontFamily: 'FuzzyBubbles',
+    fontFamily: 'FuzzyBold',
     fontSize: 26,
-    fontWeight: 'bold',
     color: '#FEF1E6',
   },
-  signupContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  registerButton: {
+    borderColor: 'rgba(49, 94, 153, 1)',
+    backgroundColor: '#fef1e6',
+    borderWidth: 2,
+    paddingHorizontal: 102,
+    paddingVertical: 13,
+    borderRadius: 15,
   },
-  signupText: {
-    fontFamily: 'FuzzyBubbles',
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  signupLink: {
-    fontFamily: 'FuzzyBubbles',
-    fontSize: 24,
-    fontWeight: 'bold',
+  registerButtonText: {
+    fontFamily: 'FuzzyBold',
+    fontSize: 26,
     color: 'rgba(49, 94, 153, 1)',
-    marginLeft: 5,
   },
 });
-
 export default WelcomeScreen;

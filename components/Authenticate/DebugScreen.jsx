@@ -6,7 +6,6 @@ import { UsernameContext } from '../../App.js';
 import { DEFAULT_EMAIL, DEFAULT_PASSWORD } from '@env';
 
 const DebugScreen = ({ navigation }) => {
-
   const { setUsername, setUserToken } = useContext(UsernameContext);
 
   // set username and password in .env to use debug screen

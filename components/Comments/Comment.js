@@ -18,32 +18,27 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
     BubbleRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
   });
 
+  const popPlopComment = (popPlop = 'pop') => {
+    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/${popPlop}/${currentUser}`, {}, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .catch((err) => console.error(err));
+  };
+
   const handlePop = () => {
     if (popped === false) {
       setPopped(true);
       if (plopped === false) {
         setPop(pop + 1);
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
+        popPlopComment('pop');
       } else {
         setPlopped(false);
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
+        popPlopComment('pop');
+        popPlopComment('pop');
         setPop(pop + 2);
       }
     } else {
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
-        headers: { Authorization: `Bearer ${userToken}` },
-      })
-        .catch((err) => console.error(err));
+      popPlopComment('plop');
       setPopped(false);
       setPop(pop - 1);
     }
@@ -52,30 +47,18 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
   const handlePlop = () => {
     if (plopped === false) {
       if (popped === false) {
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
+        popPlopComment('plop');
         setPlopped(true);
         setPop(pop - 1);
       } else {
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
-        axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
-          headers: { Authorization: `Bearer ${userToken}` },
-        })
-          .catch((err) => console.error(err));
+        popPlopComment('plop');
+        popPlopComment('plop');
         setPlopped(true);
         setPopped(false);
         setPop(pop - 2);
       }
     } else {
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
-        headers: { Authorization: `Bearer ${userToken}` },
-      })
-        .catch((err) => console.error(err));
+      popPlopComment('plop');
       setPlopped(false);
       setPop(pop + 1);
     }

@@ -6,10 +6,19 @@ import axios from 'axios';
 import { useFonts } from 'expo-font';
 import { UsernameContext, apiUrl } from '../../App.js';
 
-const Comment = ({ username, body, pops, date, commentId, confessionId, currentUser }) => {
+const Comment = ({
+  username,
+  body,
+  pops,
+  date,
+  commentId,
+  confessionId,
+  currentUser,
+  userVoteStatus,
+}) => {
   const [pop, setPop] = useState(pops);
-  const [popped, setPopped] = useState(false); // revise to get currentUser popped status from API
-  const [plopped, setPlopped] = useState(false); // revise to get currentUser plopped status from API
+  const [popped, setPopped] = useState(userVoteStatus === 1);
+  const [plopped, setPlopped] = useState(userVoteStatus === -1);
   const { userToken } = useContext(UsernameContext);
   const [viewModal, setViewModal] = useState(false);
 

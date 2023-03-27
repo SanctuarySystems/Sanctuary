@@ -33,7 +33,6 @@ const NotificationListing = (props) => {
   const name = reported === username ? 'Your' : `${reported}'s`;
   const post = commentId ? 'comment' : 'confession';
 
-
   console.log(commentId, confessionId);
 
   const [fontsLoaded] = useFonts({

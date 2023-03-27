@@ -8,8 +8,8 @@ import { UsernameContext, apiUrl } from '../../App.js';
 
 const Comment = ({ username, body, pops, date, commentId, confessionId, currentUser }) => {
   const [pop, setPop] = useState(pops);
-  const [popped, setPopped] = useState(false);
-  const [plopped, setPlopped] = useState(false);
+  const [popped, setPopped] = useState(false); // revise to get currentUser popped status from API
+  const [plopped, setPlopped] = useState(false); // revise to get currentUser plopped status from API
   const { userToken } = useContext(UsernameContext);
   const [viewModal, setViewModal] = useState(false);
 
@@ -18,49 +18,35 @@ const Comment = ({ username, body, pops, date, commentId, confessionId, currentU
     BubbleRegular: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
   });
 
-  const popPlopComment = (popPlop = 'pop') => {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/${popPlop}/${currentUser}`, {}, {
-      headers: { Authorization: `Bearer ${userToken}` },
-    })
-      .catch((err) => console.error(err));
-  };
-
   const handlePop = () => {
-    if (popped === false) {
+    if (!popped) {
       setPopped(true);
-      if (plopped === false) {
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+        .catch((err) => console.error(err));
+      if (!plopped) {
         setPop(pop + 1);
-        popPlopComment('pop');
       } else {
         setPlopped(false);
-        popPlopComment('pop');
-        popPlopComment('pop');
         setPop(pop + 2);
       }
-    } else {
-      popPlopComment('plop');
-      setPopped(false);
-      setPop(pop - 1);
     }
   };
 
   const handlePlop = () => {
-    if (plopped === false) {
-      if (popped === false) {
-        popPlopComment('plop');
-        setPlopped(true);
+    if (!plopped) {
+      setPlopped(true);
+      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+        .catch((err) => console.error(err));
+      if (!popped) {
         setPop(pop - 1);
       } else {
-        popPlopComment('plop');
-        popPlopComment('plop');
-        setPlopped(true);
         setPopped(false);
         setPop(pop - 2);
       }
-    } else {
-      popPlopComment('plop');
-      setPlopped(false);
-      setPop(pop + 1);
     }
   };
 

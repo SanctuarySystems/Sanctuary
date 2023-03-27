@@ -19,7 +19,6 @@ const Home = ({ navigation }) => {
 
   const getConfessions = () => {
     if (username) {
-      console.log(username);
       axios.get(`${apiUrl}/users/${username}`, {
         headers: { Authorization: `Bearer ${userToken}` },
       })

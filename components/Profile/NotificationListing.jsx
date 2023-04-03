@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
 const markRead = (confessionId, commentId, userToken) => {
   if (commentId) {
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/reported_read`, {}, {
+    axios.patch(`${apiUrl}/comments/${commentId}/reported_read`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((err) => console.log('mark comment read error in profile', err));

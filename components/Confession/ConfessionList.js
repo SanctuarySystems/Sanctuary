@@ -132,20 +132,19 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
 
 
   if (!fontsLoaded) {
-
     return (
       <View>
         <Text>Still loading font</Text>
       </View>
     );
-  } else {
-
+  }
   return (
     <View style={styles.container}>
       {allConfessions === 'none' && <Text style={styles.noConfText}>My confessionList Never got data pushed in. Please fix that.</Text>}
       {allConfessions.length === 0 && isRoom === false && <Text style={styles.noConfText}>There are no confessions to see in your home feed! Either join more groups or make a post!</Text>}
       {allConfessions.length === 0 && isRoom === true && <Text style={styles.noConfText}>There are no confessions in this room. Be the first to post!</Text>}
-      {allConfessions !== 'none' && allConfessions.length !== 0 && <FlatList
+      {allConfessions !== 'none' && allConfessions.length !== 0 && (
+      <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.confession_id}
@@ -165,13 +164,14 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
                 </View>
               </View>
 
-            <View style={styles.imgUserContainer}>
-            <Image source={images[(Number(item.conf_creator_avatar) - 1)]} style={styles.image}/>
-            <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
-            </View>
+              <View style={styles.imgUserContainer}>
+                <Text style={styles.textStyle}>{item.conf_creator_avatar}</Text>
+                <Image source={images[(Number(item.conf_creator_avatar) - 1)]} style={styles.image}/>
+                <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
+              </View>
               <Text style={styles.bodyText}>{item.confession}</Text>
-            <View style={styles.buttonContainer}>
-              <View style={styles.buttonStyleHug}>
+              <View style={styles.buttonContainer}>
+                <View style={styles.buttonStyleHug}>
                 {idList[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={26} />{' ' + item.hugs}</Text>
@@ -180,7 +180,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
                   <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={26} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
 
                   </View>}
-              </View>
+                </View>
               <View style={styles.buttonStyleComment}>
                 {(!isRoom) && <TouchableOpacity
                   onPress={() => nav.navigate('Comments', {confession_id: item.confession_id, item: item, image: images[(Number(item.conf_creator_avatar) - 1)]})}>
@@ -195,22 +195,21 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               </View>
             </View>
             <Modal styles={styles.modal} visible={showModal} animationType='slide' transparent>
-          <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
-          <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
-            <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
-              <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport(item.confession_id, username)}>
-                <Text style={styles.reportText}>Report</Text>
+              <TouchableOpacity style={styles.closeModalArea} onPress={() => setShowModal(false)} />
+              <TouchableOpacity style={styles.viewModal} onPress={() => setShowModal(false)}>
+                <SafeAreaView style={styles.report} onPress={() => setShowModal(false)}>
+                  <TouchableOpacity style={styles.reportButton} onPressOut={() => handleReport(item.confession_id, username)}>
+                    <Text style={styles.reportText}>Report</Text>
+                  </TouchableOpacity>
+                </SafeAreaView>
               </TouchableOpacity>
-            </SafeAreaView>
-          </TouchableOpacity>
-        </Modal>
+            </Modal>
           </View>
         )}
-
-      />}
+      />
+      )}
     </View>
   );
-  }
 };
 
 const styles = StyleSheet.create({

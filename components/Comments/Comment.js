@@ -72,11 +72,11 @@ const Comment = ({
   }
   return (
     <View style={styles.comment}>
-      <Text style={{fontFamily: 'BubbleRegular', fontSize: 20}}>{body}</Text>
+      <Text style={{ fontFamily: 'BubbleRegular', fontSize: 20 }}>{body}</Text>
       <View style={styles.info}>
         <Text style={styles.username}>{username}</Text>
         <Entypo name="dot-single" size={24} color="black" />
-        <Text style={{fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)'}}>{moment(date).fromNow()}</Text>
+        <Text style={{ fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)' }}>{moment(date).fromNow()}</Text>
       </View>
       <TouchableOpacity style={styles.dots} onPress={() => setViewModal(true)}>
         <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setViewModal(true)} />

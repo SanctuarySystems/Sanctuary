@@ -69,42 +69,41 @@ const Comment = ({
 
   if (!fontsLoaded) {
     return (<View><Text>still loading font</Text></View>);
-  } else {
-    return (
-      <View style={styles.comment}>
-        <Text style={{fontFamily: 'BubbleRegular', fontSize: 20}}>{body}</Text>
-        <View style={styles.info}>
-          <Text style={styles.username}>{username}</Text>
-          <Entypo name="dot-single" size={24} color="black" />
-          <Text style={{fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)'}}>{moment(date).fromNow()}</Text>
-        </View>
-        <TouchableOpacity style={styles.dots} onPress={() => setViewModal(true)}>
-          <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setViewModal(true)} />
-        </TouchableOpacity>
-        <View style={styles.vote}>
-          <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
-            <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.popCount}>{pop}</Text>
-          <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
-            <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-
-            <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
-              <TouchableOpacity style={styles.closeModalArea} onPress={() => setViewModal(false)} />
-              <TouchableOpacity style={styles.viewModal} onPress={() => setViewModal(false)}>
-                <SafeAreaView style={styles.report} onPress={() => setViewModal(false)}>
-                  <TouchableOpacity style={styles.reportButton} onPressOut={() => handleCommentReport()}>
-                    <Text style={styles.reportText}>Report</Text>
-                  </TouchableOpacity>
-                </SafeAreaView>
-              </TouchableOpacity>
-            </Modal>
-
-      </View>
-    );
   }
+  return (
+    <View style={styles.comment}>
+      <Text style={{fontFamily: 'BubbleRegular', fontSize: 20}}>{body}</Text>
+      <View style={styles.info}>
+        <Text style={styles.username}>{username}</Text>
+        <Entypo name="dot-single" size={24} color="black" />
+        <Text style={{fontFamily: 'BubbleRegular', color: 'rgba(49, 94, 153, 1)'}}>{moment(date).fromNow()}</Text>
+      </View>
+      <TouchableOpacity style={styles.dots} onPress={() => setViewModal(true)}>
+        <Entypo name="dots-three-horizontal" size={20} color="black" onPress={() => setViewModal(true)} />
+      </TouchableOpacity>
+      <View style={styles.vote}>
+        <TouchableOpacity style={popped ? styles.pop : null} onPress={handlePop}>
+          <FontAwesome5 name="arrow-alt-circle-up" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.popCount}>{pop}</Text>
+        <TouchableOpacity style={plopped ? styles.plop : null} onPress={handlePlop}>
+          <FontAwesome5 name="arrow-alt-circle-down" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
+          <Modal styles={styles.modal} visible={viewModal} animationType='slide' transparent>
+            <TouchableOpacity style={styles.closeModalArea} onPress={() => setViewModal(false)} />
+            <TouchableOpacity style={styles.viewModal} onPress={() => setViewModal(false)}>
+              <SafeAreaView style={styles.report} onPress={() => setViewModal(false)}>
+                <TouchableOpacity style={styles.reportButton} onPressOut={() => handleCommentReport()}>
+                  <Text style={styles.reportText}>Report</Text>
+                </TouchableOpacity>
+              </SafeAreaView>
+            </TouchableOpacity>
+          </Modal>
+
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

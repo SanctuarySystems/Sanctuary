@@ -30,7 +30,7 @@ const Comment = ({
   const handlePop = () => {
     if (!popped) {
       setPopped(true);
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/pop/${currentUser}`, {}, {
+      axios.patch(`${apiUrl}/comments/${commentId}/pop/${currentUser}`, {}, {
         headers: { Authorization: `Bearer ${userToken}` },
       })
         .catch((err) => console.error(err));
@@ -46,7 +46,7 @@ const Comment = ({
   const handlePlop = () => {
     if (!plopped) {
       setPlopped(true);
-      axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/plop/${currentUser}`, {}, {
+      axios.patch(`${apiUrl}/comments/${commentId}/plop/${currentUser}`, {}, {
         headers: { Authorization: `Bearer ${userToken}` },
       })
         .catch((err) => console.error(err));
@@ -61,7 +61,7 @@ const Comment = ({
 
   const handleCommentReport = () => {
     setViewModal(false);
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/report/${currentUser}`, {}, {
+    axios.patch(`${apiUrl}/comments/${commentId}/report/${currentUser}`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((error) => console.log(error));

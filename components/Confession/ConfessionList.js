@@ -165,6 +165,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               </View>
 
               <View style={styles.imgUserContainer}>
+                <Text style={styles.textStyle}>{item.conf_creator_avatar}</Text>
                 <Image source={images[(Number(item.conf_creator_avatar) - 1)]} style={styles.image}/>
                 <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
               </View>

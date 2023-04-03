@@ -61,7 +61,7 @@ const Comment = ({
 
   const handleCommentReport = () => {
     setViewModal(false);
-    axios.patch(`${apiUrl}/confessions/${confessionId}/${commentId}/report/${currentUser}`, {}, {
+    axios.patch(`${apiUrl}/comments/${commentId}/report/${currentUser}`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .catch((error) => console.log(error));

@@ -92,7 +92,7 @@ const Comments = ({ route }) => {
                 </View>
 
                 <View style={styles.imgUserContainer}>
-                  <Image source={image} style={styles.image}/>
+                  <Image source={image} style={styles.image} />
                   <Text style={styles.textStyle}>{'  ' + item.created_by}</Text>
                 </View>
                 <Text style={styles.bodyText}>{item.confession}</Text>
@@ -197,10 +197,8 @@ const styles = StyleSheet.create({
 
   },
   containerConfess: {
-    borderWidth: 0,
     // backgroundColor: 'rgba(144, 170 , 203, .2)',
     backgroundColor: 'rgba(255, 255, 255, .85)',
-    borderColor: 'black',
     borderRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(27, 52, 83, .08)',

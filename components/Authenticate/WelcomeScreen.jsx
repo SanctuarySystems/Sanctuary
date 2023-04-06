@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 160,
+    marginTop: 155,
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 72,
+    fontSize: 70,
     color: 'rgba(49, 94, 153, 1)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 3,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -280,
+    marginTop: -270,
   },
   logo: {
     width: 900,

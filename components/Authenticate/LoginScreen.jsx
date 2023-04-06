@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { View, SafeAreaView, KeyboardAvoidingView, TextInput, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useFonts } from 'expo-font';
 import authentication from "./firebase.js";
 import { UsernameContext } from '../../App.js';
+import { useFonts } from 'expo-font';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,7 +13,8 @@ const LoginScreen = ({ navigation }) => {
 
   const [fontsLoaded] = useFonts({
     Virgil: require('../../assets/fonts/Virgil.ttf'),
-    FuzzyBubbles: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-ExtraBold.ttf'),
   });
 
   const handleSubmit = async () => {
@@ -46,33 +47,35 @@ const LoginScreen = ({ navigation }) => {
     <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView style={styles.inputContainer} behavior='padding' keyboardVerticalOffset={150}>
-          <Text style={styles.header}>Sanctuary</Text>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Email"
-            onChangeText={(text) => setEmail(text)}
-          />
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Password"
-            secureTextEntry
-            onChangeText={(text) => setPassword(text)}
-          />
-          {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleForgotPassword}
-            >
-              <Text style={styles.buttonText}>Forgot Password</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleSubmit}
-            >
-              <Text style={styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
+          <Text style={styles.header}>Login</Text>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.inputBox}
+              onChangeText={(text) => setEmail(text)}
+              keyboardType="email-address"
+            />
           </View>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={styles.inputBox}
+              secureTextEntry
+              onChangeText={(text) => setPassword(text)}
+            />
+          </View>
+          {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.loginButtonText}>Log In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleForgotPassword}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </TouchableOpacity>
@@ -81,52 +84,65 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FEF1E6',
+    backgroundColor: '#fef1e6',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    borderWidth: 2,
   },
   header: {
-    fontFamily: 'Virgil',
-    fontSize: 60,
-    fontWeight: 'bold',
+    fontFamily: 'Merienda',
+    fontSize: 54,
     color: 'rgba(49, 94, 153, 1)',
-    marginBottom: 70,
+    marginTop: -50,
+    marginBottom: 45,
   },
   inputContainer: {
     alignItems: 'center',
     width: '80%',
+  },
+  inputWrapper: {
+    width: '100%',
+    marginBottom: 5,
+  },
+  label: {
+    fontFamily: 'FuzzyBold',
+    fontSize: 18,
+    color: 'rgba(49, 94, 153, 1)',
+    alignSelf: 'flex-start',
+    marginLeft: 5,
   },
   inputBox: {
     width: '100%',
     borderWidth: 1,
     borderColor: 'gray',
     padding: 10,
-    margin: 10,
+    marginVertical: 5,
     borderRadius: 10,
     backgroundColor: '#FAF9F6',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    width: '80%',
-    marginTop: 70,
+  errorMessage: {
+    color: 'red',
+    marginTop: 10,
   },
-  button: {
-    backgroundColor: "#FFB085",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginHorizontal: 10,
+  loginButton: {
+    backgroundColor: 'rgba(49, 94, 153, 1)',
+    paddingHorizontal: 105,
+    paddingVertical: 13,
+    borderRadius: 15,
+    marginTop: 55,
   },
-  buttonText: {
-    fontFamily: "FuzzyBubbles",
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'black',
+  loginButtonText: {
+    fontFamily: 'FuzzyBold',
+    fontSize: 26,
+    color: '#FEF1E6',
+  },
+  forgotPasswordText: {
+    fontFamily: 'FuzzyBold',
+    fontSize: 18,
+    color: 'rgba(49, 94, 153, 1)',
+    textDecorationLine: 'underline',
+    marginTop: 15,
   },
 });
 

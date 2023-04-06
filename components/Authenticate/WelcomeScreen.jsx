@@ -7,7 +7,7 @@ const WelcomeScreen = ({ navigation }) => {
     Virgil: require('../../assets/fonts/Virgil.ttf'),
     Fuzzy: require('../../assets/fonts/FuzzyBubbles-Regular.ttf'),
     FuzzyBold: require('../../assets/fonts/FuzzyBubbles-Bold.ttf'),
-    Merienda: require('../../assets/fonts/Merienda-Black.ttf'),
+    Merienda: require('../../assets/fonts/Merienda-ExtraBold.ttf'),
   });
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -30,7 +30,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/texture.png')}
+      source={require('../../assets/images/texture3.webp')}
       style={styles.container}
     >
       <View style={styles.overlay} />
@@ -68,13 +68,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    marginTop: 150,
+    marginTop: 160,
   },
   header: {
     fontFamily: 'Merienda',
-    fontSize: 68,
+    fontSize: 72,
     color: 'rgba(49, 94, 153, 1)',
-    textShadowColor: 'rgba(49, 94, 153, .5)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 3,
   },
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -265,
+    marginTop: -275,
   },
   logo: {
     width: 900,
@@ -96,15 +95,15 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: 28,
+    bottom: 45,
     alignItems: 'center',
   },
   loginButton: {
     backgroundColor: 'rgba(49, 94, 153, 1)',
-    paddingHorizontal: 115,
-    paddingVertical: 15,
+    paddingHorizontal: 105,
+    paddingVertical: 13,
     borderRadius: 15,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   loginButtonText: {
     fontFamily: 'FuzzyBold',
@@ -115,8 +114,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(49, 94, 153, 1)',
     backgroundColor: '#fef1e6',
     borderWidth: 2,
-    paddingHorizontal: 102,
-    paddingVertical: 13,
+    paddingHorizontal: 94,
+    paddingVertical: 11,
     borderRadius: 15,
   },
   registerButtonText: {

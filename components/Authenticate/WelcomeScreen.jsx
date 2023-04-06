@@ -30,7 +30,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/texture3.webp')}
+      source={require('../../assets/images/texture5.png')}
       style={styles.container}
     >
       <View style={styles.overlay} />
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   logoContainer: {
-    marginTop: -275,
+    marginTop: -280,
   },
   logo: {
     width: 900,

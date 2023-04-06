@@ -139,10 +139,10 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     fontFamily: 'FuzzyBold',
-    fontSize: 18,
+    fontSize: 20,
     color: 'rgba(49, 94, 153, 1)',
     textDecorationLine: 'underline',
-    marginTop: 15,
+    marginTop: 18,
   },
 });
 

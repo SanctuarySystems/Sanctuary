@@ -7,20 +7,20 @@ import axios from "axios";
 import moment from 'moment';
 
 const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
-  const [idList, setIdList] = useState({});
+  const [huggedConfIds, setHuggedConfIds] = useState({});
   const { username, userToken } = useContext(UsernameContext);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Add line below to reset local storage
     // saveIdList({});
-    getIdList().then(setIdList);
+    getIdList().then(setHuggedConfIds);
   }, []);
 
   const saveIdList = async (data) => {
     try {
       await AsyncStorage.setItem(
-        'idList',
+        'huggedConfIds',
         JSON.stringify(data),
       );
     } catch (error) {
@@ -31,8 +31,8 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
 
   const getIdList = async () => {
     try {
-      const idListJson = await AsyncStorage.getItem('idList');
-      return idListJson ? JSON.parse(idListJson) : {};
+      const huggedConfsJson = await AsyncStorage.getItem('huggedConfIds');
+      return huggedConfsJson ? JSON.parse(huggedConfsJson) : {};
     } catch (error) {
       // Error retrieving data
       console.log('Failed to get data in confessionsList');
@@ -111,9 +111,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
-        const newIdList = { ...idList, ...{ id } };
+        const newIdList = { ...huggedConfIds, ...{ id } };
         saveIdList(newIdList);
-        setIdList(newIdList);
+        setHuggedConfIds(newIdList);
       })
       .catch((err) => {
         console.log(err);
@@ -160,11 +160,11 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               <Text style={styles.bodyText}>{item.confession}</Text>
               <View style={styles.buttonContainer}>
                 <View style={styles.buttonStyleHug}>
-                {idList[item.confession_id] === undefined && <TouchableOpacity
+                {huggedConfIds[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={26} />{' ' + item.hugs}</Text>
                 </TouchableOpacity>}
-                {idList[item.confession_id] !== undefined && <View>
+                {huggedConfIds[item.confession_id] !== undefined && <View>
                   <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={26} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
 
                   </View>}

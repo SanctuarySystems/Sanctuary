@@ -26,15 +26,12 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
 
   const getData = async () => {
     try {
-      const value = await AsyncStorage.getItem('idList');
-      if (value !== null) {
-        // We have data!!
-        console.log('Here is value', value);
-        setIdList(JSON.parse(value));
-      }
+      const idListJson = await AsyncStorage.getItem('idList');
+      return idListJson ? JSON.parse(idListJson) : {};
     } catch (error) {
       // Error retrieving data
       console.log('Failed to save data in confessionsList line 35');
+      return {};
     }
   };
 

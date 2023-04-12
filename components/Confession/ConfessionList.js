@@ -6,35 +6,37 @@ import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, Asyn
 import axios from "axios";
 import moment from 'moment';
 
-
 const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
-  const [idList, setIdList] = useState({});
+  const [huggedConfIds, setHuggedConfIds] = useState({});
   const { username, userToken } = useContext(UsernameContext);
   const [showModal, setShowModal] = useState(false);
 
-  const saveData = async (data) => {
+  useEffect(() => {
+    // Add line below to reset local storage
+    // saveIdList({});
+    getIdList().then(setHuggedConfIds);
+  }, []);
+
+  const saveIdList = async (data) => {
     try {
       await AsyncStorage.setItem(
-        'idList',
+        'huggedConfIds',
         JSON.stringify(data),
       );
     } catch (error) {
       // Error saving data
-      console.log('Failed to save data in confessionsList line 22');
+      console.log('Failed to save data in confessionsList');
     }
   };
 
-  const getData = async () => {
+  const getIdList = async () => {
     try {
-      const value = await AsyncStorage.getItem('idList');
-      if (value !== null) {
-        // We have data!!
-        console.log('Here is value', value);
-        setIdList(JSON.parse(value));
-      }
+      const huggedConfsJson = await AsyncStorage.getItem('huggedConfIds');
+      return huggedConfsJson ? JSON.parse(huggedConfsJson) : {};
     } catch (error) {
       // Error retrieving data
-      console.log('Failed to save data in confessionsList line 35');
+      console.log('Failed to get data in confessionsList');
+      return {};
     }
   };
 
@@ -45,13 +47,6 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
     })
       .catch((error) => console.log(error));
   };
-
-  useEffect(() => {
-    ///Add line below to reset local storage
-    //saveData({});
-     getData();
-  },[])
-
 
   const [fontsLoaded] = useFonts({
     'Virgil': require('../../assets/fonts/Virgil.ttf'),
@@ -100,36 +95,30 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
   }
 
   function spaceNav(spaceName, owner) {
-
-    var isAdmin;
+    let isAdmin;
     if (isHome) {
-
       if (owner === username) {
         isAdmin = true;
       } else {
         isAdmin = false;
       }
-      nav.navigate('Space', {username: username, admin: isAdmin, space_name: spaceName});
+      nav.navigate('Space', { username, admin: isAdmin, space_name: spaceName });
     }
   }
 
   function addHug(id) {
-
-
     axios.patch(`${apiUrl}/confessions/${id}/hug`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
-    .then(() => {
-      var newObj = {...idList}
-      newObj[id] = id;
-      saveData(newObj);
-      setIdList(newObj);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then(() => {
+        const newIdList = { ...huggedConfIds, ...{ id } };
+        saveIdList(newIdList);
+        setHuggedConfIds(newIdList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
 
   if (!fontsLoaded) {
     return (
@@ -171,11 +160,11 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
               <Text style={styles.bodyText}>{item.confession}</Text>
               <View style={styles.buttonContainer}>
                 <View style={styles.buttonStyleHug}>
-                {idList[item.confession_id] === undefined && <TouchableOpacity
+                {huggedConfIds[item.confession_id] === undefined && <TouchableOpacity
                   onPress={() => addHug(item.confession_id)}>
                   <Text style={{textAlign: 'center'}}><FontAwesome5 name="hands-helping" size={26} />{' ' + item.hugs}</Text>
                 </TouchableOpacity>}
-                {idList[item.confession_id] !== undefined && <View>
+                {huggedConfIds[item.confession_id] !== undefined && <View>
                   <Text style={{textAlign: 'center', color: 'rgba(49, 94, 153, 1)'}}><FontAwesome5 name="hands-helping" size={26} color="rgba(49, 94, 153, 1)" />{' ' + (item.hugs + 1)}</Text>
 
                   </View>}
@@ -218,7 +207,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
 
   errorText: {
@@ -226,7 +215,6 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     fontFamily: 'FuzzyBubblesRegular',
     color: 'rgba(27, 52, 83, 1)',
-
   },
   noConfText: {
     padding: 19,
@@ -252,33 +240,33 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
   roomDateContainer: {
     flexDirection: 'row',
-   // backgroundColor: 'rgba(27, 52, 83, .08)',
+    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
 
   },
   imgUserContainer: {
     flexDirection: 'row',
     borderWidth: 0,
-  //  backgroundColor: 'rgba(27, 52, 83, .08)',
+    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
   image: {
     width: 20,
-    height: 20
+    height: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
     paddingTop: '1%',
     justifyContent: 'space-between',
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
   buttonStyleHug: {
     borderWidth: 0,
@@ -300,16 +288,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
     fontWeight: 'bold',
-    //color: 'rgba(27, 52, 83, 1)',
+    // color: 'rgba(27, 52, 83, 1)',
     color: 'rgba(49, 94, 153, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
 
   dateStyle: {
@@ -317,7 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingTop: '1%',
     color: 'rgba(49, 94, 153, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
   bodyText: {
     color: 'black',
@@ -372,6 +360,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 export default ConfessionList;

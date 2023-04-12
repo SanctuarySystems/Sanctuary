@@ -13,11 +13,11 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
 
   useEffect(() => {
     // Add line below to reset local storage
-    // saveData({});
-    getData();
+    // saveIdList({});
+    getIdList().then(setIdList);
   }, []);
 
-  const saveData = async (data) => {
+  const saveIdList = async (data) => {
     try {
       await AsyncStorage.setItem(
         'idList',
@@ -29,13 +29,13 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
     }
   };
 
-  const getData = async () => {
+  const getIdList = async () => {
     try {
       const idListJson = await AsyncStorage.getItem('idList');
       return idListJson ? JSON.parse(idListJson) : {};
     } catch (error) {
       // Error retrieving data
-      console.log('Failed to save data in confessionsList');
+      console.log('Failed to get data in confessionsList');
       return {};
     }
   };
@@ -111,10 +111,9 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
-        const newObj = { ...idList };
-        newObj[id] = id;
-        saveData(newObj);
-        setIdList(newObj);
+        const newIdList = { ...idList, ...{ id } };
+        saveIdList(newIdList);
+        setIdList(newIdList);
       })
       .catch((err) => {
         console.log(err);

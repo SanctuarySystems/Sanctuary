@@ -6,11 +6,16 @@ import { StyleSheet, Text, View, Button, FlatList, Image, TouchableOpacity, Asyn
 import axios from "axios";
 import moment from 'moment';
 
-
 const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
   const [idList, setIdList] = useState({});
   const { username, userToken } = useContext(UsernameContext);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    // Add line below to reset local storage
+    // saveData({});
+    getData();
+  }, []);
 
   const saveData = async (data) => {
     try {
@@ -20,7 +25,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
       );
     } catch (error) {
       // Error saving data
-      console.log('Failed to save data in confessionsList line 22');
+      console.log('Failed to save data in confessionsList');
     }
   };
 
@@ -30,7 +35,7 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
       return idListJson ? JSON.parse(idListJson) : {};
     } catch (error) {
       // Error retrieving data
-      console.log('Failed to save data in confessionsList line 35');
+      console.log('Failed to save data in confessionsList');
       return {};
     }
   };
@@ -42,13 +47,6 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
     })
       .catch((error) => console.log(error));
   };
-
-  useEffect(() => {
-    ///Add line below to reset local storage
-    //saveData({});
-     getData();
-  },[])
-
 
   const [fontsLoaded] = useFonts({
     'Virgil': require('../../assets/fonts/Virgil.ttf'),
@@ -97,36 +95,31 @@ const ConfessionList = ({ allConfessions, nav, isRoom, isHome }) => {
   }
 
   function spaceNav(spaceName, owner) {
-
-    var isAdmin;
+    let isAdmin;
     if (isHome) {
-
       if (owner === username) {
         isAdmin = true;
       } else {
         isAdmin = false;
       }
-      nav.navigate('Space', {username: username, admin: isAdmin, space_name: spaceName});
+      nav.navigate('Space', { username, admin: isAdmin, space_name: spaceName });
     }
   }
 
   function addHug(id) {
-
-
     axios.patch(`${apiUrl}/confessions/${id}/hug`, {}, {
       headers: { Authorization: `Bearer ${userToken}` },
     })
-    .then(() => {
-      var newObj = {...idList}
-      newObj[id] = id;
-      saveData(newObj);
-      setIdList(newObj);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then(() => {
+        const newObj = { ...idList };
+        newObj[id] = id;
+        saveData(newObj);
+        setIdList(newObj);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
 
   if (!fontsLoaded) {
     return (
@@ -215,7 +208,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
 
   errorText: {
@@ -223,7 +216,6 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     fontFamily: 'FuzzyBubblesRegular',
     color: 'rgba(27, 52, 83, 1)',
-
   },
   noConfText: {
     padding: 19,
@@ -249,33 +241,33 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
   roomDateContainer: {
     flexDirection: 'row',
-   // backgroundColor: 'rgba(27, 52, 83, .08)',
+    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
 
   },
   imgUserContainer: {
     flexDirection: 'row',
     borderWidth: 0,
-  //  backgroundColor: 'rgba(27, 52, 83, .08)',
+    // backgroundColor: 'rgba(27, 52, 83, .08)',
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
   image: {
     width: 20,
-    height: 20
+    height: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
     paddingTop: '1%',
     justifyContent: 'space-between',
-    fontFamily: 'Virgil'
+    fontFamily: 'Virgil',
   },
   buttonStyleHug: {
     borderWidth: 0,
@@ -297,16 +289,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'rgba(27, 52, 83, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
 
   textStyle: {
     fontSize: 16,
     paddingBottom: 8,
     fontWeight: 'bold',
-    //color: 'rgba(27, 52, 83, 1)',
+    // color: 'rgba(27, 52, 83, 1)',
     color: 'rgba(49, 94, 153, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
 
   dateStyle: {
@@ -314,7 +306,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingTop: '1%',
     color: 'rgba(49, 94, 153, 1)',
-    //fontFamily: 'Times New Roman'
+    // fontFamily: 'Times New Roman'
   },
   bodyText: {
     color: 'black',
@@ -369,6 +361,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 export default ConfessionList;

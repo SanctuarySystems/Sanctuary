@@ -21,29 +21,31 @@ This application is written in JavaScript and uses:
 * Firebase
 * Axios
 
-## UX
+## Welcome & Authentication
 
-See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit?usp=sharing)
+![Screenshot of authentication screen](readme_assets/auth_screenshot_sm.png "Auth home screen") ![Screenshot of login screen](readme_assets/login_screenshot_sm.png "Login screen") ![Screenshot of register screen](readme_assets/register_screenshot_sm.png "Register screen") 
 
-## Authentication
-
-
-The authentication component verifies new and existing users. Any user may
+The welcome screen loads the authentication component, which verifies new and existing users. Any user may:
 * Create a new account with their email and password
 * Choose their own account username and icon
 * Log into an existing account
 * Reset their password from the login screen
 
 
-## Home Page
+## Home
+![Screenshot of home screen](readme_assets/home_screenshot_sm.png "Home screen")
+![Screenshot of report screen](readme_assets/report_screenshot_sm.png "Report screen")
 
+The home screen displays all posts (called "confessions" in Sanctuary) in all the rooms that the user is a member of. This screen offers the following capabilites:
+* User can "hug" a confession by pressing the handshake icon
+* User can report a confession by pressing the 3 dots icon in the upper right corner of the confession, then pressing the red "Report" button shown in the screenshot above
+* User can view the comments on a particular confession by pressing the speech bubbles icon
 
-
-## Confessions
-
+For each confession, the home screen displays the number of "hugs" it has received, and the number of comments posted to the confession.
 
 
 ## Comments
+![Screenshot of comments screen](readme_assets/comments_screenshot_sm.png "Comments screen")
 
 Comments display the username, the message, how long ago it was posted, an options button that slides up a modal with additional features such as reporting, and the current vote count with the option to upvote or downvote a comment.
 
@@ -55,17 +57,11 @@ Comments display the username, the message, how long ago it was posted, an optio
 * Comments have an options button that slides up a modal with additional features such as reporting
   * Reported comments will send notifications to the owner of the space who will be able to view the comment and/or ban the user.
 * Utilized lazy loading with Flat List to improve app performance and increase comment load times
-
-
-
-## Navigation
-
-
-
 ## Spaces
 
 **Spaces List**
 
+![Screenshot of space list screen](readme_assets/search_screenshot_sm.png "Space list screen")
 
 - Renders links to spaces the user has created and joined.
 - Used Dimensions object to incorporate window-width into styling.
@@ -73,6 +69,8 @@ Comments display the username, the message, how long ago it was posted, an optio
 
 
 **Admin View**
+
+![Screenshot of space members screen](readme_assets/space_members_screenshot_sm.png "Space members screen") ![Screenshot of space edit screen](readme_assets/space_edit_screenshot_sm.png "Space edit screen")
 
 - Edit Modal: allows user to change space description and guidelines
 - Members Tab: allows user to view list of users who've joined the space with member presence information
@@ -124,6 +122,10 @@ From the **notification features**, users have the..
 The account management component enables users to manage their existing account. Any user may
 * Update their password after submitting their old password
 * Change their user icon
+
+## UX
+
+See initial wireframes [here](https://docs.google.com/document/d/1D0CevEq6Vk95bZJ3TnJIBEjQZrdz-UBjExdb_Y0d_Hk/edit?usp=sharing)
 
 ## Installation
 

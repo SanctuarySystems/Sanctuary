@@ -357,3 +357,4 @@ MigrationBackup/
 .expo
 .config
 package-lock.json
+/local
